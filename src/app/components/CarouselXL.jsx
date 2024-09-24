@@ -9,13 +9,13 @@ export default function CarouselXL({options}) {
   return (
     <div className="w-full">
       <Swiper
-        spaceBetween={30}
-        slidesPerView={1.2} // Only 1 card per view since they are larger now
+        spaceBetween={20}
+        slidesPerView={1.15} // Only 1 card per view since they are larger now
         grabCursor={true}
       >
         {options.map((option, index) => (
           <SwiperSlide key={index}>
-            <div className="flex flex-col bg-white rounded-lg shadow-md overflow-hidden mb-2">
+            <div className="flex flex-col border-2 border-gray-100 bg-white rounded-lg shadow-md overflow-hidden mb-2">
               <div className="h-40">
                 <Image
                   src={`/images/${option.pic}`}

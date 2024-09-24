@@ -13,11 +13,11 @@ export default function NavbarCarousel() {
     },
     { 
       label: "Meat Lover",
-      pic: "dish1.jpg"
+      pic: "dish3.jpeg"
     },
     { 
       label: "Italian",
-      pic: "dish2.jpeg"
+      pic: "dish4.jpeg"
     }
   ]
 

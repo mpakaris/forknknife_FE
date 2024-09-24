@@ -1,4 +1,5 @@
-import { FaCoffee, FaCoins, FaIceCream, FaUtensils } from 'react-icons/fa'; // Import icons
+import { useState } from "react";
+import { FaCheckCircle, FaCoffee, FaCoins, FaIceCream, FaUtensils, FaUtensilSpoon } from 'react-icons/fa'; // Import icons
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BottomSheetTagPills from "./BottomSheetTagPills";
@@ -12,6 +13,20 @@ const getCurrentDayIndex = () => {
 
 const CarouselDrawerWeeklyMenu = ({ options }) => {
   const currentIndex = getCurrentDayIndex();
+
+  // Create a local state for isSaved for each card
+  const [savedMeals, setSavedMeals] = useState(
+    options.map(() => false) // Initialize an array of 'false' values, one for each option
+  );
+
+  // Toggle the 'isSaved' state for the given card index
+  const toggleSaveMeal = (index) => {
+    setSavedMeals((prevSavedMeals) =>
+      prevSavedMeals.map((isSaved, i) =>
+        i === index ? !isSaved : isSaved // Toggle only the meal at the specific index
+      )
+    );
+  };
 
   return (
     <div className="w-full">
@@ -47,6 +62,24 @@ const CarouselDrawerWeeklyMenu = ({ options }) => {
               </div>
               <div className='mt-3'>
                 <BottomSheetTagPills tags={option.tags} paddingClass="py-1"/>
+              </div>
+
+              {/* Conditional rendering for the "Add to Meal Plan" or "Your Meal for Today" banner */}
+              <div className='mt-4'>
+                {savedMeals[index] ? (
+                  <div className="bg-teal-800 text-white py-2 px-4 rounded-md flex items-center">
+                    <FaCheckCircle className="mr-2" />
+                    <p className="text-sm font-bold">Your Meal for Today!</p>
+                  </div>
+                ) : (
+                  <div
+                    className="flex items-center justify-center mt-2 text-teal-800 cursor-pointer"
+                    onClick={() => toggleSaveMeal(index)}
+                  >
+                    <FaUtensilSpoon className="mr-2" />
+                    <p className="text-sm font-bold">Add to Meal Plan</p>
+                  </div>
+                )}
               </div>
             </div>
           </SwiperSlide>
