@@ -10,7 +10,7 @@ const BottomNav = ({ setScreen }) => {
           </div>
           <span className="block text-xs text-teal-700 font-bold">Home</span>
         </button>
-        <button onClick={() => setScreen('search')} className="text-center flex flex-col items-center">
+        <button onClick={() => setScreen('mealPlan')} className="text-center flex flex-col items-center">
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-50">
             <FaCalendarAlt className="h-5 w-5 text-teal-700" />
           </div>
