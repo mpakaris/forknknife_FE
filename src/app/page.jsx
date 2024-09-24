@@ -32,12 +32,12 @@ const Home = () => {
       meal: Locations[1].menu.Wednesday.description, // Mushroom Soup + Beef Bourguignon
       address: "Hollán Ernő u. 7, 1136 Budapest",
     },
-    {
-      date: "2024-09-26",
-      restaurant: Locations[2].name, // Gettó Gulyás
-      meal: Locations[2].menu.Thursday.description, // Vegetable Stew + Sausages
-      address: "Hollán Ernő u. 7, 1136 Budapest",
-    },
+    // {
+    //   date: "2024-09-26",
+    //   restaurant: Locations[2].name, // Gettó Gulyás
+    //   meal: Locations[2].menu.Thursday.description, // Vegetable Stew + Sausages
+    //   address: "Hollán Ernő u. 7, 1136 Budapest",
+    // },
     {
       date: "2024-09-27",
       restaurant: Locations[0].name, // Budapest Jazz Club

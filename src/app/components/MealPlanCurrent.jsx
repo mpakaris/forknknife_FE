@@ -2,7 +2,7 @@ import { FaBuilding, FaCalendarAlt, FaUtensils } from 'react-icons/fa'; // Impor
 
 export default function MealPlanCurrent({ mealEntry, weekday, date }) {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 flex flex-col border border-teal-800"> {/* Highlighted */}
+    <div className="bg-white shadow-md rounded-lg p-4 flex flex-col border-2 border-teal-600"> {/* Highlighted */}
       <div className="flex items-center mb-2">
         <FaCalendarAlt className="text-teal-800" />
         <h3 className="text-sm font-semibold ml-2">{`${weekday} | ${date.split('-').reverse().join('/')}`}</h3>

@@ -19,7 +19,7 @@ export default function MealPlanController({ mealPlan }) {
     { weekday: 'Monday', date: new Date(startOfWeek).toISOString().split('T')[0] },
     { weekday: 'Tuesday', date: new Date(startOfWeek.setDate(startOfWeek.getDate() + 1)).toISOString().split('T')[0] },
     { weekday: 'Wednesday', date: new Date(startOfWeek.setDate(startOfWeek.getDate() + 1)).toISOString().split('T')[0] },
-    // { weekday: 'Thursday', date: new Date(startOfWeek.setDate(startOfWeek.getDate() + 1)).toISOString().split('T')[0] },
+    { weekday: 'Thursday', date: new Date(startOfWeek.setDate(startOfWeek.getDate() + 1)).toISOString().split('T')[0] },
     { weekday: 'Friday', date: new Date(startOfWeek.setDate(startOfWeek.getDate() + 1)).toISOString().split('T')[0] },
   ];
 
@@ -53,3 +53,9 @@ export default function MealPlanController({ mealPlan }) {
     </div>
   );
 }
+
+// 1.	PastMealPlan: This component displays a meal plan for a day that is in the past but is “blurred” out, indicating no action is possible.
+// 2.	CurrentMealPlan: This component represents a meal plan for the current date and is highlighted, showing it is active.
+// 3.	FutureMealPlan: This component displays a meal plan for a day in the future, with a gray border indicating it’s coming up.
+// 4.	NoMealPlan: This existing component shows when there are no meal plans available for today or in the future.
+// 5.	PastNoMealPlan: This component indicates that there is no meal plan available for a day in the past and should be grayed out.

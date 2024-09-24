@@ -19,8 +19,8 @@ export default function MealPlanNone({ weekday }) {
           <FaCalendarAlt className="text-teal-800" />
           <h3 className="text-sm font-semibold ml-2">{weekday}</h3> {/* Display Day name */}
         </div>
-        <p className="text-md mb-2">Find yourself a good meal!</p>
-        <button className="bg-teal-800 text-white px-4 py-2 rounded">Find Restaurant</button>
+        <p className="text-xs mb-2">Find yourself a good meal!</p>
+        <button className="bg-teal-800 text-white text-sm px-4 py-2 rounded">Find a Meal</button>
       </div>
     </div>
   );
