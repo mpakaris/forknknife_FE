@@ -6,7 +6,7 @@ export default function MealPlanFuture({ mealEntry, weekday, date }) {
       mealEntry={mealEntry} 
       weekday={weekday} 
       date={date} 
-      borderColor="border-gray-500" // Gray border for future days
+      borderColor="" // Gray border for future days
     />
   );
 }

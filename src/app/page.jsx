@@ -38,12 +38,12 @@ const Home = () => {
     //   meal: Locations[2].menu.Thursday.description, // Vegetable Stew + Sausages
     //   address: "Hollán Ernő u. 7, 1136 Budapest",
     // },
-    {
-      date: "2024-09-27",
-      restaurant: Locations[0].name, // Budapest Jazz Club
-      meal: Locations[0].menu.Friday.description, // Tomato Soup + Grilled Salmon
-      address: "Hollán Ernő u. 7, 1136 Budapest",
-    }
+    // {
+    //   date: "2024-09-27",
+    //   restaurant: Locations[0].name, // Budapest Jazz Club
+    //   meal: Locations[0].menu.Friday.description, // Tomato Soup + Grilled Salmon
+    //   address: "Hollán Ernő u. 7, 1136 Budapest",
+    // }
   ];
 
   const renderScreen = () => {

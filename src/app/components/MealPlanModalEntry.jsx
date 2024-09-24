@@ -11,7 +11,7 @@ export default function MealPlanModalEntry({ mealEntry, weekday, date, borderCol
   ];
   
   return (
-    <div className={`bg-white shadow-md rounded-lg p-4 flex flex-col ${border} ${borderColor}`}>
+    <div className={`bg-white shadow-lg rounded-lg p-4 flex flex-col ${border} ${borderColor}`}>
       <div className="flex items-center mb-2">
         <FaCalendarAlt className="text-teal-800" />
         <h3 className="text-sm font-semibold ml-2">{`${weekday} | ${date.split('-').reverse().join('/')}`}</h3>
@@ -30,7 +30,10 @@ export default function MealPlanModalEntry({ mealEntry, weekday, date, borderCol
 
       <CarouselSmall options={options} />
 
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-between mt-4">
+        <button className="flex items-center bg-red-600 text-white px-3 py-2 rounded hover:bg-red-500">
+          <FaTrash className="text-xs" />
+        </button>        
         <button className="flex items-center bg-red-600 text-white px-3 py-2 rounded hover:bg-red-500">
           <FaTrash className="text-xs" />
         </button>
