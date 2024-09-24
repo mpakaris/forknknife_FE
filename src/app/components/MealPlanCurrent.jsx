@@ -6,7 +6,8 @@ export default function MealPlanCurrent({ mealEntry, weekday, date }) {
       mealEntry={mealEntry} 
       weekday={weekday} 
       date={date} 
-      borderColor="border-teal-600" // Highlighted border for current day
+      borderColor="border-teal-600"
+      border="border-2" // Highlighted border for current day
     />
   );
 }
