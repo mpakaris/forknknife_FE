@@ -1,0 +1,52 @@
+{
+  "name": "pwa-using-next13",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@heroicons/react": "^2.1.1",
+    "@khmyznikov/pwa-install": "^0.4.4",
+    "@maptiler/leaflet-maptilersdk": "^2.0.0",
+    "@reduxjs/toolkit": "^2.1.0",
+    "@types/node": "20.6.5",
+    "@use-gesture/react": "^10.3.1",
+    "autoprefixer": "10.4.16",
+    "axios": "^1.6.7",
+    "date-fns": "^4.1.0",
+    "eslint": "8.50.0",
+    "eslint-config-next": "13.5.2",
+    "firebase": "^10.8.0",
+    "framer-motion": "^11.5.5",
+    "leaflet": "^1.9.4",
+    "next": "^13.5.7",
+    "next-pwa": "^5.6.0",
+    "postcss": "8.4.30",
+    "primereact": "^10.5.1",
+    "react": "^18.2.0",
+    "react-bottom-sheet": "^1.1.1",
+    "react-dom": "^18.2.0",
+    "react-hook-speech-to-text": "^0.8.0",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.3.0",
+    "react-leaflet": "^4.2.1",
+    "react-redux": "^9.1.0",
+    "react-spring": "^9.7.4",
+    "react-spring-bottom-sheet": "^3.4.1",
+    "react-swipeable": "^7.0.1",
+    "react-toastify": "^10.0.4",
+    "swiper": "^11.1.14",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.53",
+    "@types/react-dom": "^18.2.18"
+  }
+}

@@ -1,0 +1,15 @@
+.map-wrap {
+  position: relative;
+  width: 100%;
+  min-height: calc(110vh); /* Height of the screen minus the heading */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+.map {
+  position: absolute;
+  width: 100%;
+  height: 115%; /* Extend beyond the visible area to hide advertisements */
+  top: -15%; /* Shift upwards to ensure it covers the required area */
+  left: 0;
+  overflow: hidden; /* Prevent scrolling within the map container */
+}
