@@ -15,11 +15,17 @@ import TopInfoBanner from "./components/TopInfoBanner";
 import Locations from './mockData/locations';
 
 const Home = () => {
-  const [currentScreen, setScreen] = useState("mealPlan");
+  const [currentScreen, setScreen] = useState("home");
   const [currentLocation, setLocation] = useState(undefined);
   const [infoBanner, setInfoBanner] = useState(false);
   const [infoMsg, setInfoMsg] = useState("New FORK 'n KNIFE Version available!");
   const mockMealPlan = [
+    //     {
+    //   date: "2024-09-23",
+    //   restaurant: Locations[0].name, // Budapest Jazz Club
+    //   meal: Locations[0].menu.Friday.description, // Tomato Soup + Grilled Salmon
+    //   address: "Hollán Ernő u. 7, 1136 Budapest",
+    // },
     {
       date: "2024-09-24", // current date
       restaurant: Locations[0].name, // Budapest Jazz Club
@@ -79,13 +85,19 @@ const Home = () => {
     if (infoBanner) return <TopInfoBanner message={infoMsg}/>
   }
 
+  const displayNavbar = () => {
+    if (currentScreen !== "map") return <Navbar />;
+  }
+
   return (
-    <div className="App h-screen flex flex-col">
-      <div className="sticky top-0 z-10 bg-white">
-        <Navbar />
-        <NavbarSearch setScreen={setScreen}/>
+    <div className="App h-screen flex flex-col overflow-y-auto">
+      <div className="relative z-10"> 
+        {displayNavbar()}
       </div>
-      <div className="flex-grow overflow-y-auto">
+      <div className="sticky top-0 z-20 bg-white"> 
+        <NavbarSearch setScreen={setScreen} />
+      </div>
+      <div className="flex-grow">
         {renderInfoBanner()}
         {renderScreen()}
         <ScrollingBuffer />

@@ -1,4 +1,4 @@
-import { FaBuilding, FaCalendarAlt, FaTrash, FaUtensils } from 'react-icons/fa';
+import { FaBuilding, FaCalendarAlt, FaEdit, FaUtensils } from 'react-icons/fa';
 import CarouselSmall from './CarouselSmall'; // Import the CarouselSmall component
 
 export default function MealPlanModalEntry({ mealEntry, weekday, date, borderColor, border="border" }) {
@@ -27,15 +27,11 @@ export default function MealPlanModalEntry({ mealEntry, weekday, date, borderCol
         <FaUtensils className="text-teal-800" />
         <p className="ml-2 text-sm">{mealEntry.meal}</p>
       </div>
-
       <CarouselSmall options={options} />
-
-      <div className="flex justify-between mt-4">
-        <button className="flex items-center bg-red-600 text-white px-3 py-2 rounded hover:bg-red-500">
-          <FaTrash className="text-xs" />
-        </button>        
-        <button className="flex items-center bg-red-600 text-white px-3 py-2 rounded hover:bg-red-500">
-          <FaTrash className="text-xs" />
+      <div className="flex justify-end mt-4">
+        <button className="flex items-center bg-teal-800 text-white px-6 py-3 rounded hover:bg-teal-700">
+          <FaEdit className="text-lg mr-2" /> 
+          <span>Edit Meal</span>
         </button>
       </div>
     </div>
