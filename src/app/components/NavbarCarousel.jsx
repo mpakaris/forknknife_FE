@@ -25,7 +25,7 @@ export default function NavbarCarousel() {
 
   return (
     <div className="flex flex-col items-start px-3 my-3">
-      <h4 className="text-md font-bold text-center mb-2">Quick 'n dirty</h4>
+      <h4 className="text-md font-bold text-center mb-2">Quick and dirty</h4>
       <div className="w-full">
         <CarouselSmall options={options} />
       </div>

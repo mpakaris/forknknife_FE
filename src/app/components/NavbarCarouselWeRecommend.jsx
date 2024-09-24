@@ -27,7 +27,7 @@ export default function NavbarCarouselWeRecommend() {
 
   return (
     <div className="flex flex-col items-start px-3 my-4">
-      <h4 className="text-md font-bold text-center mb-2">Fork 'n Knife recommends</h4>
+      <h4 className="text-md font-bold text-center mb-2">Fork and Knife recommends</h4>
       <div className="w-full">
         <CarouselSmall options={options} />
       </div>
