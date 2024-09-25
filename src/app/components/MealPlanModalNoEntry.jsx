@@ -5,7 +5,7 @@ export default function MealPlanEntryNoEntry({ weekday, isPast }) {
   const placeholderImage = '/images/noMealPlan.png'; // Placeholder image path
 
   return (
-    <div className={`bg-white shadow-lg flex rounded-lg border-2 ${isPast ? 'border-gray-300 opacity-50 cursor-not-allowed' : 'border-red-600'} h-48`}>
+    <div className={`bg-white shadow-lg flex rounded-lg border-2 ${isPast ? 'border-gray-300 opacity-50 cursor-not-allowed' : 'border-gray-300'} h-48`}>
       <div className="relative w-1/3 h-full"> {/* Image section */}
         <Image 
           src={placeholderImage} 
