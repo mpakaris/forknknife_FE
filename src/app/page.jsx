@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BottomNavigation from "./components/BottomNavigation";
 import MapController from "./components/MapController";
 import MealPlanController from './components/MealPlanController';
@@ -12,13 +12,15 @@ import NavbarCarouselWeRecommend from "./components/NavbarCarouselWeRecommend";
 import NavbarSearch from "./components/NavbarSearch";
 import ScrollingBuffer from "./components/ScrollingBuffer";
 import TopInfoBanner from "./components/TopInfoBanner";
-import Locations from './mockData/locations';
+import Locations from "./mockData/locations";
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
   const [currentLocation, setLocation] = useState(undefined);
   const [infoBanner, setInfoBanner] = useState(false);
   const [infoMsg, setInfoMsg] = useState("New FORK 'n KNIFE Version available!");
+  const [navbarVisible, setNavbarVisible] = useState(true); // Track Navbar visibility
+
   const mockMealPlan = [
     //     {
     //   date: "2024-09-23",
@@ -51,6 +53,22 @@ const Home = () => {
     //   address: "Hollán Ernő u. 7, 1136 Budapest",
     // }
   ];
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setNavbarVisible(false);
+    } else {
+      setNavbarVisible(true);
+    }
+  };
+
+  // Attach scroll event listener
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -86,7 +104,7 @@ const Home = () => {
   }
 
   const displayNavbar = () => {
-    if (currentScreen !== "map") return <Navbar />;
+    if (currentScreen !== "map" && navbarVisible) return <Navbar />;
   }
 
   return (

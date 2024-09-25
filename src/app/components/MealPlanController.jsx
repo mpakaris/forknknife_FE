@@ -24,7 +24,7 @@ export default function MealPlanController({ mealPlan }) {
   ];
 
   return (
-    <div className="overflow-y-auto max-h-screen mb-2 mt-5">
+    <div className="max-h-[90vh] mt-5">
       <div className="flex flex-col px-4 space-y-4">
         {weekdays.map((day) => {
           const mealEntry = sortedMealPlan.find(meal => meal.date === day.date);
@@ -50,7 +50,7 @@ export default function MealPlanController({ mealPlan }) {
           }
         })}
       </div>
-      <div style={{height: "100px"}}></div>
+      <div style={{ height: "100px" }}></div>
     </div>
   );
 }
