@@ -1,4 +1,5 @@
 import { FaBuilding, FaCalendarAlt, FaEdit, FaUtensils } from 'react-icons/fa';
+import { useSwipeable } from 'react-swipeable';
 import CarouselSmall from './CarouselSmall'; // Import the CarouselSmall component
 
 export default function MealPlanModalEntry({ mealEntry, weekday, date, borderColor, border="border", isPast = false }) {
@@ -13,8 +14,17 @@ export default function MealPlanModalEntry({ mealEntry, weekday, date, borderCol
   // Conditional class to gray out the card if it's a past meal plan
   const pastMealClasses = isPast ? 'opacity-50 cursor-not-allowed' : '';
 
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => console.log("User Swiped!", eventData),
+    onSwipedLeft: () => alert("left"),
+    onSwipedRight: () => alert("right"),
+    delta: 20,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
   return (
-    <div className={`bg-white shadow-lg rounded-lg p-4 flex flex-col ${border} ${borderColor} ${pastMealClasses}`}>
+    <div  className={`bg-white shadow-lg rounded-lg p-4 flex flex-col ${border} ${borderColor} ${pastMealClasses}`}>
       <div className="flex items-center mb-2">
         <FaCalendarAlt className="text-teal-800" />
         <h3 className="text-sm font-semibold ml-2">{`${weekday} | ${date.split('-').reverse().join('/')}`}</h3>
@@ -33,10 +43,10 @@ export default function MealPlanModalEntry({ mealEntry, weekday, date, borderCol
       <CarouselSmall options={options} />
 
       {!isPast && (
-        <div className="flex justify-end mt-4">
+        <div {...handlers} className="flex justify-end mt-4">
           <button className="flex items-center bg-teal-800 text-white px-6 py-3 rounded hover:bg-teal-700">
             <FaEdit className="text-lg mr-2" /> 
-            <span>Edit Meal</span>
+            <span>Swipe here to change meal</span>
           </button>
         </div>
       )}
