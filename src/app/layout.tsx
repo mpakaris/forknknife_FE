@@ -38,7 +38,11 @@ export default function RootLayout({
         href="https://unpkg.com/react-spring-bottom-sheet/dist/style.css"
         crossOrigin="anonymous"
       ></link> */}
+      {/* Set Nodge-Color for iOS */}
+      <meta name="theme-color" content="#2c7a7b"></meta>
       <body className={inter.className}>{children}</body>
+      {/* // "theme_color": "#2196f3",
+      // "background_color": "#2196f3", */}
     </html>
   );
 }

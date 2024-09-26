@@ -747,8 +747,8 @@ video {
 .h-\[5px\] {
   height: 5px;
 }
-.h-\[90vh\] {
-  height: 90vh;
+.h-\[80vh\] {
+  height: 80vh;
 }
 .h-auto {
   height: auto;
@@ -758,9 +758,6 @@ video {
 }
 .h-screen {
   height: 100vh;
-}
-.h-\[80vh\] {
-  height: 80vh;
 }
 .max-h-\[80vh\] {
   max-height: 80vh;
@@ -799,9 +796,6 @@ video {
   flex: 1 1 0%;
 }
 .flex-grow {
-  flex-grow: 1;
-}
-.grow {
   flex-grow: 1;
 }
 .transform {
