@@ -39,7 +39,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, children }) => {
       )}
       <animated.div
         style={{ y, touchAction: 'none' }} // Disable touch scroll while dragging
-        className="fixed bottom-0 left-0 right-0 bg-white z-50 shadow-lg rounded-t-3xl p-4 h-[90vh] overflow-y-auto"
+        className="fixed bottom-0 left-0 right-0 bg-white z-50 shadow-lg rounded-t-3xl p-4 h-[80vh] overflow-y-auto"
       >
         {/* Apply drag functionality to the dash only */}
         <div {...bind()} className="flex items-center justify-center cursor-grab">
