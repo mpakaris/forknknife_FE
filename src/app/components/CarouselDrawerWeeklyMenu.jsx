@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaCheckCircle, FaCoffee, FaCoins, FaIceCream, FaUtensils, FaUtensilSpoon } from 'react-icons/fa'; // Import icons
+import { FaBell, FaCheckCircle, FaCoffee, FaCoins, FaIceCream, FaUtensils, FaUtensilSpoon } from 'react-icons/fa'; // Added FaBell for "Alert me!" button
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BottomSheetTagPills from "./BottomSheetTagPills";
@@ -9,6 +9,13 @@ const getCurrentDayIndex = () => {
   const today = new Date();
   const currentDay = today.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
   return (currentDay + 6) % 7; // Adjusting so Monday is 0
+};
+
+// Helper function to check if a date is today or in the future
+const isTodayOrFuture = (dateStr) => {
+  const today = new Date();
+  const optionDate = new Date(dateStr);
+  return optionDate >= today; // Compare dates
 };
 
 const CarouselDrawerWeeklyMenu = ({ options }) => {
@@ -42,6 +49,13 @@ const CarouselDrawerWeeklyMenu = ({ options }) => {
               <div className="mb-2 space-x-1 space-y-2">
                 <div className="flex justify-between items-center mb-5 pb-3 border-b border-gray-300">
                   <p className="text-basic text-gray-700 font-bold">{option.date}</p>
+                  {/* "Alert me!" button */}
+                  <button
+                    className="flex items-center text-teal-600 hover:text-teal-800 font-bold"
+                    onClick={() => alert("ALERT!")}
+                  >
+                    <FaBell className="mr-1" />
+                  </button>
                 </div>
                 <div className="flex items-center mb-1">
                   <FaCoffee className="mr-2 text-teal-600" />
@@ -72,13 +86,16 @@ const CarouselDrawerWeeklyMenu = ({ options }) => {
                     <p className="text-sm font-bold">Your Meal for Today!</p>
                   </div>
                 ) : (
-                  <div
-                    className="flex items-center justify-center mt-2 text-teal-800 cursor-pointer"
-                    onClick={() => toggleSaveMeal(index)}
-                  >
-                    <FaUtensilSpoon className="mr-2" />
-                    <p className="text-sm font-bold">Add to Meal Plan</p>
-                  </div>
+                  // Show "Add to Meal Plan" only if the date is today or in the future
+                  isTodayOrFuture(option.date) && (
+                    <div
+                      className="flex items-center justify-center mt-2 text-teal-800 cursor-pointer"
+                      onClick={() => toggleSaveMeal(index)}
+                    >
+                      <FaUtensilSpoon className="mr-2" />
+                      <p className="text-sm font-bold">Add to Meal Plan</p>
+                    </div>
+                  )
                 )}
               </div>
             </div>

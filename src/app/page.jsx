@@ -11,7 +11,6 @@ import NavbarCarouselLastChecked from "./components/NavbarCarouselLastChecked";
 import NavbarCarouselMayAlsoLike from "./components/NavbarCarouselMayAlsoLike";
 import NavbarCarouselWeRecommend from "./components/NavbarCarouselWeRecommend";
 import NavbarSearch from "./components/NavbarSearch";
-import ScrollingBuffer from "./components/ScrollingBuffer";
 import TopInfoBanner from "./components/TopInfoBanner";
 import Locations from "./mockData/locations";
 
@@ -113,7 +112,7 @@ const Home = () => {
             {renderScreen()}
           </motion.div>
         </AnimatePresence>
-        <ScrollingBuffer />
+        {/* <ScrollingBuffer /> */}
       </div>
     </div>
   );
