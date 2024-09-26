@@ -1,5 +1,6 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client'
+import { AnimatePresence, motion } from 'framer-motion'; // Import AnimatePresence for transitions
+import { useState } from "react";
 import { useSwipeable } from 'react-swipeable';
 import MapController from "./components/MapController";
 import MealPlanController from './components/MealPlanController';
@@ -11,25 +12,16 @@ import NavbarCarouselMayAlsoLike from "./components/NavbarCarouselMayAlsoLike";
 import NavbarCarouselWeRecommend from "./components/NavbarCarouselWeRecommend";
 import NavbarSearch from "./components/NavbarSearch";
 import ScrollingBuffer from "./components/ScrollingBuffer";
-import TopInfoBanner from "./components/TopInfoBanner";
 import Locations from "./mockData/locations";
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
-  const [currentLocation, setLocation] = useState(undefined);
-  const [infoBanner, setInfoBanner] = useState(false);
-  const [infoMsg, setInfoMsg] = useState("New FORK 'n KNIFE Version available!");
-  const [navbarVisible, setNavbarVisible] = useState(true); // Track Navbar visibility
+  const [direction, setDirection] = useState("right"); // Track swipe direction
   const screens = ["home", "mealPlan", "map", "favorites", "profile"];
+  
   const mockMealPlan = [
-    //     {
-    //   date: "2024-09-23",
-    //   restaurant: Locations[0].name, // Budapest Jazz Club
-    //   meal: Locations[0].menu.Friday.description, // Tomato Soup + Grilled Salmon
-    //   address: "Hollán Ernő u. 7, 1136 Budapest",
-    // },
     {
-      date: "2024-09-24", // current date
+      date: "2024-09-24",
       restaurant: Locations[0].name, // Budapest Jazz Club
       meal: Locations[0].menu.Tuesday.description, // Chicken Paprikash + Noodles with Cottage Cheese
       address: "Hollán Ernő u. 7, 1136 Budapest",
@@ -46,56 +38,33 @@ const Home = () => {
       meal: Locations[2].menu.Thursday.description, // Vegetable Stew + Sausages
       address: "Hollán Ernő u. 7, 1136 Budapest",
     },
-    // {
-    //   date: "2024-09-27",
-    //   restaurant: Locations[0].name, // Budapest Jazz Club
-    //   meal: Locations[0].menu.Friday.description, // Tomato Soup + Grilled Salmon
-    //   address: "Hollán Ernő u. 7, 1136 Budapest",
-    // }
   ];
 
-  const handleScroll = () => {
-    if (window.scrollY > 50) {
-      setNavbarVisible(false);
-    } else {
-      setNavbarVisible(true);
-    }
-  };
-
-  // Attach scroll event listener
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   const handlers = useSwipeable({
-    onSwiped: (eventData) => console.log("User Swiped!", eventData),
     onSwipedLeft: () => swipeScreenHandler("left"),
     onSwipedRight: () => swipeScreenHandler("right"),
     delta: 200,
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
-    // swipeDuration: 150
   });
 
   const swipeScreenHandler = (direction) => {
+    setDirection(direction); // Set direction for animation
     const currentIndex = screens.indexOf(currentScreen);
     if (direction === "left") {
-      const nextScreen = screens[(currentIndex + 1) % screens.length]; // Move forward
+      const nextScreen = screens[(currentIndex + 1) % screens.length]; 
       setScreen(nextScreen);
     } else if (direction === "right") {
-      const prevScreen = screens[(currentIndex - 1 + screens.length) % screens.length]; // Move backward
+      const prevScreen = screens[(currentIndex - 1 + screens.length) % screens.length]; 
       setScreen(prevScreen);
     }
   };
 
-  const renderScreen = () => {
-    switch (currentScreen) {
+  const renderScreen = (screen) => {
+    switch (screen) {
       case "home":
         return (
-          <div className="homeScreen" {...handlers}>
+          <div key="home" {...handlers}>
             <NavbarCarousel />
             <NavbarCarouselLastChecked />
             <NavbarCarouselMayAlsoLike />
@@ -105,43 +74,65 @@ const Home = () => {
         );
       case "map":
         return (
-          <div className="mapScreen" {...handlers}>
+          <div key="map" {...handlers}>
             <MapController />
           </div>
         );
       case "mealPlan": 
-        return(
-          <div className="mealPlan" {...handlers}>
-            <MealPlanController mealPlan={mockMealPlan}/>
+        return (
+          <div key="mealPlan" {...handlers}>
+            <MealPlanController mealPlan={mockMealPlan} />
           </div>
-      );
+        );
       default:
-        return <div className="homeScreen" {...handlers}>Screen not found: {currentScreen}</div>;
+        return (
+          <div key="default" className="homeScreen bg-gray-300 opacity-40" {...handlers}>
+            Screen not found: {screen}
+          </div>
+        );
     }
   };
 
-  const renderInfoBanner = () => {
-    if (infoBanner) return <TopInfoBanner message={infoMsg}/>
-  }
-
-  const displayNavbar = () => {
-    if (currentScreen !== "map" && navbarVisible) return <Navbar />;
-  }
+  const transitionVariants = {
+    enter: (direction) => ({
+      x: direction === "left" ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction === "left" ? "-100%" : "100%",
+      opacity: 0,
+    }),
+  };
 
   return (
-    <div className="App h-screen flex flex-col overflow-y-auto">
-      <div className="relative z-10"> 
-        {displayNavbar()}
+    <div className="App h-screen flex flex-col overflow-hidden"> {/* Prevent overflow */}
+      <div className="relative z-10">
+        <Navbar />
       </div>
-      <div className="sticky top-0 z-20 bg-white"> 
+      <div className="sticky top-0 z-20 bg-white">
         <NavbarSearch setScreen={setScreen} />
       </div>
-      <div className="flex-grow">
-        {renderInfoBanner()}
-        {renderScreen()}
+      <div className="flex-grow relative overflow-hidden"> {/* Allow content to grow and overflow */}
+        <AnimatePresence custom={direction}>
+          <motion.div
+            key={currentScreen} // Set unique key for each screen
+            custom={direction}
+            variants={transitionVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+            style={{ position: "absolute", width: "100%", height: "100%", overflowY: "auto" }} // Ensure full-screen size and scrollability
+          >
+            {renderScreen(currentScreen)}
+          </motion.div>
+        </AnimatePresence>
         <ScrollingBuffer />
       </div>
-      {/* <BottomNavigation setScreen={setScreen} /> */}
     </div>
   );
 };
