@@ -1,6 +1,6 @@
-'use client'
-import { AnimatePresence, motion } from 'framer-motion'; // Import AnimatePresence for transitions
-import { useState } from "react";
+"use client";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useSwipeable } from 'react-swipeable';
 import MapController from "./components/MapController";
 import MealPlanController from './components/MealPlanController';
@@ -12,33 +12,35 @@ import NavbarCarouselMayAlsoLike from "./components/NavbarCarouselMayAlsoLike";
 import NavbarCarouselWeRecommend from "./components/NavbarCarouselWeRecommend";
 import NavbarSearch from "./components/NavbarSearch";
 import ScrollingBuffer from "./components/ScrollingBuffer";
+import TopInfoBanner from "./components/TopInfoBanner";
 import Locations from "./mockData/locations";
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
-  const [direction, setDirection] = useState("right"); // Track swipe direction
+  const [navbarVisible, setNavbarVisible] = useState(true);
+  const [infoBanner, setInfoBanner] = useState(false);
   const screens = ["home", "mealPlan", "map", "favorites", "profile"];
-  
   const mockMealPlan = [
-    {
-      date: "2024-09-24",
-      restaurant: Locations[0].name, // Budapest Jazz Club
-      meal: Locations[0].menu.Tuesday.description, // Chicken Paprikash + Noodles with Cottage Cheese
-      address: "Hollán Ernő u. 7, 1136 Budapest",
-    },
-    {
-      date: "2024-09-25",
-      restaurant: Locations[1].name, // Cafe Vian
-      meal: Locations[1].menu.Wednesday.description, // Mushroom Soup + Beef Bourguignon
-      address: "Hollán Ernő u. 7, 1136 Budapest",
-    },
-    {
-      date: "2024-09-26",
-      restaurant: Locations[2].name, // Gettó Gulyás
-      meal: Locations[2].menu.Thursday.description, // Vegetable Stew + Sausages
-      address: "Hollán Ernő u. 7, 1136 Budapest",
-    },
+    { date: "2024-09-24", restaurant: Locations[0].name, meal: Locations[0].menu.Tuesday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
+    { date: "2024-09-25", restaurant: Locations[1].name, meal: Locations[1].menu.Wednesday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
+    { date: "2024-09-26", restaurant: Locations[2].name, meal: Locations[2].menu.Thursday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
   ];
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setNavbarVisible(false);
+    } else {
+      setNavbarVisible(true);
+    }
+  };
+
+  // Attach scroll event listener
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => swipeScreenHandler("left"),
@@ -49,7 +51,6 @@ const Home = () => {
   });
 
   const swipeScreenHandler = (direction) => {
-    setDirection(direction); // Set direction for animation
     const currentIndex = screens.indexOf(currentScreen);
     if (direction === "left") {
       const nextScreen = screens[(currentIndex + 1) % screens.length]; 
@@ -60,11 +61,11 @@ const Home = () => {
     }
   };
 
-  const renderScreen = (screen) => {
-    switch (screen) {
+  const renderScreen = () => {
+    switch (currentScreen) {
       case "home":
         return (
-          <div key="home" {...handlers}>
+          <div className="homeScreen">
             <NavbarCarousel />
             <NavbarCarouselLastChecked />
             <NavbarCarouselMayAlsoLike />
@@ -73,62 +74,43 @@ const Home = () => {
           </div>
         );
       case "map":
-        return (
-          <div key="map" {...handlers}>
-            <MapController />
-          </div>
-        );
-      case "mealPlan": 
-        return (
-          <div key="mealPlan" {...handlers}>
-            <MealPlanController mealPlan={mockMealPlan} />
-          </div>
-        );
+        return <MapController />;
+      case "mealPlan":
+        return <MealPlanController mealPlan={mockMealPlan} />;
       default:
-        return (
-          <div key="default" className="homeScreen bg-gray-300 opacity-40" {...handlers}>
-            Screen not found: {screen}
-          </div>
-        );
+        return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }
   };
 
-  const transitionVariants = {
-    enter: (direction) => ({
-      x: direction === "left" ? "100%" : "-100%",
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction) => ({
-      x: direction === "left" ? "-100%" : "100%",
-      opacity: 0,
-    }),
+  const renderInfoBanner = () => {
+    if (infoBanner) return <TopInfoBanner message={"Sample Info Banner"} />;
+  };
+
+  const displayNavbar = () => {
+    if (currentScreen !== "map" && navbarVisible) return <Navbar />;
   };
 
   return (
-    <div className="App h-screen flex flex-col overflow-hidden"> {/* Prevent overflow */}
+    <div className="App h-screen flex flex-col overflow-y-auto">
       <div className="relative z-10">
-        <Navbar />
+        {displayNavbar()}
       </div>
-      <div className="sticky top-0 z-20 bg-white">
+      <div className="sticky top-0 z-20 bg-white"> 
         <NavbarSearch setScreen={setScreen} />
       </div>
-      <div className="flex-grow relative overflow-hidden"> {/* Allow content to grow and overflow */}
-        <AnimatePresence custom={direction}>
+      <div className="flex-grow">
+        {renderInfoBanner()}
+        <AnimatePresence>
           <motion.div
-            key={currentScreen} // Set unique key for each screen
-            custom={direction}
-            variants={transitionVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
+            key={currentScreen}
+            initial={{ opacity: 0, x: currentScreen === "home" ? -50 : 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: currentScreen === "home" ? 50 : -50 }}
             transition={{ duration: 0.5 }}
-            style={{ position: "absolute", width: "100%", height: "100%", overflowY: "auto" }} // Ensure full-screen size and scrollability
+            className="w-full h-full"
+            {...handlers}
           >
-            {renderScreen(currentScreen)}
+            {renderScreen()}
           </motion.div>
         </AnimatePresence>
         <ScrollingBuffer />
