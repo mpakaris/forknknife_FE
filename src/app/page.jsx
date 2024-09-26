@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import BottomNavigation from "./components/BottomNavigation";
+import { useSwipeable } from 'react-swipeable';
 import MapController from "./components/MapController";
 import MealPlanController from './components/MealPlanController';
 import Navbar from "./components/Navbar";
@@ -20,7 +20,7 @@ const Home = () => {
   const [infoBanner, setInfoBanner] = useState(false);
   const [infoMsg, setInfoMsg] = useState("New FORK 'n KNIFE Version available!");
   const [navbarVisible, setNavbarVisible] = useState(true); // Track Navbar visibility
-
+  const screens = ["home", "mealPlan", "map", "favorites", "profile"];
   const mockMealPlan = [
     //     {
     //   date: "2024-09-23",
@@ -70,11 +70,32 @@ const Home = () => {
     };
   }, []);
 
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => console.log("User Swiped!", eventData),
+    onSwipedLeft: () => swipeScreenHandler("left"),
+    onSwipedRight: () => swipeScreenHandler("right"),
+    delta: 200,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+    // swipeDuration: 150
+  });
+
+  const swipeScreenHandler = (direction) => {
+    const currentIndex = screens.indexOf(currentScreen);
+    if (direction === "left") {
+      const nextScreen = screens[(currentIndex + 1) % screens.length]; // Move forward
+      setScreen(nextScreen);
+    } else if (direction === "right") {
+      const prevScreen = screens[(currentIndex - 1 + screens.length) % screens.length]; // Move backward
+      setScreen(prevScreen);
+    }
+  };
+
   const renderScreen = () => {
     switch (currentScreen) {
       case "home":
         return (
-          <div className="homeScreen">
+          <div className="homeScreen" {...handlers}>
             <NavbarCarousel />
             <NavbarCarouselLastChecked />
             <NavbarCarouselMayAlsoLike />
@@ -84,18 +105,18 @@ const Home = () => {
         );
       case "map":
         return (
-          <div className="mapScreen">
+          <div className="mapScreen" {...handlers}>
             <MapController />
           </div>
         );
       case "mealPlan": 
         return(
-          <div className="mealPlan">
-            <MealPlanController mealPlan={mockMealPlan} />
+          <div className="mealPlan" {...handlers}>
+            <MealPlanController mealPlan={mockMealPlan}/>
           </div>
       );
       default:
-        return <div className="homeScreen">Screen not found: {currentScreen}</div>;
+        return <div className="homeScreen" {...handlers}>Screen not found: {currentScreen}</div>;
     }
   };
 
@@ -120,7 +141,7 @@ const Home = () => {
         {renderScreen()}
         <ScrollingBuffer />
       </div>
-      <BottomNavigation setScreen={setScreen} />
+      {/* <BottomNavigation setScreen={setScreen} /> */}
     </div>
   );
 };
