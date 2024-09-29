@@ -4,21 +4,22 @@ import BottomSheetReviews from "./BottomSheetReviews";
 import BottomSheetTagPills from "./BottomSheetTagPills";
 import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 
-const BottomSheetDrawerModalContent = ({ location }) => {
+const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation}) => {
   return (
     <div className="max-h-[90vh] overflow-y-auto">
       {/* Head Info */}
+        <div>{JSON.stringify(currentLocation)}</div>
       <div className="my-4">
         <BottomSheetHeadInfo 
-          name={location.name}
-          address={location.address}
-          contact={location.contact}
-          website={location.website}
-          rating={location.rating}
+          name={selectedLocation.name}
+          address={selectedLocation.address}
+          contact={selectedLocation.contact}
+          website={selectedLocation.website}
+          rating={selectedLocation.rating}
         />
       </div>
       {/* Tags and Pills */}
-      <BottomSheetTagPills tags={location.tags} />
+      <BottomSheetTagPills tags={selectedLocation.tags} />
       
       <div className="h-[2px] bg-gray-200 mt-6"></div>
       
@@ -31,13 +32,15 @@ const BottomSheetDrawerModalContent = ({ location }) => {
       
       {/* Weekly Menu */}
       <div className="weeklyMenu mt-5">
-        <BottomSheetWeeklyMenu menu={location.menu}/>
+        <BottomSheetWeeklyMenu menu={selectedLocation.menu}/>
       </div>
+
 
       <div className="h-[2px] bg-gray-200 mt-6"></div>
 
+      {/* Reviews */}
       <div className="reviews mt-5">
-        <BottomSheetReviews reviews={location.reviews} />
+        <BottomSheetReviews reviews={selectedLocation.reviews} />
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { FaChevronDown } from 'react-icons/fa'; // Import the icon for the handl
 import { animated, useSpring } from 'react-spring';
 import BottomSheetDrawerModalContent from "./BottomSheetDrawerModalContent";
 
-const BottomSheetDrawer = ({ isOpen, onClose, location }) => {
+const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation }) => {
   const [isDragging, setDragging] = useState(false);
   const [{ y }, api] = useSpring(() => ({ y: 0 }));
   const scrollContainerRef = useRef(null);
@@ -85,7 +85,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, location }) => {
           ref={scrollContainerRef}
           className="h-full overflow-y-auto"
         >
-          <BottomSheetDrawerModalContent location={location} />
+          <BottomSheetDrawerModalContent selectedLocation={selectedLocation} currentLocation={currentLocation} />
         </div>
       </animated.div>
     </>

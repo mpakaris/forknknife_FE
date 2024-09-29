@@ -99,7 +99,7 @@ const Home = () => {
         {displayNavbar()}
       </div>
       <div className="sticky top-0 z-20 bg-white"> 
-        <NavbarSearch setScreen={setScreen} />
+        <NavbarSearch setScreen={setScreen} currentScreen={currentScreen}/>
       </div>
       <div className="flex-grow">
         {/* {renderInfoBanner()} */}
