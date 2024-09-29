@@ -6,7 +6,7 @@ import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 
 const BottomSheetDrawerModalContent = ({ location }) => {
   return (
-    <div className="max-h-[80vh] overflow-y-auto">
+    <div className="max-h-[90vh] overflow-y-auto">
       {/* Head Info */}
       <div className="my-4">
         <BottomSheetHeadInfo 

@@ -1,5 +1,6 @@
 import { useDrag } from '@use-gesture/react';
 import { useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa'; // Import the icon for the handle
 import { animated, useSpring } from 'react-spring';
 import BottomSheetDrawerModalContent from "./BottomSheetDrawerModalContent";
 
@@ -40,15 +41,18 @@ const BottomSheetDrawer = ({ isOpen, onClose, location }) => {
       )}
       <animated.div
         style={{ y, touchAction: 'none' }} // Disable touch scroll while dragging
-        className="fixed bottom-0 left-0 right-0 bg-white z-50 shadow-lg rounded-t-3xl p-4 h-[80vh] overflow-y-auto"
+        className="fixed top-0 left-0 right-0 bg-white z-50 shadow-lg rounded-t-3xl p-4 h-full overflow-y-auto" // Full height to cover 100% of the screen
       >
-        {/* Apply drag functionality to the dash only */}
-        <div {...bind()} className="flex items-center justify-center cursor-grab">
-          <div className="bg-teal-700 w-[80px] h-[5px] rounded-full"></div>
+        {/* New down arrow icon for closing the sheet */}
+        <div className="flex items-center justify-center cursor-pointer mb-4" >
+          <FaChevronDown
+            className="text-teal-600 text-2xl"
+            onClick={onClose} // Close the sheet when the icon is tapped
+          />
         </div>
 
         {/* Content of the Bottom Sheet Drawer */}
-          <BottomSheetDrawerModalContent location={location} />
+        <BottomSheetDrawerModalContent location={location} />
       </animated.div>
     </>
   );

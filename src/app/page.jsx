@@ -89,6 +89,10 @@ const Home = () => {
     if (currentScreen !== "map" && navbarVisible) return <Navbar />;
   };
 
+  const displayBottomNavigation = () => {
+    if (currentScreen !== "map") return   <BottomNavigation setScreen={setScreen}/>;
+  }
+
   return (
     <div className="App h-screen flex flex-col overflow-y-auto">
       <div className="relative z-10">
@@ -100,7 +104,7 @@ const Home = () => {
       <div className="flex-grow">
         {/* {renderInfoBanner()} */}
         {renderScreen()}
-        <BottomNavigation setScreen={setScreen}/>
+        {displayBottomNavigation()}
       </div>
     </div>
   );
