@@ -50,7 +50,7 @@ export default function MealPlanController({ mealPlan }) {
           }
         })}
       </div>
-      <div style={{ height: "450px", width: "100%", backgroundColor: "yellow" }}></div>
+      <div style={{ height: "150px", width: "100%" }}></div>
     </div>
   );
 }

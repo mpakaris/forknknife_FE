@@ -104,7 +104,9 @@ const Home = () => {
       <div className="flex-grow">
         {/* {renderInfoBanner()} */}
         {renderScreen()}
-        {displayBottomNavigation()}
+        <div style={{marginTop: "100px"}}>
+          {displayBottomNavigation()}
+        </div>
       </div>
     </div>
   );
