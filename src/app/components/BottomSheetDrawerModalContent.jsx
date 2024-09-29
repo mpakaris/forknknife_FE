@@ -4,7 +4,7 @@ import BottomSheetReviews from "./BottomSheetReviews";
 import BottomSheetTagPills from "./BottomSheetTagPills";
 import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 
-export const ModalContent = ({ location }) => {
+const BottomSheetDrawerModalContent = ({ location }) => {
   return (
     <div className="max-h-[80vh] overflow-y-auto">
       {/* Head Info */}
@@ -42,3 +42,5 @@ export const ModalContent = ({ location }) => {
     </div>
   );
 };
+
+export default BottomSheetDrawerModalContent;

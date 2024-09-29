@@ -1,8 +1,9 @@
 import { useDrag } from '@use-gesture/react';
 import { useState } from 'react';
 import { animated, useSpring } from 'react-spring';
+import BottomSheetDrawerModalContent from "./BottomSheetDrawerModalContent";
 
-const BottomSheetDrawer = ({ isOpen, onClose, children }) => {
+const BottomSheetDrawer = ({ isOpen, onClose, location }) => {
   const [isDragging, setDragging] = useState(false);
   const [{ y }, api] = useSpring(() => ({ y: 0 }));
 
@@ -47,7 +48,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, children }) => {
         </div>
 
         {/* Content of the Bottom Sheet Drawer */}
-        <div className="mt-8">{children}</div>
+          <BottomSheetDrawerModalContent location={location} />
       </animated.div>
     </>
   );

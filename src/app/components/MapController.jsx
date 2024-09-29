@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import Locations from "../mockData/locations"; // Importing mock data
 import BottomSheetDrawer from "./BottomSheetDrawer";
-import { ModalContent } from "./ModalContent";
 
 // Dynamically load the Map component for client-side rendering
 const Map = dynamic(() => import("./MapTiler"), { ssr: false });
@@ -29,9 +28,7 @@ const MapController = () => {
     <div className="App">
       <Map onMarkerClick={openDrawer} locations={Locations} />
       {selectedLocation && (
-        <BottomSheetDrawer isOpen={isDrawerOpen} onClose={closeDrawer}>
-          <ModalContent location={selectedLocation} />
-        </BottomSheetDrawer>
+        <BottomSheetDrawer isOpen={isDrawerOpen} onClose={closeDrawer} location={selectedLocation} />
       )}
     </div>
   );

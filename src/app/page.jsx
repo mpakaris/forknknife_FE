@@ -1,7 +1,7 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSwipeable } from 'react-swipeable';
+import BottomNavigation from "./components/BottomNavigation";
 import MapController from "./components/MapController";
 import MealPlanController from './components/MealPlanController';
 import Navbar from "./components/Navbar";
@@ -98,7 +98,7 @@ const Home = () => {
         <NavbarSearch setScreen={setScreen} />
       </div>
       <div className="flex-grow">
-        {renderInfoBanner()}
+        {/* {renderInfoBanner()}
         <AnimatePresence>
           <motion.div
             key={currentScreen}
@@ -111,8 +111,10 @@ const Home = () => {
           >
             {renderScreen()}
           </motion.div>
-        </AnimatePresence>
+        </AnimatePresence> */}
         {/* <ScrollingBuffer /> */}
+        {renderScreen()}
+        <BottomNavigation />
       </div>
     </div>
   );
