@@ -98,23 +98,9 @@ const Home = () => {
         <NavbarSearch setScreen={setScreen} />
       </div>
       <div className="flex-grow">
-        {/* {renderInfoBanner()}
-        <AnimatePresence>
-          <motion.div
-            key={currentScreen}
-            initial={{ opacity: 0, x: currentScreen === "home" ? -50 : 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: currentScreen === "home" ? 50 : -50 }}
-            transition={{ duration: 0.5 }}
-            className="w-full h-full"
-            {...handlers}
-          >
-            {renderScreen()}
-          </motion.div>
-        </AnimatePresence> */}
-        {/* <ScrollingBuffer /> */}
+        {/* {renderInfoBanner()} */}
         {renderScreen()}
-        <BottomNavigation />
+        <BottomNavigation setScreen={setScreen}/>
       </div>
     </div>
   );
