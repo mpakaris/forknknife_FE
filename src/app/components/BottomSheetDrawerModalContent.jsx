@@ -1,14 +1,19 @@
+import "leaflet/dist/leaflet.css";
+import dynamic from "next/dynamic";
 import BottomSheetHeadInfo from "./BottomSheetHeadInfo";
 import BottomSheetImpressions from "./BottomSheetImpressions";
 import BottomSheetReviews from "./BottomSheetReviews";
 import BottomSheetTagPills from "./BottomSheetTagPills";
 import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 
-const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation}) => {
+// Dynamically load the Map component for client-side rendering
+const Map = dynamic(() => import("./MapTilerModal"), { ssr: false });
+
+const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation }) => {
   return (
     <div className="max-h-[90vh] overflow-y-auto">
       {/* Head Info */}
-        <div>{JSON.stringify(currentLocation)}</div>
+      <div>{JSON.stringify(currentLocation)}</div>
       <div className="my-4">
         <BottomSheetHeadInfo 
           name={selectedLocation.name}
@@ -20,8 +25,23 @@ const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation}) => 
       </div>
       {/* Tags and Pills */}
       <BottomSheetTagPills tags={selectedLocation.tags} />
-      
+
       <div className="h-[2px] bg-gray-200 mt-6"></div>
+      
+      <div className="reviews mt-4">
+        <Map 
+          currentLocation={{
+            lat: 47.51367275414454,
+            lng: 19.046562515873084
+          }} 
+          destinationLocation={{
+            lat: 47.48650052765575, 
+            lng: 19.107689904921532
+          }} 
+        />
+      </div>
+      
+      <div className="h-[2px] bg-gray-200"></div>
       
       {/* Impressions-Switch */}
       <div className="mt-3">
@@ -34,7 +54,6 @@ const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation}) => 
       <div className="weeklyMenu mt-5">
         <BottomSheetWeeklyMenu menu={selectedLocation.menu}/>
       </div>
-
 
       <div className="h-[2px] bg-gray-200 mt-6"></div>
 

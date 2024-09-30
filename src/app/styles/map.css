@@ -5,6 +5,13 @@
   overflow: hidden; /* Prevent scrolling */
 }
 
+.map-wrap-modal {
+  position: relative;
+  width: 100%;
+  min-height: calc(30vh); /* Height of the screen minus the heading */
+  overflow: hidden; /* Prevent scrolling */
+}
+
 .map {
   position: absolute;
   width: 100%;
@@ -12,4 +19,11 @@
   top: -15%; /* Shift upwards to ensure it covers the required area */
   left: 0;
   overflow: hidden; /* Prevent scrolling within the map container */
+}
+
+.map-modal {
+  position: absolute;
+  width: 100%;
+  height: 100%; /* Extend beyond the visible area to hide advertisements */
+  left: 0;
 }
