@@ -36,7 +36,7 @@ export default function Map({ currentLocation, destinationLocation }) {
     const bounds = new maptilersdk.LngLatBounds();
     bounds.extend([destinationLocation.lng, destinationLocation.lat]);
     bounds.extend([currentLocation.lng, currentLocation.lat]);
-    map.current.fitBounds(bounds, { padding: 65 }); // Add some padding for better visibility
+    map.current.fitBounds(bounds, { padding: 55 }); // Add some padding for better visibility
 
   }, [currentLocation, destinationLocation]);
 

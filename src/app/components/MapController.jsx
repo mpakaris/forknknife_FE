@@ -48,7 +48,8 @@ const MapController = () => {
   useEffect(() => {
     const hasLocationPermission = localStorage.getItem("hasLocationPermission");
 
-    if (!hasLocationPermission || hasLocationPermission === "false") {
+    // if (!hasLocationPermission || hasLocationPermission === "false") {
+    if (!hasLocationPermission || hasLocationPermission === "true") {
       // Ask for permission if not granted previously
       const userWantsToAllow = window.confirm("Allow to access current location?");
       if (userWantsToAllow) {
