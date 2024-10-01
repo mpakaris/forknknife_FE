@@ -3,17 +3,17 @@ import { FaShareAlt } from "react-icons/fa";
 
 const MenuCard = ({ menu, inviter, date, time, place }) => {
   const handleShare = async () => {
-    const imgUrl = `${window.location.origin}/images/pizza.jpeg`; // Image path
+    const imgUrl = `${window.location.origin}/images/dinner.jpeg`; // Image path
 
-    if (navigator.canShare && navigator.canShare({ files: [new File([], "pizza.jpeg")] })) {
+    if (navigator.canShare && navigator.canShare({ files: [new File([], "dinner.jpeg")] })) {
       try {
         const response = await fetch(imgUrl);
         const blob = await response.blob();
-        const file = new File([blob], "pizza.jpeg", { type: blob.type });
+        const file = new File([blob], "dinner.jpeg", { type: blob.type });
 
         await navigator.share({
           title: "Lunch Invitation",
-          text: `You are invited by Niko to a lunch on 04-10-2024 1.30PM @Cafe Vian at Lisz Ferenc Tét!\nMenu: ${menu.description}\nDessert: ${menu.dessert} (${menu.dessertPrice})\n ${menu.tags.join(", ")}`,
+          text: `You are invited by Niko to a lunch on 04-10-2024 1.30PM @Cafe Vian at Lisz Ferenc Tét!\n\nMenu: ${menu.description}\nDessert: ${menu.dessert}\n\n Go ahead and let him know how much you love him!`,
           files: [file],
         });
         console.log("Content shared successfully");
@@ -26,13 +26,13 @@ const MenuCard = ({ menu, inviter, date, time, place }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto mt-4">
+    <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto mt-1">
       <Image 
-        className="w-full h-48 object-cover rounded-md mb-4" 
-        src="/images/pizza.jpeg" 
+        className="w-full object-cover rounded-md mb-4" 
+        src="/images/dinner.jpeg" 
         alt="Lunch Invitation" 
         width={640}
-        height={960}
+        height={760}
       />
       <h3 className="text-lg font-bold mb-2">{menu.description}</h3>
       <p className="text-gray-700 mb-2">Dessert: {menu.dessert} ({menu.dessertPrice})</p>
