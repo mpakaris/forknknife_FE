@@ -1,15 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  compiler: {
-    removeConsole: process.env.NODE_ENV !== "development",
-  },
-  images: {
-    domains: ["www.bjc.hu", "another-allowed-domain.com"], // Add all the domains you need
-  },
-};
+/** @type {import('next').NextConfig} */
 
 const withPWA = require("next-pwa")({
   dest: "public",
@@ -17,5 +8,22 @@ const withPWA = require("next-pwa")({
   register: true,
   skipWaiting: true,
 });
+
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV !== "development",
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.postimg.cc",
+        pathname: "/**", // Allow all paths from this hostname
+      },
+    ],
+  },
+};
 
 module.exports = withPWA(nextConfig);

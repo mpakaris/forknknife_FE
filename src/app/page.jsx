@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import { useSwipeable } from 'react-swipeable';
 import BottomNavigation from "./components/BottomNavigation";
+import ImageWithText from "./components/ImageWithText";
 import MapController from "./components/MapController";
 import MealPlanController from './components/MealPlanController';
+import MenuCard from "./components/MenuCard";
 import Navbar from "./components/Navbar";
 import NavbarCarousel from "./components/NavbarCarousel";
 import NavbarCarouselFavorites from "./components/NavbarCarouselFavorites";
@@ -13,7 +15,6 @@ import NavbarCarouselWeRecommend from "./components/NavbarCarouselWeRecommend";
 import NavbarSearch from "./components/NavbarSearch";
 import TopInfoBanner from "./components/TopInfoBanner";
 import Locations from "./mockData/locations";
-import MenuCard from "./components/MenuCard";
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
@@ -78,8 +79,10 @@ const Home = () => {
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
       case "favorites": 
-        return <MenuCard menu={} inviter={"Nikos Mpakaris"} date={"30.09.2024"} time={"2pm"} place={"Cafe Vian"} />;
-      default:
+        return <MenuCard menu={{}} inviter={"Nikos Mpakaris"} date={"30.09.2024"} time={"2pm"} place={"Cafe Vian"} />;
+      case "profile": 
+        return <ImageWithText />;
+        default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }
   };
