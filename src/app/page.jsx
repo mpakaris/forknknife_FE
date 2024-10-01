@@ -13,6 +13,7 @@ import NavbarCarouselWeRecommend from "./components/NavbarCarouselWeRecommend";
 import NavbarSearch from "./components/NavbarSearch";
 import TopInfoBanner from "./components/TopInfoBanner";
 import Locations from "./mockData/locations";
+import MenuCard from "./components/MenuCard";
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
@@ -76,6 +77,8 @@ const Home = () => {
         return <MapController />;
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
+      case "favorites": 
+        return <MenuCard />;
       default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }
