@@ -78,7 +78,7 @@ const Home = () => {
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
       case "favorites": 
-        return <MenuCard />;
+        return <MenuCard menu={} inviter={"Nikos Mpakaris"} date={"30.09.2024"} time={"2pm"} place={"Cafe Vian"} />;
       default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }
