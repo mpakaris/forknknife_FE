@@ -1,31 +1,42 @@
 import React from "react";
 import { FaShareAlt } from "react-icons/fa";
 
-const MenuCard = ({ menu }) => {
+const MenuCard = ({ menu, inviter, date, time, place }) => {
   const handleShare = async () => {
-    if (navigator.share) {
+    const imgUrl = `${window.location.origin}/images/vian.jpeg`; // Image path
+
+    if (navigator.canShare && navigator.canShare({ files: [new File([], "vian.jpeg")] })) {
       try {
+        const response = await fetch(imgUrl);
+        const blob = await response.blob();
+        const file = new File([blob], "vian.jpeg", { type: blob.type });
+
         await navigator.share({
-          title: "Menu of the Day",
-          text: `${menu.description}\nDessert: ${menu.dessert} (${menu.dessertPrice})\nPrice: ${menu.price}\nTags: ${menu.tags.join(", ")}`,
+          title: "Lunch Invitation",
+          text: `You are invited by ${inviter} to a lunch on ${date} ${time} @ ${place}!\nMenu: ${menu.description}\nDessert: ${menu.dessert} (${menu.dessertPrice})\nPrice: ${menu.price}\nTags: ${menu.tags.join(", ")}`,
+          files: [file],
         });
         console.log("Content shared successfully");
       } catch (error) {
         console.error("Error sharing content:", error);
       }
     } else {
-      alert("Web Share API is not supported in your browser.");
+      alert("Sharing files is not supported in your browser.");
     }
   };
 
   return (
-    <div className="menu-card">
-      <h3>{menu.description}</h3>
-      <p>Price: {menu.price}</p>
-      <p>Dessert: {menu.dessert} ({menu.dessertPrice})</p>
-      <p>Tags: {menu.tags.join(", ")}</p>
-      <button className="share-btn" onClick={handleShare}>
-        <FaShareAlt /> Share
+    <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto mt-4">
+      <img className="w-full h-48 object-cover rounded-md mb-4" src="/images/vian1.jpeg" alt="Lunch Invitation" />
+      <h3 className="text-lg font-bold mb-2">{menu.description}</h3>
+      <p className="text-gray-700 mb-2">Price: {menu.price}</p>
+      <p className="text-gray-700 mb-2">Dessert: {menu.dessert} ({menu.dessertPrice})</p>
+      <p className="text-gray-500 mb-4">Tags: {menu.tags.join(", ")}</p>
+      <button
+        className="bg-blue-500 text-white py-2 px-4 rounded-lg flex items-center justify-center w-full hover:bg-blue-600 transition duration-300"
+        onClick={handleShare}
+      >
+        <FaShareAlt className="mr-2" /> Share Invitation
       </button>
     </div>
   );
@@ -42,7 +53,13 @@ const menu = {
 
 const App = () => (
   <div>
-    <MenuCard menu={menu} />
+    <MenuCard
+      menu={menu}
+      inviter="Niko"
+      date="2024-10-01"
+      time="12:30 PM"
+      place="Riverside Cafe"
+    />
   </div>
 );
 
