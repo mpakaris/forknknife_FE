@@ -24,7 +24,7 @@ const RestaurantInvitation = () => {
     
     // Construct the message dynamically
     const defaultMessage = `Niko wants to share with you via FORK 'n KNIFE the following:\n\n${location.name} located at ${location.address}.\n\n`;
-    const message = customMessage ? `${defaultMessage}Custom Message:\n ${customMessage}\n\n` : defaultMessage; // Attach custom message if provided
+    const message = customMessage ? `${defaultMessage}Custom Message:\n${customMessage}\n\n` : defaultMessage; // Attach custom message if provided
     
     if (navigator.canShare && navigator.canShare({ files: [new File([], "image.jpeg")] })) {
       try {
