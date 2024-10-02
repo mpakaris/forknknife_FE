@@ -9,7 +9,7 @@ import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 // Dynamically load the Map component for client-side rendering
 const Map = dynamic(() => import("../Maps/MapTilerModal"), { ssr: false });
 
-const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation, setModalScreen }) => {
+const BottomSheetMainContent = ({ selectedLocation, currentLocation, setModalScreen }) => {
 
   return (
     <div className="max-h-[90vh] overflow-y-auto">
@@ -71,4 +71,4 @@ const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation, setM
   );
 };
 
-export default BottomSheetDrawerModalContent;
+export default BottomSheetMainContent;

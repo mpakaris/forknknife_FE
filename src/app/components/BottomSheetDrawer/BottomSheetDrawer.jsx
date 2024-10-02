@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa'; // Import the icon for the handle
 import { animated, useSpring } from 'react-spring';
-import BottomSheetDrawerModalContent from "./BottomSheetDrawerModalContent";
+import BottomSheetContentController from "./BottomSheetContentController";
 
 const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation }) => {
   const [isDragging, setDragging] = useState(false);
   const [{ y }, api] = useSpring(() => ({ y: 0 }));
   const scrollContainerRef = useRef(null);
-
-  const[currentModal, setModal] = useState(undefined)
 
   // Function to handle the additional swipe down to close
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,44 +71,13 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
           className="h-full overflow-y-auto"
         >
           <BottomSheetContentController 
-            currentModal={currentModal} 
             selectedLocation={selectedLocation}
             currentLocation={currentLocation}
-            setModalScreen={setModalScreen}
           />
         </div>
       </animated.div>
     </>
   );
 };
-
-const BottomSheetContentController = ({currentModal, selectedLocation, currentLocation, setModalScreen}) => {
-  const renderDrawerContent = () => {
-    switch (currentModal) {
-      case "invitation_location":
-        return (
-          <p>Test 2</p>
-        );
-      case "invitation_menu":
-        return (
-          <p>Test 3</p>
-        );
-      default:
-        return (
-          <BottomSheetDrawerModalContent 
-            selectedLocation={selectedLocation} 
-            currentLocation={currentLocation}
-            setModalScreen={setModalScreen}
-          />
-        )
-    }
-  }
-  
-  return (
-    <div className='drawer-content'>
-      {renderDrawerContent()}
-    </div>
-  )
-}
 
 export default BottomSheetDrawer;

@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MY SEGW-AI",
+  title: "FORK 'n KNIFE",
   description: "PWA application with Next 13",
   generator: "Next.js",
   manifest: "/manifest.json",
