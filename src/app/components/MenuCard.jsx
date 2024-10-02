@@ -26,23 +26,25 @@ const MenuCard = ({ menu, inviter, date, time, place }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto mt-1">
-      <Image 
-        className="w-full object-cover rounded-md mb-4" 
-        src="/images/dinner.jpeg" 
-        alt="Lunch Invitation" 
-        width={640}
-        height={760}
-      />
-      <h3 className="text-lg font-bold mb-2">{menu.description}</h3>
-      <p className="text-gray-700 mb-2">Dessert: {menu.dessert} ({menu.dessertPrice})</p>
-      <p className="text-gray-500 mb-4">Tags: {menu.tags.join(", ")}</p>
-      <button
-        className="bg-blue-500 text-white py-2 px-4 rounded-lg flex items-center justify-center w-full hover:bg-blue-600 transition duration-300"
-        onClick={handleShare}
-      >
-        <FaShareAlt className="mr-2" /> Share Invitation
-      </button>
+    <div className='px-8 py-3'>
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto mt-1 border-gray-100 border-2">
+        <Image 
+          className="w-full max-h-[30vh] object-cover rounded-md mb-4" 
+          src="/images/dinner.jpeg" 
+          alt="Lunch Invitation" 
+          width={640}
+          height={500}
+        />
+        <h3 className="text-lg font-bold mb-2">{menu.description}</h3>
+        <p className="text-gray-700 mb-2">Dessert: {menu.dessert}</p>
+        <p className="text-gray-500 mb-4">Tags: {menu.tags.join(", ")}</p>
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg flex items-center justify-center w-full hover:bg-blue-600 transition duration-300"
+          onClick={handleShare}
+        >
+          <FaShareAlt className="mr-2" /> Share Invitation
+        </button>
+      </div>
     </div>
   );
 };

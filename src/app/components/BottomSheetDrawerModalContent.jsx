@@ -9,11 +9,14 @@ import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 // Dynamically load the Map component for client-side rendering
 const Map = dynamic(() => import("./MapTilerModal"), { ssr: false });
 
-const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation }) => {
+const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation, setModalScreen }) => {
+
   return (
     <div className="max-h-[90vh] overflow-y-auto">
-      {/* Head Info */}
+      {/* Display currentScreen state for debugging (can be removed later) */}
       <div>{JSON.stringify(currentLocation)}</div>
+      
+      {/* Head Info */}
       <div className="my-4">
         <BottomSheetHeadInfo 
           name={selectedLocation.name}
@@ -21,13 +24,16 @@ const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation }) =>
           contact={selectedLocation.contact}
           website={selectedLocation.website}
           rating={selectedLocation.rating}
+          setModalScreen={setModalScreen} 
         />
       </div>
+
       {/* Tags and Pills */}
       <BottomSheetTagPills tags={selectedLocation.tags} />
 
       <div className="h-[2px] bg-gray-200 mt-6"></div>
-      
+
+      {/* Map Component */}
       <div className="reviews mt-4">
         <Map 
           currentLocation={{
@@ -42,14 +48,14 @@ const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation }) =>
       </div>
       
       <div className="h-[2px] bg-gray-200"></div>
-      
-      {/* Impressions-Switch */}
+
+      {/* Impressions Section */}
       <div className="mt-3">
-        <BottomSheetImpressions />  
+        <BottomSheetImpressions />
       </div>
 
       <div className="h-[2px] bg-gray-200 mt-6"></div>
-      
+
       {/* Weekly Menu */}
       <div className="weeklyMenu mt-5">
         <BottomSheetWeeklyMenu menu={selectedLocation.menu}/>
@@ -57,7 +63,7 @@ const BottomSheetDrawerModalContent = ({ selectedLocation, currentLocation }) =>
 
       <div className="h-[2px] bg-gray-200 mt-6"></div>
 
-      {/* Reviews */}
+      {/* Reviews Section */}
       <div className="reviews mt-5">
         <BottomSheetReviews reviews={selectedLocation.reviews} />
       </div>
