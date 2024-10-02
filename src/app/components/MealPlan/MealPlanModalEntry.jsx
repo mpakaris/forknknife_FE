@@ -1,5 +1,5 @@
 import { FaBuilding, FaCalendarAlt, FaEdit, FaUtensils } from 'react-icons/fa';
-import CarouselSmall from '../CarouselSmall'; // Import the CarouselSmall component
+import CarouselSmall from '../MainPage/CarouselSmall';
 
 export default function MealPlanModalEntry({ mealEntry, weekday, date, borderColor, border="border", isPast = false }) {
   const options = [

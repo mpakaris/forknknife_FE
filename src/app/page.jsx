@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import { useSwipeable } from 'react-swipeable';
 import BottomNavigation from "./components/BottomNavigation";
 import ImageWithText from "./components/ImageWithText";
+import NavbarCarousel from "./components/MainPage/NavbarCarousel";
+import NavbarCarouselFavorites from "./components/MainPage/NavbarCarouselFavorites";
+import NavbarCarouselLastChecked from "./components/MainPage/NavbarCarouselLastChecked";
+import NavbarCarouselMayAlsoLike from "./components/MainPage/NavbarCarouselMayAlsoLike";
+import NavbarCarouselWeRecommend from "./components/MainPage/NavbarCarouselWeRecommend";
+import NavbarSearch from "./components/MainPage/NavbarSearch";
+import TopInfoBanner from "./components/MainPage/TopInfoBanner";
 import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
 import MenuCard from "./components/MenuCard";
 import Navbar from "./components/Navbar";
-import NavbarCarousel from "./components/NavbarCarousel";
-import NavbarCarouselFavorites from "./components/NavbarCarouselFavorites";
-import NavbarCarouselLastChecked from "./components/NavbarCarouselLastChecked";
-import NavbarCarouselMayAlsoLike from "./components/NavbarCarouselMayAlsoLike";
-import NavbarCarouselWeRecommend from "./components/NavbarCarouselWeRecommend";
-import NavbarSearch from "./components/NavbarSearch";
-import TopInfoBanner from "./components/TopInfoBanner";
 import Locations from "./mockData/locations";
 
 const Home = () => {
