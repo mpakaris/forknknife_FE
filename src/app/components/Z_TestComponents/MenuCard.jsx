@@ -3,17 +3,23 @@ import { FaShareAlt } from "react-icons/fa";
 
 const MenuCard = ({ menu, inviter, date, time, place }) => {
   const handleShare = async () => {
-    const imgUrl = `${window.location.origin}/images/dinner.jpeg`; // Image path
+    const imgUrl = `${window.location.origin}${carouselImages[currentSlide]}`;
 
-    if (navigator.canShare && navigator.canShare({ files: [new File([], "dinner.jpeg")] })) {
+    let message = `Niko wants to share with you via FORK 'n KNIFE the following: \n\n${location.name} located at ${location.address}.\n\n`;
+
+    if (customMessage) {
+      message += `\n\nCustom Message:\n\n ${customMessage}\n\n`;
+    }
+  
+    if (navigator.canShare && navigator.canShare({ files: [new File([], "image.jpeg")] })) {
       try {
         const response = await fetch(imgUrl);
         const blob = await response.blob();
-        const file = new File([blob], "dinner.jpeg", { type: blob.type });
-
+        const file = new File([blob], "image.jpeg", { type: blob.type });
+  
         await navigator.share({
-          title: "Lunch Invitation",
-          text: `You are invited by Niko to a lunch on 04-10-2024 1.30PM @Cafe Vian at Lisz Ferenc Tét!\n\nMenu: ${menu.description}\nDessert: ${menu.dessert}\n\n Go ahead and let him know how much you love him!`,
+          title: "Cafe Vian",
+          text: message, 
           files: [file],
         });
         console.log("Content shared successfully");
