@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CarouselDrawerImages from "../CarouselDrawerImages";
+import CarouselDrawerImages from "./CarouselDrawerImages";
 
 export default function BottomSheetImpressions() {
   const [activeCarousel, setActiveCarousel] = useState('restaurants'); // State to track active carousel

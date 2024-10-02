@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSwipeable } from 'react-swipeable';
-import BottomNavigation from "./components/BottomNavigation";
-import ImageWithText from "./components/ImageWithText";
 import NavbarCarousel from "./components/MainPage/NavbarCarousel";
 import NavbarCarouselFavorites from "./components/MainPage/NavbarCarouselFavorites";
 import NavbarCarouselLastChecked from "./components/MainPage/NavbarCarouselLastChecked";
@@ -12,8 +10,9 @@ import NavbarSearch from "./components/MainPage/NavbarSearch";
 import TopInfoBanner from "./components/MainPage/TopInfoBanner";
 import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
-import MenuCard from "./components/MenuCard";
-import Navbar from "./components/Navbar";
+import BottomNavigation from "./components/Navigation/BottomNavigation";
+import Navbar from "./components/Navigation/Navbar";
+import MenuCard from "./components/Z_TestComponents/MenuCard";
 import Locations from "./mockData/locations";
 
 const Home = () => {
@@ -81,7 +80,7 @@ const Home = () => {
       case "favorites": 
         return <MenuCard menu={{}} inviter={"Nikos Mpakaris"} date={"30.09.2024"} time={"2pm"} place={"Cafe Vian"} />;
       case "profile": 
-        return <ImageWithText />;
+        return <p>PROFILE</p>;
         default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }

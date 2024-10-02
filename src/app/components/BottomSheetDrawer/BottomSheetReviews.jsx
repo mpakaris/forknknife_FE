@@ -1,4 +1,4 @@
-import CarouselDrawerReviews from "../CarouselDrawerReviews";
+import CarouselDrawerReviews from "./CarouselDrawerReviews";
 
 export default function BottomSheetReviews({ reviews }) {
   return (

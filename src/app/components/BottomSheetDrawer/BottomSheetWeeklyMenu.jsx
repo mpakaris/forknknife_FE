@@ -1,5 +1,5 @@
 import { addDays, format, startOfWeek } from 'date-fns';
-import CarouselDrawerWeeklyMenu from "../CarouselDrawerWeeklyMenu"; // Ensure the path is correct
+import CarouselDrawerWeeklyMenu from "./CarouselDrawerWeeklyMenu"; // Ensure the path is correct
 
 // Helper function to get the current week's dates (Mon-Fri)
 const getCurrentWeek = () => {
