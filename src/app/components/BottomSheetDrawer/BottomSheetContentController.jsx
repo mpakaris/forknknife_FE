@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import BottomSheetMainContent from "./BottomSheetMainContent";
+import RestaurantInvitation from "./Invitation/RestaurantInvitation";
 
 const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
  
@@ -13,7 +14,7 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
    switch (currentModalScreen) {
      case "invitation_location":
        return (
-         <p>Test 2</p>
+        <RestaurantInvitation />
        );
      case "invitation_menu":
        return (

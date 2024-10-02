@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { FaShareAlt } from "react-icons/fa";
 
-const RestaurantInvitation = ({ location }) => {
+const RestaurantInvitation = () => {
   const handleShare = async () => {
     const imgUrl = `${window.location.origin}/images/dinner.jpeg`; // Image path
 
@@ -12,8 +12,8 @@ const RestaurantInvitation = ({ location }) => {
         const file = new File([blob], "dinner.jpeg", { type: blob.type });
 
         await navigator.share({
-          title: "Lunch Invitation",
-          text: `You are invited by Niko to a lunch on 04-10-2024 1.30PM @Cafe Vian at Lisz Ferenc Tét!\n\nMenu: ${menu.description}\nDessert: ${menu.dessert}\n\n Go ahead and let him know how much you love him!`,
+          title: "Cafe Vian",
+          text: `You are invited by Niko to Cafe Vian on 04-10-2024 1.30PM @Cafe Vian at Lisz Ferenc Tét!\n\nMenu: ${menu.description}\nDessert: ${menu.dessert}\n\n Go ahead and let him know how much you love him!`,
           files: [file],
         });
         console.log("Content shared successfully");
@@ -35,14 +35,14 @@ const RestaurantInvitation = ({ location }) => {
           width={640}
           height={500}
         />
-        <h3 className="text-lg font-bold mb-2">{menu.description}</h3>
-        <p className="text-gray-700 mb-2">Dessert: {menu.dessert}</p>
-        <p className="text-gray-500 mb-4">Tags: {menu.tags.join(", ")}</p>
+        <h3 className="text-lg font-bold mb-2">Cafe Vian</h3>
+        <p className="text-gray-700 mb-2">Liszt Ferenc Tér</p>
+        <p className="text-gray-500 mb-4">1085 Budapest</p>
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg flex items-center justify-center w-full hover:bg-blue-600 transition duration-300"
+          className="bg-teal-800 text-white py-2 px-4 rounded-lg flex items-center justify-center w-full hover:bg-blue-600 transition duration-300"
           onClick={handleShare}
         >
-          <FaShareAlt className="mr-2" /> Share Invitation
+          <FaShareAlt className="mr-2" /> Send Invitation
         </button>
       </div>
     </div>
