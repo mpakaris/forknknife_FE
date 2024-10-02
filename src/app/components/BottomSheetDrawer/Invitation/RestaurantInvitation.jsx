@@ -4,8 +4,8 @@ import CarouselDrawerImages from '../CarouselDrawerImages';
 
 const RestaurantInvitation = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false); // Controls the accordion
-  const [customMessage, setCustomMessage] = useState(''); // Stores the custom message
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false); 
+  const [customMessage, setCustomMessage] = useState(''); 
 
   const carouselImages = [
     '/images/restaurant1.jpg', 
@@ -18,21 +18,23 @@ const RestaurantInvitation = () => {
     name: "Cafe Vian",
     address: "Liszt Ferenc Ter 10, 1078 Budapest"
   }
+
   const handleShare = async () => {
     const imgUrl = `${window.location.origin}${carouselImages[currentSlide]}`;
-  
-    const defaultMessage = `Niko wants to share with you: ${location.name} located at ${location.address}.`;
-    const message = customMessage ? customMessage : defaultMessage;
-  
+    
+    // Construct the message dynamically
+    const defaultMessage = `Niko wants to share with you via FORK 'n KNIFE the following:\n\n${location.name} located at ${location.address}.\n\n`;
+    const message = customMessage ? `${defaultMessage}Custom Message: ${customMessage}\n\n` : defaultMessage; // Attach custom message if provided
+    
     if (navigator.canShare && navigator.canShare({ files: [new File([], "image.jpeg")] })) {
       try {
         const response = await fetch(imgUrl);
         const blob = await response.blob();
         const file = new File([blob], "image.jpeg", { type: blob.type });
-  
+
         await navigator.share({
-          title: "Cafe Vian",
-          text: defaultMessage,
+          title: location.name,
+          text: message,  // Pass the constructed message with custom message if exists
           files: [file],
         });
         console.log("Content shared successfully");
@@ -77,8 +79,7 @@ const RestaurantInvitation = () => {
           >
             Add Custom Message {isAccordionOpen ? "▲" : "▼"}
           </button>
-          
-          {/* Accordion content (text area) */}
+
           {isAccordionOpen && (
             <div className="mt-3">
               <textarea

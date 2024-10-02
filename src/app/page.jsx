@@ -12,7 +12,6 @@ import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
 import Navbar from "./components/Navigation/Navbar";
-import MenuCard from "./components/Z_TestComponents/MenuCard";
 import Locations from "./mockData/locations";
 
 const Home = () => {
@@ -77,8 +76,6 @@ const Home = () => {
         return <MapController />;
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
-      case "favorites": 
-        return <MenuCard menu={{}} inviter={"Nikos Mpakaris"} date={"30.09.2024"} time={"2pm"} place={"Cafe Vian"} />;
       case "profile": 
         return <p>PROFILE</p>;
         default:
