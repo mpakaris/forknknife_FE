@@ -4,6 +4,9 @@ import CarouselDrawerImages from '../CarouselDrawerImages';
 
 const RestaurantInvitation = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false); // Controls the accordion
+  const [customMessage, setCustomMessage] = useState(''); // Stores the custom message
+
   const carouselImages = [
     '/images/restaurant1.jpg', 
     '/images/restaurant2.jpg', 
@@ -11,18 +14,25 @@ const RestaurantInvitation = () => {
     '/images/restaurant4.jpg'
   ];
 
+  const location = {
+    name: "Cafe Vian",
+    address: "Liszt Ferenc Ter 10, 1078 Budapest"
+  }
   const handleShare = async () => {
-    const imgUrl = `${window.location.origin}/images/dinner.jpeg`; // Image path
-
-    if (navigator.canShare && navigator.canShare({ files: [new File([], "dinner.jpeg")] })) {
+    const imgUrl = `${window.location.origin}${carouselImages[currentSlide]}`;
+  
+    const defaultMessage = `Niko wants to share with you: ${location.name} located at ${location.address}.`;
+    const message = customMessage ? customMessage : defaultMessage;
+  
+    if (navigator.canShare && navigator.canShare({ files: [new File([], "image.jpeg")] })) {
       try {
         const response = await fetch(imgUrl);
         const blob = await response.blob();
-        const file = new File([blob], "dinner.jpeg", { type: blob.type });
-
+        const file = new File([blob], "image.jpeg", { type: blob.type });
+  
         await navigator.share({
           title: "Cafe Vian",
-          text: `You are invited by Niko to Cafe Vian on 04-10-2024 1.30PM @Cafe Vian at Lisz Ferenc Tét!\n\nMenu: ${menu.description}\nDessert: ${menu.dessert}\n\n Go ahead and let him know how much you love him!`,
+          text: defaultMessage,
           files: [file],
         });
         console.log("Content shared successfully");
@@ -38,11 +48,15 @@ const RestaurantInvitation = () => {
     setCurrentSlide(newIndex);
   };
 
+  const toggleAccordion = () => {
+    setIsAccordionOpen(!isAccordionOpen);
+  };
+
   return (
     <div className='px-2 py-3'>
       <h1 className="text-xl mb-4 font-bold text-teal-800">Recommend to a friend</h1>
-      <div className= 'border-2 border-gray-100 p-2 pb-5 pt-3 rounded-lg bg-white'>
-      <h2 className="text-basic mb-4 font-bold text-teal-800">Choose your pic</h2>
+      <div className='border-2 border-gray-100 p-2 pb-5 pt-3 rounded-lg bg-white'>
+        <h2 className="text-basic mb-4 font-bold text-teal-800">Choose your pic</h2>
         <div className="flex items-center justify-center px-3">
           <CarouselDrawerImages
             images={carouselImages}
@@ -53,8 +67,30 @@ const RestaurantInvitation = () => {
         </div>
 
         <div className="mt-5 px-5">
-          <h3 className="text-lg font-bold mb-2">Cafe Vian</h3>
-          <p className="text-gray-700 mb-2">Liszt Ferenc Tér | 1085 Budapest</p>
+          <h3 className="text-lg font-bold mb-2">{location.name}</h3>
+          <p className="text-gray-700 mb-2">{location.address}</p>
+          
+          {/* Accordion button */}
+          <button
+            className="w-full text-teal-800 py-2 mt-2 flex items-center justify-between border-b-2 border-teal-800"
+            onClick={toggleAccordion}
+          >
+            Add Custom Message {isAccordionOpen ? "▲" : "▼"}
+          </button>
+          
+          {/* Accordion content (text area) */}
+          {isAccordionOpen && (
+            <div className="mt-3">
+              <textarea
+                className="w-full border-2 border-teal-800 p-2 rounded-lg"
+                rows="4"
+                placeholder="Write your custom message here..."
+                value={customMessage}
+                onChange={(e) => setCustomMessage(e.target.value)}
+              />
+            </div>
+          )}
+
           <button
             className="bg-teal-800 text-white py-2 px-4 mt-5 rounded-lg flex items-center justify-center w-full hover:bg-teal-600 transition duration-300"
             onClick={handleShare}
