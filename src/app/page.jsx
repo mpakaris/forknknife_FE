@@ -4,7 +4,7 @@ import { useSwipeable } from 'react-swipeable';
 import BottomNavigation from "./components/BottomNavigation";
 import ImageWithText from "./components/ImageWithText";
 import MapController from "./components/Maps/MapController";
-import MealPlanController from './components/MealPlanController';
+import MealPlanController from './components/MealPlan/MealPlanController';
 import MenuCard from "./components/MenuCard";
 import Navbar from "./components/Navbar";
 import NavbarCarousel from "./components/NavbarCarousel";
