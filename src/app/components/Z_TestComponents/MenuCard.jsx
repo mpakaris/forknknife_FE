@@ -6,10 +6,6 @@ const MenuCard = ({ menu, inviter, date, time, place }) => {
     const imgUrl = `${window.location.origin}${carouselImages[currentSlide]}`;
 
     let message = `Niko wants to share with you via FORK 'n KNIFE the following: \n\n${location.name} located at ${location.address}.\n\n`;
-
-    if (customMessage) {
-      message += `\n\nCustom Message:\n\n ${customMessage}\n\n`;
-    }
   
     if (navigator.canShare && navigator.canShare({ files: [new File([], "image.jpeg")] })) {
       try {
@@ -19,7 +15,7 @@ const MenuCard = ({ menu, inviter, date, time, place }) => {
   
         await navigator.share({
           title: "Cafe Vian",
-          text: message, 
+          text:  message += `\n\n ${customMessage}\n\n`, 
           files: [file],
         });
         console.log("Content shared successfully");
