@@ -2,23 +2,24 @@ import Image from 'next/image';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-export default function CarouselDrawerImages({ images }) {
+export default function CarouselDrawerImages({ images, slidesPerView = 1.2, onSlideChange }) {
   return (
     <div className="w-full">
       <Swiper
         spaceBetween={10}  
-        slidesPerView={1.2}   
+        slidesPerView={slidesPerView}   
         grabCursor={true}
+        onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)} // Pass active slide index to parent
       >
         {images.map((option, index) => (
           <SwiperSlide key={index}>
-            <div className="h-60 flex items-center justify-center overflow-hidden">
+            <div className="h-80 flex items-center justify-center overflow-hidden">
               <Image
                 src={`${option}`}
-                width={240} // Base width
-                height={240} // Fixed height to ensure a good aspect ratio
-                alt={`${option.label} dish`} // Alt description for accessibility
-                className="rounded-sm mx-auto object-cover h-full w-auto" // Image styling
+                width={440} 
+                height={440} 
+                alt={`${option.label} dish`} 
+                className="rounded-sm mx-auto object-cover h-full w-auto"
               />
             </div>
           </SwiperSlide>

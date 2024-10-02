@@ -49,7 +49,7 @@ export default function BottomSheetImpressions() {
         </div>
       </div>
         <CarouselDrawerImages
-          images={carouselImages[activeCarousel]} // Load images based on the active carousel
+          images={carouselImages[activeCarousel]}
         />
       </div>
     </div>

@@ -1,7 +1,16 @@
-import Image from 'next/image';
+import { useState } from 'react';
 import { FaShareAlt } from "react-icons/fa";
+import CarouselDrawerImages from '../CarouselDrawerImages';
 
 const RestaurantInvitation = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const carouselImages = [
+    '/images/restaurant1.jpg', 
+    '/images/restaurant2.jpg', 
+    '/images/restaurant3.jpg', 
+    '/images/restaurant4.jpg'
+  ];
+
   const handleShare = async () => {
     const imgUrl = `${window.location.origin}/images/dinner.jpeg`; // Image path
 
@@ -25,28 +34,37 @@ const RestaurantInvitation = () => {
     }
   };
 
+  const handleSlideChange = (newIndex) => {
+    setCurrentSlide(newIndex);
+  };
+
   return (
-    <div className='px-8 py-3'>
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto mt-1 border-gray-100 border-2">
-        <Image 
-          className="w-full max-h-[30vh] object-cover rounded-md mb-4" 
-          src="/images/dinner.jpeg" 
-          alt="Lunch Invitation" 
-          width={640}
-          height={500}
-        />
-        <h3 className="text-lg font-bold mb-2">Cafe Vian</h3>
-        <p className="text-gray-700 mb-2">Liszt Ferenc Tér</p>
-        <p className="text-gray-500 mb-4">1085 Budapest</p>
-        <button
-          className="bg-teal-800 text-white py-2 px-4 rounded-lg flex items-center justify-center w-full hover:bg-blue-600 transition duration-300"
-          onClick={handleShare}
-        >
-          <FaShareAlt className="mr-2" /> Send Invitation
-        </button>
+    <div className='px-2 py-3'>
+      <h1 className="text-xl mb-4 font-bold text-teal-800">Recommend to a friend</h1>
+      <div className= 'border-2 border-gray-100 p-2 pb-5 pt-3 rounded-lg bg-white'>
+      <h2 className="text-basic mb-4 font-bold text-teal-800">Choose your pic</h2>
+        <div className="flex items-center justify-center px-3">
+          <CarouselDrawerImages
+            images={carouselImages}
+            slidesPerView={1}
+            currentSlide={currentSlide}
+            onSlideChange={handleSlideChange} 
+          />
+        </div>
+
+        <div className="mt-5 px-5">
+          <h3 className="text-lg font-bold mb-2">Cafe Vian</h3>
+          <p className="text-gray-700 mb-2">Liszt Ferenc Tér | 1085 Budapest</p>
+          <button
+            className="bg-teal-800 text-white py-2 px-4 mt-5 rounded-lg flex items-center justify-center w-full hover:bg-teal-600 transition duration-300"
+            onClick={handleShare}
+          >
+            <FaShareAlt className="mr-2" /> Send to a Friend
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default RestaurantInvitation
+export default RestaurantInvitation;

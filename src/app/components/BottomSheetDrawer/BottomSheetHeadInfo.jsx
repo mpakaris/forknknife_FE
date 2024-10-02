@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useState } from 'react';
 import { FaGlobe, FaHeart, FaMapMarkerAlt, FaPhone, FaRegHeart, FaShareAlt } from 'react-icons/fa';
 import ModalTemplate from '../Modal/ModalTemplate';
@@ -63,14 +64,28 @@ export default function BottomSheetHeadInfo({ name, address, contact, website, s
         </a>
       </div>
 
-      {/* Modal for confirmation */}
       <ModalTemplate
         show={showModal}
         onClose={handleCloseModal}
         onConfirm={handleConfirmModal}
       >
-        <p className="text-basic">This function lets you share this Restaurant with a friend.</p>
-        <p className="text-basic mt-3">Do you want to continue?</p>
+        <div className="flex">
+          <div className="w-1/3 flex items-center justify-center">
+            <Image
+              src="/images/bro_invitation.png"
+              alt="Restaurant Preview"
+              className="rounded-sm w-full h-auto object-cover"
+              width={200}
+              height={200}
+            />
+          </div>
+          <div className="w-2/3 flex items-center pl-4">
+            <div>
+              <p className="text-md">This function lets you share this Restaurant with a friend.</p>
+              <p className="text-md mt-3">Do you want to continue?</p>
+            </div>
+          </div>
+        </div>
       </ModalTemplate>
     </div>
   );
