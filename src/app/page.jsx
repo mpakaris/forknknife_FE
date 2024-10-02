@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSwipeable } from 'react-swipeable';
 import BottomNavigation from "./components/BottomNavigation";
 import ImageWithText from "./components/ImageWithText";
-import MapController from "./components/MapController";
+import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlanController';
 import MenuCard from "./components/MenuCard";
 import Navbar from "./components/Navbar";

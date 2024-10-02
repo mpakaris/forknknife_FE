@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaBell, FaCheckCircle, FaCoffee, FaCoins, FaIceCream, FaUtensils, FaUtensilSpoon } from 'react-icons/fa'; // Added FaBell for "Alert me!" button
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import BottomSheetTagPills from "./BottomSheetTagPills";
+import BottomSheetTagPills from "./BottomSheetDrawer/BottomSheetTagPills";
 
 // Function to get the current day index (0 for Monday, 1 for Tuesday, ..., 6 for Sunday)
 const getCurrentDayIndex = () => {
