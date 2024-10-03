@@ -1,8 +1,8 @@
 {
   "name": "Next-13 PWA",
   "short_name": "PWA",
-  "theme_color": "#2c7a7b",
-  "background_color": "#2c7a7b", 
+  "theme_color": "#000000",
+  "background_color": "#000000", 
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",

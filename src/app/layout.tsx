@@ -39,7 +39,7 @@ export default function RootLayout({
         crossOrigin="anonymous"
       ></link> */}
       {/* Set Nodge-Color for iOS */}
-      <meta name="theme-color" content="#2c7a7b"></meta>
+      <meta name="theme-color" content="#000000"></meta>
       <body className={inter.className}>{children}</body>
       {/* // "theme_color": "#2196f3",
       // "background_color": "#2196f3", */}
