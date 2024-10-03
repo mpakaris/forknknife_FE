@@ -31,6 +31,7 @@
     "primereact": "^10.5.1",
     "react": "^18.2.0",
     "react-bottom-sheet": "^1.1.1",
+    "react-datepicker": "^7.4.0",
     "react-dom": "^18.2.0",
     "react-hook-speech-to-text": "^0.8.0",
     "react-hot-toast": "^2.4.1",

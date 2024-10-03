@@ -14,7 +14,7 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
    switch (currentModalScreen) {
      case "invitation_location":
        return (
-        <RestaurantInvitation />
+        <RestaurantInvitation setModalScreen={setModalScreen}/>
        );
      case "invitation_menu":
        return (
