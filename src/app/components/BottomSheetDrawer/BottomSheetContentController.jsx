@@ -1,10 +1,16 @@
 import { useState } from 'react';
+import BottomSheetHeadInfo from './BottomSheetHeadInfo';
 import BottomSheetMainContent from "./BottomSheetMainContent";
 import RestaurantInvitation from "./Invitation/RestaurantInvitation";
 
 const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
  
  const [currentModalScreen, setCurrentModalScreen] = useState(undefined) 
+ const [showReservation, setShowReservation] = useState(false)
+
+ const handleShare = () => {
+  setShowReservation(!showReservation);
+ }
 
  const setModalScreen = (screen) => {
   setCurrentModalScreen(screen)
@@ -22,11 +28,24 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
        );
      default:
        return (
-         <BottomSheetMainContent
-           selectedLocation={selectedLocation} 
-           currentLocation={currentLocation}
-           setModalScreen={setModalScreen}
-         />
+
+        <div className='max-h-[90vh] overflow-y-auto'>
+          <BottomSheetHeadInfo 
+            selectedLocation={selectedLocation}
+            handleShare={handleShare}
+          />
+          {showReservation && 
+            <RestaurantInvitation handleShare={handleShare}/> 
+          }
+          <BottomSheetMainContent
+            selectedLocation={selectedLocation} 
+            currentLocation={currentLocation}
+            setModalScreen={setModalScreen}
+          />
+        </div>
+
+
+
        )
    }
  }

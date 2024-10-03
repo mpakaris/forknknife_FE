@@ -1,33 +1,33 @@
-import Image from 'next/image';
 import { useState } from 'react';
 import { FaGlobe, FaHeart, FaMapMarkerAlt, FaPhone, FaRegHeart, FaShareAlt } from 'react-icons/fa';
-import ModalTemplate from '../Modal/ModalTemplate';
+// import ModalTemplate from '../Modal/ModalTemplate';
+import BottomSheetTagPills from './BottomSheetTagPills';
 
-export default function BottomSheetHeadInfo({ name, address, contact, website, setModalScreen }) {
+export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
   const [isFavorite, setIsFavorite] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
   };
 
-  const handleShare = () => {
-    setShowModal(true);
-  };
+  // const handleShare = () => {
+  //   setShowModal(true);
+  // };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  // const handleCloseModal = () => {
+  //   setShowModal(false);
+  // };
 
-  const handleConfirmModal = () => {
-    setModalScreen('invitation_location');
-    setShowModal(false);
-  };
+  // const handleConfirmModal = () => {
+  //   setModalScreen('invitation_location');
+  //   setShowModal(false);
+  // };
 
   return (
-    <div className="pills space-y-1">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-teal-800">{name}</h1>
+    <div className="pills space-y-2">
+      <div className="flex justify-between items-center mb-2">
+        <h1 className="text-2xl font-bold text-teal-800">{selectedLocation.name}</h1>
         <div className="flex items-center space-x-3">
           <button onClick={handleShare}>
             <FaShareAlt className="text-teal-800 text-2xl" />
@@ -44,27 +44,31 @@ export default function BottomSheetHeadInfo({ name, address, contact, website, s
 
       <div className="flex items-center">
         <FaMapMarkerAlt className="text-teal-600 mr-2" />
-        <span className="text-gray-800">{address}</span>
+        <span className="text-gray-800">{selectedLocation.address}</span>
       </div>
 
       <div className="flex items-center">
         <FaPhone className="text-teal-600 mr-2" />
-        <span className="text-gray-500">{contact}</span>
+        <span className="text-gray-500">{selectedLocation.contact}</span>
       </div>
 
       <div className="flex items-center">
         <FaGlobe className="text-teal-800 mr-2" />
         <a
-          href={website}
+          href={selectedLocation.website}
           className="text-teal-600 hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >
-          {website}
+          {selectedLocation.website}
         </a>
       </div>
 
-      <ModalTemplate
+     <div className='mt-4'>
+      <BottomSheetTagPills tags={selectedLocation.tags} />
+     </div>
+
+      {/* <ModalTemplate
         show={showModal}
         onClose={handleCloseModal}
         onConfirm={handleConfirmModal}
@@ -86,7 +90,7 @@ export default function BottomSheetHeadInfo({ name, address, contact, website, s
             </div>
           </div>
         </div>
-      </ModalTemplate>
+      </ModalTemplate> */}
     </div>
   );
 }

@@ -1,36 +1,16 @@
 import "leaflet/dist/leaflet.css";
 import dynamic from "next/dynamic";
-import BottomSheetHeadInfo from "./BottomSheetHeadInfo";
 import BottomSheetImpressions from "./BottomSheetImpressions";
 import BottomSheetReviews from "./BottomSheetReviews";
-import BottomSheetTagPills from "./BottomSheetTagPills";
 import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 
 // Dynamically load the Map component for client-side rendering
 const Map = dynamic(() => import("../Maps/MapTilerModal"), { ssr: false });
 
-const BottomSheetMainContent = ({ selectedLocation, currentLocation, setModalScreen }) => {
+const BottomSheetMainContent = ({ selectedLocation, currentLocation, }) => {
 
   return (
-    <div className="max-h-[90vh] overflow-y-auto">
-      {/* Display currentScreen state for debugging (can be removed later) */}
-      <div>{JSON.stringify(currentLocation)}</div>
-      
-      {/* Head Info */}
-      <div className="my-4">
-        <BottomSheetHeadInfo 
-          name={selectedLocation.name}
-          address={selectedLocation.address}
-          contact={selectedLocation.contact}
-          website={selectedLocation.website}
-          rating={selectedLocation.rating}
-          setModalScreen={setModalScreen} 
-        />
-      </div>
-
-      {/* Tags and Pills */}
-      <BottomSheetTagPills tags={selectedLocation.tags} />
-
+    <div className="mt-8">
       <div className="h-[2px] bg-gray-200 mt-6"></div>
 
       {/* Map Component */}
