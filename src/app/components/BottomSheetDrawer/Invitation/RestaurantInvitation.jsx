@@ -70,17 +70,23 @@ const RestaurantInvitation = ({ setModalScreen }) => {
     setIsCustomMessageAccordionOpen(!isCustomMessageAccordionOpen);
   };
 
-  // Handle time selection in 15-minute intervals
+  // Handle time selection in 12-hour format between 11 AM and 9 PM
   const handleTimeChange = (e) => {
     setSelectedTime(e.target.value);
   };
 
-  // Generate time options in 15-minute intervals
-  const timeOptions = Array.from({ length: 96 }, (_, index) => {
-    const hours = String(Math.floor(index / 4)).padStart(2, '0');
-    const minutes = String((index % 4) * 15).padStart(2, '0');
-    return `${hours}:${minutes}`;
-  });
+  // Generate time options in 12-hour format from 11 AM to 9 PM
+  const timeOptions = Array.from({ length: 11 }, (_, index) => {
+    const hours = 11 + index; // Starting from 11 AM
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHour = hours > 12 ? hours - 12 : hours; // Convert to 12-hour format
+    return `${displayHour}:00 ${ampm}`;
+  }).concat(Array.from({ length: 10 }, (_, index) => {
+    const hours = 11 + index; // Starting from 11 AM
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHour = hours > 12 ? hours - 12 : hours; // Convert to 12-hour format
+    return `${displayHour}:15 ${ampm}`;
+  }));
 
   return (
     <div className='px-2 py-3' style={{marginBottom: "150px"}}>
@@ -108,6 +114,7 @@ const RestaurantInvitation = ({ setModalScreen }) => {
             />
           </div>
         )}
+
         {/* Accordion for Date and Time */}
         <button
           className="bg-teal-800 text-white py-2 px-4 mt-5 rounded-lg flex items-center justify-center w-full hover:bg-teal-600 transition duration-300"
@@ -164,7 +171,7 @@ const RestaurantInvitation = ({ setModalScreen }) => {
         {isCustomMessageAccordionOpen && (
           <div className="mt-3">
             <textarea
-              className="w-full border-2 gray-200 p-2 rounded-lg"
+              className="w-full border-2 border-gray-200 p-2 rounded-lg"
               rows="4"
               placeholder="Write your custom message here..."
               value={customMessage}
