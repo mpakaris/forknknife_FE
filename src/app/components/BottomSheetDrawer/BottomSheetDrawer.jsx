@@ -56,7 +56,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
       <animated.div
         style={{ y, touchAction: 'none' }} // Disable touch scroll while dragging
         className="fixed top-0 left-0 right-0 bg-black z-50 shadow-lg 
-        rounded-t-xl p-4 h-full overflow-y-auto"
+        rounded-t-xl p-4 h-full overflow-y-auto scrollbar-hidden"
       >
         {/* New down arrow icon for closing the sheet */}
         <div className="flex items-center justify-center cursor-pointer mb-4">
@@ -68,7 +68,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
 
         <div
           ref={scrollContainerRef}
-          className="h-full overflow-y-auto"
+          className="h-full overflow-y-auto scrollbar-hidden"
         >
           <BottomSheetContentController 
             selectedLocation={selectedLocation}

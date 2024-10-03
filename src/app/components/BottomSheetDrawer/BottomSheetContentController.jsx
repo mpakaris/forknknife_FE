@@ -29,7 +29,7 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
      default:
        return (
 
-        <div className='max-h-[90vh] overflow-y-auto'>
+        <div className='max-h-[90vh] mb-9'>
           <BottomSheetHeadInfo 
             selectedLocation={selectedLocation}
             handleShare={handleShare}
@@ -43,9 +43,6 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
             setModalScreen={setModalScreen}
           />
         </div>
-
-
-
        )
    }
  }
