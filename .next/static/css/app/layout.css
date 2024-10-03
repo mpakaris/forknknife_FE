@@ -760,6 +760,9 @@ video {
 .h-screen {
   height: 100vh;
 }
+.h-12 {
+  height: 3rem;
+}
 .max-h-\[90vh\] {
   max-height: 90vh;
 }

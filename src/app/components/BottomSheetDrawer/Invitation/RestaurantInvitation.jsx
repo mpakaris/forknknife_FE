@@ -83,7 +83,7 @@ const RestaurantInvitation = ({ setModalScreen }) => {
   });
 
   return (
-    <div className='px-2 py-3'>
+    <div className='px-2 py-3' style={{marginBottom: "150px"}}>
       <h1 className="text-xl mb-4 font-bold text-teal-800">Invite a friend</h1>
 
       {/* Name and Address of Restaurant */}
@@ -108,7 +108,6 @@ const RestaurantInvitation = ({ setModalScreen }) => {
             />
           </div>
         )}
-
         {/* Accordion for Date and Time */}
         <button
           className="bg-teal-800 text-white py-2 px-4 mt-5 rounded-lg flex items-center justify-center w-full hover:bg-teal-600 transition duration-300"
@@ -125,7 +124,7 @@ const RestaurantInvitation = ({ setModalScreen }) => {
                   selected={selectedDate}
                   onChange={(date) => setSelectedDate(date)}
                   minDate={new Date()}
-                  className="w-full border-2 border-gray-200 p-2 rounded-lg pl-10"
+                  className="w-full border-2 border-gray-200 p-2 rounded-lg pl-10 h-12"  
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaCalendarAlt className="text-teal-800" />
@@ -139,7 +138,7 @@ const RestaurantInvitation = ({ setModalScreen }) => {
                 <select
                   value={selectedTime}
                   onChange={handleTimeChange}
-                  className="w-full border-2 border-gray-200 p-2 rounded-lg pl-10"
+                  className="w-full border-2 border-gray-200 rounded-lg pl-10 h-12"  
                 >
                   {timeOptions.map((time) => (
                     <option key={time} value={time}>
