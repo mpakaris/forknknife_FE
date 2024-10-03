@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'; // Import Framer Motion
 import Image from 'next/image';
 import { useState } from 'react';
 import DatePicker from "react-datepicker";
@@ -48,7 +49,7 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
           resetInputs();
           setInvitationSent(false);
           handleShare(); // Close the component
-        }, 2000);
+        }, 5000);
       } catch (error) {
         console.error("Error sharing content:", error);
       }
@@ -74,7 +75,13 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
   }
 
   return (
-    <div className='py-3'>
+    <motion.div 
+      className='py-3'
+      initial={{ opacity: 0, y: 50 }}  
+      animate={{ opacity: 1, y: 0 }}   
+      exit={{ opacity: 100, y: 50 }}      
+      transition={{ duration: 1.5 }}    
+    >
       <div className="h-[2px] bg-gray-200 mt-6"></div>
       <div className="flex items-center justify-between my-5">
         {/* Conditional rendering for the title */}
@@ -95,90 +102,100 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
         </button>
       </div>
       
-      {!invitationSent ?  <div className="mt-5">
-        <div className="mt-3 flex space-x-4">
-          {/* Date Picker */}
-          <div className="mb-4 w-1/2 relative">
-            <div className="relative">
-              <DatePicker
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                minDate={new Date()}
-                className="w-full border-2 border-gray-200 p-2 rounded-lg pl-10 h-12"
-              />
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FaCalendarAlt className="text-teal-800" />
+      {!invitationSent ? (
+        <motion.div 
+          className="mt-5"
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ duration: 0.3 }}
+        >
+          <div className="mt-3 flex space-x-4">
+            {/* Date Picker */}
+            <div className="mb-4 w-1/2 relative">
+              <div className="relative">
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  minDate={new Date()}
+                  className="w-full border-2 border-gray-200 p-2 rounded-lg pl-10 h-12"
+                />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaCalendarAlt className="text-teal-800" />
+                </div>
+              </div>
+            </div>
+
+            {/* Time Picker */}
+            <div className="mb-4 w-1/2 relative">
+              <div className="relative">
+                <select
+                  value={selectedTime}
+                  onChange={handleTimeChange}
+                  className="w-full border-2 border-gray-200 rounded-lg pl-10 h-12 bg-white"
+                >
+                  {timeOptions.map((time) => (
+                    <option key={time} value={time}>
+                      {time}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
-
-          {/* Time Picker */}
-          <div className="mb-4 w-1/2 relative">
-            <div className="relative">
-              <select
-                value={selectedTime}
-                onChange={handleTimeChange}
-                className="w-full border-2 border-gray-200 rounded-lg pl-10 h-12 bg-white" // Set background to white
-              >
-                {timeOptions.map((time) => (
-                  <option key={time} value={time}>
-                    {time}
-                  </option>
-                ))}
-              </select>
+          <div className="flex space-x-4">
+            <textarea
+              className="w-1/2 border-2 border-gray-200 p-2 rounded-lg"
+              rows="4"
+              placeholder="Add a custom message here..."
+              value={customMessage}
+              onChange={(e) => setCustomMessage(e.target.value)}
+            />
+            
+            <div className="w-1/2 my-auto">
+              <Image 
+                src="/images/restaurant1.jpg" 
+                alt="Description of the image"
+                layout="responsive"
+                width={200} 
+                height={200} 
+                className="rounded-lg" 
+              />
             </div>
           </div>
-        </div>
-        <div className="flex space-x-4">
-          <textarea
-            className="w-1/2 border-2 border-gray-200 p-2 rounded-lg"
-            rows="4"
-            placeholder="Add a custom message here..."
-            value={customMessage}
-            onChange={(e) => setCustomMessage(e.target.value)}
-          />
-          
-          <div className="w-1/2 my-auto">
+
+          <button
+            className="bg-teal-800 text-white py-2 px-4 mt-5 rounded-lg flex items-center justify-center w-full hover:bg-teal-600 transition duration-300"
+            onClick={shareInvitation}
+          >
+            <FaShareAlt className="mr-2" /> Send to a Friend
+          </button>
+        </motion.div>
+      ) : (
+        <motion.div 
+          className="flex justify-between items-center w-full mt-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Left Box - Text */}
+          <div className="w-1/2 flex justify-center items-center">
+            <h2 className="text-basic font-bold text-teal-800">Your invitation was sent!</h2>
+          </div>
+
+          {/* Right Box - Image */}
+          <div className="w-1/2 flex justify-center items-center">
             <Image 
-              src="/images/restaurant1.jpg" 
-              alt="Description of the image"
-              layout="responsive"
-              width={200} 
-              height={200} 
-              className="rounded-lg" 
+              src="/images/invitation_bro.png" 
+              alt="Success Image" 
+              width={150} 
+              height={150} 
+              layout="intrinsic" 
+              className="rounded-lg"
             />
           </div>
-        </div>
-
-        {/* Share Button */}
-        <button
-          className="bg-teal-800 text-white py-2 px-4 mt-5 rounded-lg flex items-center justify-center w-full hover:bg-teal-600 transition duration-300"
-          onClick={shareInvitation}
-        >
-          <FaShareAlt className="mr-2" /> Send to a Friend
-        </button>
-      </div>
-      : 
-      <div className="flex justify-between items-center w-full mt-8">
-        {/* Left Box - Text */}
-        <div className="w-1/2 flex justify-center items-center">
-          <h2 className="text-basic font-bold text-teal-800">Your invitation was sent!</h2>
-        </div>
-
-        {/* Right Box - Image */}
-        <div className="w-1/2 flex justify-center items-center">
-          <Image 
-            src="/images/invitation_bro.png" 
-            alt="Success Image" 
-            width={150} 
-            height={150} 
-            layout="intrinsic" 
-            className="rounded-lg"
-          />
-        </div>
-      </div>
-      }
-    </div>
+        </motion.div>
+      )}
+    </motion.div>
   );
 };
 
