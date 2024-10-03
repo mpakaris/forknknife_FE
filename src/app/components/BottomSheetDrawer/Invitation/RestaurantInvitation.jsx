@@ -8,17 +8,17 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
   const [customMessage, setCustomMessage] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('');
-
-  const carouselImages = [
-    '/images/restaurant1.jpg',
-    '/images/restaurant2.jpg',
-    '/images/restaurant3.jpg',
-    '/images/restaurant4.jpg'
-  ];
+  const [invitationSent, setInvitationSent] = useState(false);
 
   const location = {
     name: "Cafe Vian",
     address: "Liszt Ferenc Ter 10, 1078 Budapest"
+  };
+
+  const resetInputs = () => {
+    setCustomMessage('');
+    setSelectedDate(new Date());
+    setSelectedTime('');
   };
 
   const shareInvitation = async () => {
@@ -26,7 +26,7 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
     const formattedTime = selectedTime ? `Time: ${selectedTime}` : '';
     const formattedDate = selectedDate ? `Date: ${selectedDate.toLocaleDateString()}` : '';
   
-    const defaultMessage = `Niko wants to share with you via FORK 'n KNIFE the following:\n\nMeet me at ${location.name} located at ${location.address}\n\nOn ${formattedDate} @${formattedTime}\n\n`;
+    const defaultMessage = `Niko wants to share with you via FORK 'n KNIFE the following:\n\nMeet me at *${location.name}* located at ${location.address}\n\nOn ${formattedDate} @${formattedTime}\n\n`;
     const message = customMessage ? `${defaultMessage}Custom Message:\n${customMessage}\n\n` : defaultMessage;
   
     if (navigator.canShare && navigator.canShare({ files: [new File([], "FORK 'n KNIFE")] })) {
@@ -40,8 +40,15 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
           text: message,
           files: [file],
         });
-        setModalScreen("");
-        alert("Invitation sent successfully"); // Alert on success
+        
+        setInvitationSent(true);
+
+        // Wait for 2 seconds before resetting and closing
+        setTimeout(() => {
+          resetInputs();
+          setInvitationSent(false);
+          handleShare(); // Close the component
+        }, 2000);
       } catch (error) {
         console.error("Error sharing content:", error);
       }
@@ -70,15 +77,25 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
     <div className='py-3'>
       <div className="h-[2px] bg-gray-200 mt-6"></div>
       <div className="flex items-center justify-between my-5">
-        <h1 className="text-basic font-bold text-teal-800">
-          Invite a friend to Lunch 
-          <FaEnvelope size={18} className="inline-block ml-1" /> {/* Add your envelope icon here */}
-        </h1>
+        {/* Conditional rendering for the title */}
+        {!invitationSent ? (
+          <h1 className="text-basic font-bold text-teal-800">
+            Invite a friend to Lunch
+            <FaEnvelope size={18} className="inline-block ml-1" />
+          </h1>
+        ) : (
+          <h1 className="text-basic font-bold text-teal-800">
+            {/* Title when invitation is sent */}
+          </h1>
+        )}
+        
+        {/* X Button always present */}
         <button onClick={handleShare} className="text-teal-800">
           <FaTimes size={24} />
         </button>
       </div>
-      <div className="mt-5">
+      
+      {!invitationSent ?  <div className="mt-5">
         <div className="mt-3 flex space-x-4">
           {/* Date Picker */}
           <div className="mb-4 w-1/2 relative">
@@ -112,8 +129,6 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
             </div>
           </div>
         </div>
-
-
         <div className="flex space-x-4">
           <textarea
             className="w-1/2 border-2 border-gray-200 p-2 rounded-lg"
@@ -143,6 +158,26 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
           <FaShareAlt className="mr-2" /> Send to a Friend
         </button>
       </div>
+      : 
+      <div className="flex justify-between items-center w-full mt-8">
+        {/* Left Box - Text */}
+        <div className="w-1/2 flex justify-center items-center">
+          <h2 className="text-basic font-bold text-teal-800">Your invitation was sent!</h2>
+        </div>
+
+        {/* Right Box - Image */}
+        <div className="w-1/2 flex justify-center items-center">
+          <Image 
+            src="/images/invitation_bro.png" 
+            alt="Success Image" 
+            width={150} 
+            height={150} 
+            layout="intrinsic" 
+            className="rounded-lg"
+          />
+        </div>
+      </div>
+      }
     </div>
   );
 };
