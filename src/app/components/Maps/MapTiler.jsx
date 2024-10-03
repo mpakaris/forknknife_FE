@@ -1,4 +1,3 @@
-// MapTiler.jsx (or Map.js)
 import * as maptilersdk from '@maptiler/sdk';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { useEffect, useRef } from 'react';
@@ -16,7 +15,8 @@ const Map = ({ onMarkerClick, locations }) => {
 
     map.current = new maptilersdk.Map({
       container: mapContainer.current,
-      style: maptilersdk.MapStyle.STREETS,
+      // Use the Streets Dark style
+      style: "https://api.maptiler.com/maps/streets-dark/style.json?key=bKNG0Ir1ORmL8bGkuCNM",
       center: [location.lng, location.lat],
       zoom: zoom
     });
