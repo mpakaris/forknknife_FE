@@ -86,18 +86,18 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
       <div className="flex items-center justify-between my-5">
         {/* Conditional rendering for the title */}
         {!invitationSent ? (
-          <h1 className="text-basic font-bold text-teal-800">
+          <h1 className="text-basic font-bold text-gray-200">
             Invite a friend to Lunch
             <FaEnvelope size={18} className="inline-block ml-1" />
           </h1>
         ) : (
-          <h1 className="text-basic font-bold text-teal-800">
+          <h1 className="text-basic font-bold text-gray-200">
             {/* Title when invitation is sent */}
           </h1>
         )}
         
         {/* X Button always present */}
-        <button onClick={handleShare} className="text-teal-800">
+        <button onClick={handleShare} className="text-gray-200">
           <FaTimes size={24} />
         </button>
       </div>

@@ -23,7 +23,7 @@ export default function BottomSheetWeeklyMenu({ menu }) {
   return (
     <div className="space-y-2 px-1">
       {/* Menu Section */}
-      <h2 className="text-md font-bold text-gray-600 my-4">
+      <h2 className="text-md font-bold text-gray-200 my-4">
         Weekly Menu | {weekDays[0].date.split(', ')[1]} - {weekDays[4].date.split(', ')[1]}
       </h2>
 

@@ -45,10 +45,10 @@ const CarouselDrawerWeeklyMenu = ({ options }) => {
       >
         {options && options.map((option, index) => (
           <SwiperSlide key={index}>
-            <div className={`bg-white rounded-lg shadow-md overflow-hidden mb-2 p-4 border-2 ${index === currentIndex ? 'border-teal-600' : 'border-gray-100'}`}>
+            <div className={`bg-gray-800 rounded-lg shadow-md overflow-hidden mb-2 p-4 border-2 ${index === currentIndex ? 'border-teal-600' : 'border-gray-100'}`}>
               <div className="mb-2 space-x-1 space-y-2">
                 <div className="flex justify-between items-center mb-5 pb-3 border-b border-gray-300">
-                  <p className="text-basic text-gray-700 font-bold">{option.date}</p>
+                  <p className="text-basic text-gray-200 font-bold">{option.date}</p>
                   {/* "Alert me!" button */}
                   <button
                     className="flex items-center text-teal-600 hover:text-teal-800 font-bold"
@@ -59,19 +59,19 @@ const CarouselDrawerWeeklyMenu = ({ options }) => {
                 </div>
                 <div className="flex items-center mb-1">
                   <FaCoffee className="mr-2 text-teal-600" />
-                  <h2 className="text-sm ml-2 font-bold text-gray-700">Fish Soup</h2>
+                  <h2 className="text-sm ml-2 font-bold text-gray-200">Fish Soup</h2>
                 </div>
                 <div className="flex items-center mb-1">
                   <FaUtensils className="mr-2 text-teal-600" />
-                  <h2 className="text-sm ml-2 font-bold text-gray-700">{option.name}</h2>
+                  <h2 className="text-sm ml-2 font-bold text-gray-200">{option.name}</h2>
                 </div>
                 <div className="flex items-center mb-1">
                   <FaIceCream className="mr-2 text-teal-600" />
-                  <p className="text-sm ml-2 text-gray-700 font-bold">{option.dessert}</p>
+                  <p className="text-sm ml-2 text-gray-200 font-bold">{option.dessert}</p>
                 </div>
                 <div className="flex items-center">
                   <FaCoins className="mr-2 text-teal-600" />
-                  <p className="text-sm ml-2 text-gray-700 font-bold">{option.price}</p>
+                  <p className="text-sm ml-2 text-gray-200 font-bold">{option.price}</p>
                 </div>
               </div>
               <div className='mt-3'>

@@ -29,9 +29,9 @@ const ReviewCard = ({ review }) => {
   };
 
   return (
-    <div className={`p-4 my-3 border-2 border-gray-100 bg-white rounded-lg shadow-md transition-all duration-300 ${expanded ? 'h-auto' : 'h-50'}`}>
+    <div className={`p-4 my-3 border-2 border-gray-100 bg-gray-800 rounded-lg shadow-md transition-all duration-300 ${expanded ? 'h-auto' : 'h-50'}`}>
       <div className="flex justify-between items-center border-b-2 border-gray-100">
-        <h3 className="font-semibold text-md text-teal-800">{user}</h3>
+        <h3 className="font-semibold text-md text-gray-200">{user}</h3>
         <div className="flex">
           {Array.from({ length: 5 }, (_, index) => (
             <svg
@@ -47,7 +47,7 @@ const ReviewCard = ({ review }) => {
       </div>
       <p className="text-gray-400 text-xs mt-1">{date}</p>
       <blockquote className="mt-5 text-center italic">
-        <p className={`text-gray-800 text-sm ${expanded ? 'line-clamp-none' : 'line-clamp-3'}`}>
+        <p className={`text-gray-200 text-sm ${expanded ? 'line-clamp-none' : 'line-clamp-3'}`}>
           {expanded ? reviewText : `${reviewText.slice(0, 100)}...`}
         </p>
       </blockquote>

@@ -27,36 +27,36 @@ export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
   return (
     <div className="pills space-y-2">
       <div className="flex justify-between items-center mb-2">
-        <h1 className="text-2xl font-bold text-teal-800">{selectedLocation.name}</h1>
+        <h1 className="text-2xl font-bold text-gray-200">{selectedLocation.name}</h1>
         <div className="flex items-center space-x-3">
           <button onClick={handleShare}>
-            <FaShareAlt className="text-teal-800 text-2xl" />
+            <FaShareAlt className="text-gray-200 text-2xl" />
           </button>
           <button onClick={toggleFavorite}>
             {isFavorite ? (
               <FaHeart className="text-red-600 text-2xl" />
             ) : (
-              <FaRegHeart className="text-teal-800 text-2xl" />
+              <FaRegHeart className="text-gray-200 text-2xl" />
             )}
           </button>
         </div>
       </div>
 
       <div className="flex items-center">
-        <FaMapMarkerAlt className="text-teal-600 mr-2" />
-        <span className="text-gray-800">{selectedLocation.address}</span>
+        <FaMapMarkerAlt className="text-gray-200 mr-2" />
+        <span className="text-gray-300">{selectedLocation.address}</span>
       </div>
 
       <div className="flex items-center">
-        <FaPhone className="text-teal-600 mr-2" />
-        <span className="text-gray-500">{selectedLocation.contact}</span>
+        <FaPhone className="text-gray-200 mr-2" />
+        <span className="text-gray-200">{selectedLocation.contact}</span>
       </div>
 
       <div className="flex items-center">
-        <FaGlobe className="text-teal-800 mr-2" />
+        <FaGlobe className="text-gray-200 mr-2" />
         <a
           href={selectedLocation.website}
-          className="text-teal-600 hover:underline"
+          className="text-gray-300 hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -55,7 +55,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
       )}
       <animated.div
         style={{ y, touchAction: 'none' }} // Disable touch scroll while dragging
-        className="fixed top-0 left-0 right-0 bg-white z-50 shadow-lg 
+        className="fixed top-0 left-0 right-0 bg-black z-50 shadow-lg 
         rounded-t-xl p-4 h-full overflow-y-auto"
       >
         {/* New down arrow icon for closing the sheet */}
