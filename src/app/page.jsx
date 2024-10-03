@@ -96,7 +96,7 @@ const Home = () => {
   }
 
   return (
-    <div className="App h-screen flex flex-col overflow-y-auto">
+    <div className="App h-screen flex flex-col overflow-y-auto bg-black">
       <div className="relative z-10">
         {displayNavbar()}
       </div>

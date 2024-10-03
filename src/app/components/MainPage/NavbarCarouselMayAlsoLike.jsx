@@ -13,7 +13,7 @@ export default function NavbarCarouselLastChecked() {
 
   return (
     <div className="flex flex-col items-start px-3 mt-3 py-3">
-      <h4 className="text-md font-bold text-center mb-2">You May Also Like (Sponsored)</h4>
+      <h4 className="text-white text-md font-bold text-center mb-2">You May Also Like (Sponsored)</h4>
       <div className="w-full">
         <CarouselXL options={options} />
       </div>
