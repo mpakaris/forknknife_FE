@@ -70,26 +70,24 @@ const RestaurantInvitation = ({ setModalScreen }) => {
     setIsCustomMessageAccordionOpen(!isCustomMessageAccordionOpen);
   };
 
-  // Handle time selection in 12-hour format between 11 AM and 9 PM
+  // Handle time selection in 15-minute intervals
   const handleTimeChange = (e) => {
     setSelectedTime(e.target.value);
   };
 
-  // Generate time options in 12-hour format from 11 AM to 9 PM
-  const timeOptions = Array.from({ length: 11 }, (_, index) => {
-    const hours = 11 + index; // Starting from 11 AM
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const displayHour = hours > 12 ? hours - 12 : hours; // Convert to 12-hour format
-    return `${displayHour}:00 ${ampm}`;
-  }).concat(Array.from({ length: 10 }, (_, index) => {
-    const hours = 11 + index; // Starting from 11 AM
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const displayHour = hours > 12 ? hours - 12 : hours; // Convert to 12-hour format
-    return `${displayHour}:15 ${ampm}`;
-  }));
+  // Generate time options in 15-minute intervals from 11 AM to 9 PM
+  const timeOptions = [];
+  for (let hour = 11; hour <= 21; hour++) {
+    for (let minute = 0; minute < 60; minute += 15) {
+      const formattedHour = hour > 12 ? hour - 12 : hour;
+      const suffix = hour >= 12 ? 'PM' : 'AM';
+      const time = `${formattedHour}:${String(minute).padStart(2, '0')} ${suffix}`;
+      timeOptions.push(time);
+    }
+  }
 
   return (
-    <div className='px-2 py-3' style={{marginBottom: "150px"}}>
+    <div className='px-2 py-3' style={{ marginBottom: "150px" }}>
       <h1 className="text-xl mb-4 font-bold text-teal-800">Invite a friend</h1>
 
       {/* Name and Address of Restaurant */}
@@ -131,7 +129,7 @@ const RestaurantInvitation = ({ setModalScreen }) => {
                   selected={selectedDate}
                   onChange={(date) => setSelectedDate(date)}
                   minDate={new Date()}
-                  className="w-full border-2 border-gray-200 p-2 rounded-lg pl-10 h-12"  
+                  className="w-full border-2 border-gray-200 p-2 rounded-lg pl-10 h-12"
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaCalendarAlt className="text-teal-800" />
@@ -145,7 +143,7 @@ const RestaurantInvitation = ({ setModalScreen }) => {
                 <select
                   value={selectedTime}
                   onChange={handleTimeChange}
-                  className="w-full border-2 border-gray-200 rounded-lg pl-10 h-12"  
+                  className="w-full border-2 border-gray-200 rounded-lg pl-10 h-12 bg-white" // Set background to white
                 >
                   {timeOptions.map((time) => (
                     <option key={time} value={time}>
