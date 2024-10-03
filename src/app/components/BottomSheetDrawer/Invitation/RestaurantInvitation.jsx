@@ -22,28 +22,26 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
   };
 
   const shareInvitation = async () => {
-    const imgUrl = `${window.location.origin}/images/restaurant1.jpg}`;
+    const imgUrl = `${window.location.origin}/images/restaurant1.jpg`; // Corrected URL
     const formattedTime = selectedTime ? `Time: ${selectedTime}` : '';
     const formattedDate = selectedDate ? `Date: ${selectedDate.toLocaleDateString()}` : '';
-
-    const defaultMessage = `Niko wants to share with you via FORK 'n KNIFE the following:\n\n
-      Meet me at ${location.name} located at ${location.address}\n\n
-      On ${formattedDate} @${formattedTime}\n\n`;
-    const message = customMessage ? `${defaultMessage}Custom Message:\n
-      ${customMessage}\n\n` : defaultMessage;
-
+  
+    const defaultMessage = `Niko wants to share with you via FORK 'n KNIFE the following:\n\nMeet me at ${location.name} located at ${location.address}\n\nOn ${formattedDate} @${formattedTime}\n\n`;
+    const message = customMessage ? `${defaultMessage}Custom Message:\n${customMessage}\n\n` : defaultMessage;
+  
     if (navigator.canShare && navigator.canShare({ files: [new File([], "FORK 'n KNIFE")] })) {
       try {
         const response = await fetch(imgUrl);
         const blob = await response.blob();
         const file = new File([blob], "image.jpeg", { type: blob.type });
-
+  
         await navigator.share({
           title: location.name,
           text: message,
           files: [file],
         });
         setModalScreen("");
+        alert("Invitation sent successfully"); // Alert on success
       } catch (error) {
         console.error("Error sharing content:", error);
       }
@@ -120,18 +118,18 @@ const RestaurantInvitation = ({ setModalScreen, handleShare }) => {
           <textarea
             className="w-1/2 border-2 border-gray-200 p-2 rounded-lg"
             rows="4"
-            placeholder="Write your custom message here..."
+            placeholder="Add a custom message here..."
             value={customMessage}
             onChange={(e) => setCustomMessage(e.target.value)}
           />
           
-          <div className="w-1/2">
+          <div className="w-1/2 my-auto">
             <Image 
-              src="/images/invitation_bro.png" 
+              src="/images/restaurant1.jpg" 
               alt="Description of the image"
               layout="responsive"
-              width={100} 
-              height={100} 
+              width={200} 
+              height={200} 
               className="rounded-lg" 
             />
           </div>
