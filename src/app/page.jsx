@@ -121,7 +121,7 @@ const Home = () => {
   };
 
   return (
-    <div ref={scrollContainerRef} className="App h-screen flex flex-col overflow-y-auto bg-black">
+    <div ref={scrollContainerRef} className="App h-screen flex flex-col overflow-y-auto bg-black scrollbar-hidden">
       <div className="relative z-10">
         {displayNavbar()}
       </div>
