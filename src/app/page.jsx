@@ -1,4 +1,5 @@
 "use client";
+import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
 import { useSwipeable } from 'react-swipeable';
 import NavbarCarousel from "./components/MainPage/NavbarCarousel";
@@ -17,12 +18,11 @@ import Locations from "./mockData/locations";
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
   const [navbarVisible, setNavbarVisible] = useState(true);
+  const [showBottomNavigation, setShowBottomNavigation] = useState(true);
   const [infoBanner, setInfoBanner] = useState(false);
-  const [showBottomNavigation, setShowBottomNavigation] = useState(true); // For BottomNavigation
+  const lastScrollY = useRef(0); // useRef to track scroll position
+  const scrollContainerRef = useRef(null); // Scroll container reference
   const screens = ["home", "mealPlan", "map", "favorites", "profile"];
-  const scrollContainerRef = useRef(null); // Reference for scrollable container
-  const lastScrollY = useRef(0); // Reference for last scroll position
-
   const mockMealPlan = [
     { date: "2024-09-24", restaurant: Locations[0].name, meal: Locations[0].menu.Tuesday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
     { date: "2024-09-25", restaurant: Locations[1].name, meal: Locations[1].menu.Wednesday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
@@ -31,25 +31,23 @@ const Home = () => {
 
   // Scroll event handler to toggle BottomNavigation based on scroll direction
   const handleScroll = () => {
-    const currentScrollY = scrollContainerRef.current.scrollTop; // Use scrollTop for the container
-    if (currentScrollY > lastScrollY.current && currentScrollY > 5) {
+    const currentScrollY = scrollContainerRef.current.scrollTop; // Use the ref to track the scroll position
+    if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
       // Scrolling down
       setShowBottomNavigation(false);
     } else if (currentScrollY < lastScrollY.current) {
       // Scrolling up
       setShowBottomNavigation(true);
     }
-
-    lastScrollY.current = currentScrollY;
+    lastScrollY.current = currentScrollY; // Update ref value
   };
 
-  // Attach scroll event listener to the container
+  // Attach scroll event listener to the scrollable container
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
       scrollContainer.addEventListener("scroll", handleScroll);
     }
-
     return () => {
       if (scrollContainer) {
         scrollContainer.removeEventListener("scroll", handleScroll);
@@ -68,10 +66,10 @@ const Home = () => {
   const swipeScreenHandler = (direction) => {
     const currentIndex = screens.indexOf(currentScreen);
     if (direction === "left") {
-      const nextScreen = screens[(currentIndex + 1) % screens.length]; 
+      const nextScreen = screens[(currentIndex + 1) % screens.length];
       setScreen(nextScreen);
     } else if (direction === "right") {
-      const prevScreen = screens[(currentIndex - 1 + screens.length) % screens.length]; 
+      const prevScreen = screens[(currentIndex - 1 + screens.length) % screens.length];
       setScreen(prevScreen);
     }
   };
@@ -92,7 +90,7 @@ const Home = () => {
         return <MapController />;
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
-      case "profile": 
+      case "profile":
         return <p>PROFILE</p>;
       default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
@@ -108,18 +106,30 @@ const Home = () => {
   };
 
   const displayBottomNavigation = () => {
-    if (currentScreen !== "map" && showBottomNavigation) return <BottomNavigation setScreen={setScreen} />;
+    if (currentScreen !== "map") {
+      return (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }} // Hidden initially
+          animate={{ y: showBottomNavigation ? 0 : 100, opacity: showBottomNavigation ? 1 : 0 }} // Animate based on visibility
+          transition={{ duration: 0.5, ease: "easeInOut" }} // Smooth animation
+          className="fixed bottom-0 left-0 right-0 z-50"
+        >
+          <BottomNavigation setScreen={setScreen} />
+        </motion.div>
+      );
+    }
   };
 
   return (
-    <div ref={scrollContainerRef} className="App h-screen flex flex-col overflow-y-auto bg-black scrollbar-hidden">
+    <div ref={scrollContainerRef} className="App h-screen flex flex-col overflow-y-auto bg-black">
       <div className="relative z-10">
         {displayNavbar()}
       </div>
-      <div className="sticky top-0 z-20 bg-white"> 
+      <div className="sticky top-0 z-20 bg-white">
         <NavbarSearch setScreen={setScreen} currentScreen={currentScreen} />
       </div>
       <div className="flex-grow">
+        {/* {renderInfoBanner()} */}
         {renderScreen()}
         <div style={{ marginTop: "100px" }}>
           {displayBottomNavigation()}
