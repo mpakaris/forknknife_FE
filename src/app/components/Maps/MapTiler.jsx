@@ -16,7 +16,7 @@ const Map = ({ onMarkerClick, locations }) => {
     map.current = new maptilersdk.Map({
       container: mapContainer.current,
       // Use the Streets Dark style
-      style: "https://api.maptiler.com/maps/streets-dark/style.json?key=bKNG0Ir1ORmL8bGkuCNM",
+      // style: "https://api.maptiler.com/maps/streets-dark/style.json?key=bKNG0Ir1ORmL8bGkuCNM",
       center: [location.lng, location.lat],
       zoom: zoom
     });
