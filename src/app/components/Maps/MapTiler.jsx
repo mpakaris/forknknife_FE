@@ -9,7 +9,6 @@ const Map = ({ onMarkerClick, locations, userLocation }) => {
   const map = useRef(null);
   const [markers, setMarkers] = useState([]);
   const [selectedMarkerUuid, setSelectedMarkerUuid] = useState(null);
-  // const location = { lat: 47.49919, lng: 19.0527 };
   const zoom = 11;
   maptilersdk.config.apiKey = 'bKNG0Ir1ORmL8bGkuCNM';
 
@@ -60,11 +59,11 @@ const Map = ({ onMarkerClick, locations, userLocation }) => {
     });
 
     // Add the user's location marker if available
-    if (userLocation) {
+    if (userLocation && userLocation.lng && userLocation.lat) {
       const userMarker = new maptilersdk.Marker({
         color: '#00CED1',
       })
-        .setLngLat([userLocation?.lng, userLocation?.lat])
+        .setLngLat([userLocation.lng, userLocation.lat])
         .addTo(map.current);
       newMarkers.push(userMarker); // Add user marker to the markers array
     }
@@ -73,10 +72,14 @@ const Map = ({ onMarkerClick, locations, userLocation }) => {
   };
 
   useEffect(() => {
+    // Only create the map if userLocation has valid coordinates
     if (!map.current) {
+      const initialLng = userLocation?.lng || 19.0527; // Fallback longitude
+      const initialLat = userLocation?.lat || 47.49919; // Fallback latitude
+
       map.current = new maptilersdk.Map({
         container: mapContainer.current,
-        center: [userLocation?.lng, userLocation?.lat],
+        center: [initialLng, initialLat],
         zoom: zoom,
       });
     }
