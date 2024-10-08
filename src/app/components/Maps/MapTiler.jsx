@@ -3,12 +3,13 @@ import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { useEffect, useRef, useState } from 'react';
 import '../../styles/map.css';
 
-const Map = ({ onMarkerClick, locations }) => {
+
+const Map = ({ onMarkerClick, locations, userLocation }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [markers, setMarkers] = useState([]);
   const [selectedMarkerUuid, setSelectedMarkerUuid] = useState(null);
-  const location = { lat: 47.49919, lng: 19.0527 };
+  // const location = { lat: 47.49919, lng: 19.0527 };
   const zoom = 11;
   maptilersdk.config.apiKey = 'bKNG0Ir1ORmL8bGkuCNM';
 
@@ -40,7 +41,7 @@ const Map = ({ onMarkerClick, locations }) => {
         })
           .setLngLat([loc.lng, loc.lat])
           .setHTML(
-            `<div class="text-red-600 text-xs font-bold  text-center p-1">
+            `<div class="text-red-800 text-xs font-bold text-center p-1">
               ${loc.name}
             </div>`
           )
@@ -57,6 +58,17 @@ const Map = ({ onMarkerClick, locations }) => {
 
       return marker;
     });
+
+    // Add the user's location marker if available
+    if (userLocation) {
+      const userMarker = new maptilersdk.Marker({
+        color: '#00CED1',
+      })
+        .setLngLat([userLocation?.lng, userLocation?.lat])
+        .addTo(map.current);
+      newMarkers.push(userMarker); // Add user marker to the markers array
+    }
+
     setMarkers(newMarkers);
   };
 
@@ -64,7 +76,7 @@ const Map = ({ onMarkerClick, locations }) => {
     if (!map.current) {
       map.current = new maptilersdk.Map({
         container: mapContainer.current,
-        center: [location.lng, location.lat],
+        center: [userLocation?.lng, userLocation?.lat],
         zoom: zoom,
       });
     }
@@ -72,7 +84,7 @@ const Map = ({ onMarkerClick, locations }) => {
     // Clear existing markers and add new ones whenever selectedMarkerUuid changes
     clearMarkers();
     addMarkers();
-  }, [selectedMarkerUuid, locations]);
+  }, [selectedMarkerUuid, locations, userLocation]);
 
   return (
     <div className="map-wrap">

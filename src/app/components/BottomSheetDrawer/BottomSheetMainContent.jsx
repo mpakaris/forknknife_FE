@@ -17,8 +17,8 @@ const BottomSheetMainContent = ({ selectedLocation, currentLocation, }) => {
       <div className="reviews mt-4">
         <Map 
           currentLocation={{
-            lat: 47.51367275414454,
-            lng: 19.046562515873084
+            lat: currentLocation.lat,
+            lng: currentLocation.lng
           }} 
           destinationLocation={{
             lat: selectedLocation.lat, 

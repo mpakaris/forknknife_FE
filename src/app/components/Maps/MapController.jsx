@@ -66,7 +66,11 @@ const MapController = () => {
 
   return (
     <div className="App">
-      <Map onMarkerClick={openDrawer} locations={Locations} />
+      <Map 
+        onMarkerClick={openDrawer} 
+        locations={Locations} 
+        userLocation={currentLocation}
+      />
       {selectedLocation && (
         <BottomSheetDrawer
           isOpen={isDrawerOpen}

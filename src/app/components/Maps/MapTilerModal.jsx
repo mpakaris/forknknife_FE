@@ -23,12 +23,12 @@ export default function Map({ currentLocation, destinationLocation }) {
     });
 
     // Add the destination marker (red pin)
-    const destinationMarker = new maptilersdk.Marker({ color: 'red' })
+    const destinationMarker = new maptilersdk.Marker({ color: '#DF245B' })
       .setLngLat([destinationLocation.lng, destinationLocation.lat])
       .addTo(map.current);
 
     // Add the current location marker (blue dot)
-    const currentMarker = new maptilersdk.Marker({ color: 'blue' })
+    const currentMarker = new maptilersdk.Marker({ color: '#00CED1' })
       .setLngLat([currentLocation.lng, currentLocation.lat])
       .addTo(map.current);
 
