@@ -37,7 +37,6 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
           {showReservation && 
             <RestaurantInvitation handleShare={handleShare}/> 
           }
-          <p className='text-white'>Lat: {currentLocation.lat} | Lng: {currentLocation.lng}</p>
           <BottomSheetMainContent
             selectedLocation={selectedLocation} 
             currentLocation={currentLocation}
