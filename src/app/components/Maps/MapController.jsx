@@ -15,7 +15,6 @@ const MapController = () => {
 
   // Open drawer for the selected location
   const openDrawer = (uuid) => {
-    console.log(uuid);
     setSelectedLocationId(uuid);
     setIsDrawerOpen(true);
   };
