@@ -22,7 +22,7 @@ const Map = ({ onMarkerClick, locations }) => {
     setMarkers([]);
   };
 
-  // Function to add markers to the map
+  // Function to add markers and show popups
   const addMarkers = () => {
     const newMarkers = locations.map((loc) => {
       const marker = new maptilersdk.Marker({
@@ -30,6 +30,24 @@ const Map = ({ onMarkerClick, locations }) => {
       })
         .setLngLat([loc.lng, loc.lat])
         .addTo(map.current);
+
+      // Show popup only for the selected marker
+      if (selectedMarkerUuid === loc.uuid) {
+        const popup = new maptilersdk.Popup({
+          closeButton: false,
+          closeOnClick: false,
+          className: 'popup-class', // Custom class for styling
+        })
+          .setLngLat([loc.lng, loc.lat])
+          .setHTML(
+            `<div class="text-red-600 text-xs font-bold  text-center p-1">
+              ${loc.name}
+            </div>`
+          )
+          .addTo(map.current);
+        
+        marker.setPopup(popup);
+      }
 
       // Add click event to marker
       marker.getElement().addEventListener("click", () => {
