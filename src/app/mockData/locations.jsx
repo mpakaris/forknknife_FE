@@ -3695,7 +3695,7 @@ const Locations = [
     crawlType: "TXT",
     description: "Only Monday was filled, rest of the week not",
     lat: 47.50496267135815, 
-    lng: 19.17168872975294
+    lng: 19.17168872975294,
     phone: "06309077431",
     pictures: [],
     rating: 4.6,
