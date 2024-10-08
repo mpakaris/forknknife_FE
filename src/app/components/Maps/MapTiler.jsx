@@ -22,7 +22,9 @@ const Map = ({ onMarkerClick, locations }) => {
     });
 
     locations.forEach((loc) => {
-      const marker = new maptilersdk.Marker()
+      const marker = new maptilersdk.Marker({
+        // color: "#FFFFFF"
+      })
         .setLngLat([loc.lng, loc.lat])
         .addTo(map.current);
 
