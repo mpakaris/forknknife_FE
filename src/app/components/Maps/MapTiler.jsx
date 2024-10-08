@@ -7,7 +7,7 @@ const Map = ({ onMarkerClick, locations }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const location = { lat: 47.49919, lng: 19.0527 };
-  const zoom = 13;
+  const zoom = 11;
   maptilersdk.config.apiKey = 'bKNG0Ir1ORmL8bGkuCNM';
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Map = ({ onMarkerClick, locations }) => {
         .setLngLat([loc.lng, loc.lat])
         .addTo(map.current);
 
-      marker.getElement().addEventListener("click", () => onMarkerClick(loc.id));
+      marker.getElement().addEventListener("click", () => onMarkerClick(loc.uuid));
     });
   }, [location.lng, location.lat, zoom, locations, onMarkerClick]);
 

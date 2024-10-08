@@ -21,8 +21,8 @@ const BottomSheetMainContent = ({ selectedLocation, currentLocation, }) => {
             lng: 19.046562515873084
           }} 
           destinationLocation={{
-            lat: 47.48650052765575, 
-            lng: 19.107689904921532
+            lat: selectedLocation.lat, 
+            lng: selectedLocation.lng
           }} 
         />
       </div>

@@ -1,5 +1,5 @@
 import { addDays, format, startOfWeek } from 'date-fns';
-import CarouselDrawerWeeklyMenu from "./CarouselDrawerWeeklyMenu"; // Ensure the path is correct
+// import CarouselDrawerWeeklyMenu from "./CarouselDrawerWeeklyMenu";
 
 // Helper function to get the current week's dates (Mon-Fri)
 const getCurrentWeek = () => {
@@ -28,7 +28,7 @@ export default function BottomSheetWeeklyMenu({ menu }) {
       </h2>
 
       {/* Swiper for Menu */}
-      <CarouselDrawerWeeklyMenu
+      {/* <CarouselDrawerWeeklyMenu
         options={weekDays.map((day) => ({
           date: day.date, 
           name: menu[day.day].description, 
@@ -37,7 +37,7 @@ export default function BottomSheetWeeklyMenu({ menu }) {
           dessert: menu[day.day].dessert,
           tags: menu[day.day].tags || [], 
         }))}
-      />
+      /> */}
     </div>
   );
 }

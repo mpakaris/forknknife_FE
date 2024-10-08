@@ -14,8 +14,9 @@ const MapController = () => {
   const [currentLocation, setCurrentLocation] = useState(null); // State to store current location
 
   // Open drawer for the selected location
-  const openDrawer = (id) => {
-    setSelectedLocationId(id);
+  const openDrawer = (uuid) => {
+    console.log(uuid)
+    setSelectedLocationId(uuid);
     setIsDrawerOpen(true);
   };
 
@@ -24,7 +25,7 @@ const MapController = () => {
     setSelectedLocationId(null);
   };
 
-  const selectedLocation = Locations.find((loc) => loc.id === selectedLocationId);
+  const selectedLocation = Locations.find((loc) => loc.uuid === selectedLocationId);
 
   // Function to handle location permission and get current location
   const handleLocationPermission = () => {

@@ -26,6 +26,7 @@ export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
 
   return (
     <div className="pills space-y-2">
+      {/* {JSON.stringify(selectedLocation)} */}
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-2xl font-bold text-gray-200">{selectedLocation.name}</h1>
         <div className="flex items-center space-x-3">
@@ -55,12 +56,12 @@ export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
       <div className="flex items-center">
         <FaGlobe className="text-gray-200 mr-2" />
         <a
-          href={selectedLocation.website}
+          href={selectedLocation.url}
           className="text-gray-300 hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >
-          {selectedLocation.website}
+          {selectedLocation.url}
         </a>
       </div>
 

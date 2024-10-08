@@ -13,7 +13,6 @@ import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
 import Navbar from "./components/Navigation/Navbar";
-import Locations from "./mockData/locations";
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
@@ -23,11 +22,11 @@ const Home = () => {
   const lastScrollY = useRef(0); // useRef to track scroll position
   const scrollContainerRef = useRef(null); // Scroll container reference
   const screens = ["home", "mealPlan", "map", "favorites", "profile"];
-  const mockMealPlan = [
-    { date: "2024-09-24", restaurant: Locations[0].name, meal: Locations[0].menu.Tuesday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
-    { date: "2024-09-25", restaurant: Locations[1].name, meal: Locations[1].menu.Wednesday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
-    { date: "2024-09-26", restaurant: Locations[2].name, meal: Locations[2].menu.Thursday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
-  ];
+  // const mockMealPlan = [
+  //   { date: "2024-09-24", restaurant: Locations[0].name, meal: Locations[0].menu.Tuesday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
+  //   { date: "2024-09-25", restaurant: Locations[1].name, meal: Locations[1].menu.Wednesday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
+  //   { date: "2024-09-26", restaurant: Locations[2].name, meal: Locations[2].menu.Thursday.description, address: "Hollán Ernő u. 7, 1136 Budapest" },
+  // ];
 
   // Scroll event handler to toggle BottomNavigation based on scroll direction
   const handleScroll = () => {
