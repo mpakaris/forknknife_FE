@@ -50,7 +50,7 @@ export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
 
       <div className="flex items-center">
         <FaPhone className="text-gray-200 mr-2" />
-        <span className="text-gray-200">{selectedLocation.contact}</span>
+        <span className="text-gray-200">{selectedLocation.phone}</span>
       </div>
 
       <div className="flex items-center">
