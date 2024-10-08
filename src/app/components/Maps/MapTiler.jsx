@@ -3,7 +3,6 @@ import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { useEffect, useRef, useState } from 'react';
 import '../../styles/map.css';
 
-
 const Map = ({ onMarkerClick, locations, userLocation }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -60,8 +59,11 @@ const Map = ({ onMarkerClick, locations, userLocation }) => {
 
     // Add the user's location marker if available
     if (userLocation && userLocation.lng && userLocation.lat) {
+      const userMarkerElement = document.createElement('div');
+      userMarkerElement.className = 'user-marker';
+      
       const userMarker = new maptilersdk.Marker({
-        color: '#00CED1',
+        element: userMarkerElement,
       })
         .setLngLat([userLocation.lng, userLocation.lat])
         .addTo(map.current);

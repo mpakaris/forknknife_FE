@@ -63,3 +63,24 @@ body {
 .scrollbar-hidden::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+.user-marker {
+  background-color: #007bff; /* Blue color for the dot */
+  border-radius: 50%; /* Make it circular */
+  width: 12px; /* Size of the dot */
+  height: 12px; /* Size of the dot */
+  position: absolute; /* Positioning */
+  transform: translate(-50%, -50%); /* Center the dot */
+}
+
+.user-marker::before {
+  content: "";
+  position: absolute;
+  top: -4px; /* Adjust to create a ring effect */
+  left: -4px; /* Adjust to create a ring effect */
+  background-color: rgba(0, 123, 255, 0.15); /* Lighter blue ring color */
+  border-radius: 50%; /* Make it circular */
+  width: 20px; /* Size of the ring */
+  height: 20px; /* Size of the ring */
+  z-index: -1; /* Place the ring behind the dot */
+}
