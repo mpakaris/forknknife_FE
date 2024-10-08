@@ -11,11 +11,11 @@ const Map = dynamic(() => import("./MapTiler"), { ssr: false });
 const MapController = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedLocationId, setSelectedLocationId] = useState(null);
-  const [currentLocation, setCurrentLocation] = useState(null); // State to store current location
+  const [currentLocation, setCurrentLocation] = useState(null);
 
   // Open drawer for the selected location
   const openDrawer = (uuid) => {
-    console.log(uuid)
+    console.log(uuid);
     setSelectedLocationId(uuid);
     setIsDrawerOpen(true);
   };
@@ -29,28 +29,27 @@ const MapController = () => {
 
   // Function to handle location permission and get current location
   const handleLocationPermission = () => {
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(
-    //     (position) => {
-    //       const { latitude, longitude } = position.coords;
-    //       setCurrentLocation({ lat: latitude, long: longitude });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLocation({ lat: latitude, lng: longitude });
 
-    //       // Save permission status in localStorage
-    //       localStorage.setItem("hasLocationPermission", "true");
-    //     },
-    //     (error) => {
-    //       console.error("Error fetching location:", error);
-    //     }
-    //   );
-    // }
+          // Save permission status in localStorage
+          localStorage.setItem("hasLocationPermission", "true");
+        },
+        (error) => {
+          console.error("Error fetching location:", error);
+        }
+      );
+    }
   };
 
   // UseEffect to check location permission from localStorage when the component mounts
   useEffect(() => {
     const hasLocationPermission = localStorage.getItem("hasLocationPermission");
 
-    // if (!hasLocationPermission || hasLocationPermission === "false") {
-    if (!hasLocationPermission || hasLocationPermission === "true") {
+    if (!hasLocationPermission || hasLocationPermission === "false") {
       // Ask for permission if not granted previously
       const userWantsToAllow = window.confirm("Allow to access current location?");
       if (userWantsToAllow) {
@@ -60,15 +59,14 @@ const MapController = () => {
       }
     } else if (hasLocationPermission === "true") {
       // If permission was already granted, just log the current location
+      console.log("Location permission already granted. Fetching current location...");
       handleLocationPermission(); // Fetch the location and log it to the console
-      // console.log("Location permission already granted. Fetching current location...");
     }
   }, []);
 
   return (
     <div className="App">
       <Map onMarkerClick={openDrawer} locations={Locations} />
-      {/* {console.log(currentLocation)} */}
       {selectedLocation && (
         <BottomSheetDrawer
           isOpen={isDrawerOpen}
