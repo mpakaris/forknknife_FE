@@ -17,12 +17,12 @@ const BottomSheetMainContent = ({ selectedLocation, currentLocation, }) => {
       <div className="reviews mt-4">
         <Map 
           currentLocation={{
-            lat: currentLocation.lat,
-            lng: currentLocation.lng
+            lat: currentLocation?.lat,
+            lng: currentLocation?.lng
           }} 
           destinationLocation={{
-            lat: selectedLocation.lat, 
-            lng: selectedLocation.lng
+            lat: selectedLocation?.lat, 
+            lng: selectedLocation?.lng
           }} 
         />
       </div>
