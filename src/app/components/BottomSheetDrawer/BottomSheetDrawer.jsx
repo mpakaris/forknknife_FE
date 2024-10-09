@@ -2,27 +2,24 @@ import { useEffect, useRef, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa'; // Import the icon for the handle
 import { animated, useSpring } from 'react-spring';
 import BottomSheetContentController from "./BottomSheetContentController";
+import CarouselDrawerImages from './CarouselDrawerImages';
 
 const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation }) => {
   const [isDragging, setDragging] = useState(false);
   const [{ y }, api] = useSpring(() => ({ y: 0 }));
   const scrollContainerRef = useRef(null);
 
-  // Function to handle the additional swipe down to close
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Function to handle swipe down to close
   const handleSwipeToClose = () => {
     const scrollTop = scrollContainerRef.current.scrollTop;
-
-    // If at the top of the scroll and user swipes down
     if (scrollTop === 0) {
-      onClose(); // Close the BottomSheetDrawer
+      onClose(); // Close the BottomSheetDrawer when at the top of the scroll
     }
   };
 
-  // Detect scroll event and trigger the swipe down to close at the top
+  // Detect scroll event and trigger swipe down to close
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
-    
     const handleScroll = () => {
       if (scrollContainer.scrollTop === 0 && isDragging) {
         handleSwipeToClose();
@@ -30,50 +27,47 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
     };
 
     scrollContainer.addEventListener('scroll', handleScroll);
-    
     return () => {
       scrollContainer.removeEventListener('scroll', handleScroll);
     };
-  }, [handleSwipeToClose, isDragging]);
+  }, [isDragging]);
 
-  const closeDrawer = () => {
-    setModal(null);
-    onClose();
-  }
-
-  const setModalScreen = (newScreen) => {
-    setModal(newScreen);
-  }
+  // Extract image URLs from selectedLocation.serpAPI.images_results
+  const imageUrls = selectedLocation?.serpAPI?.images_results?.map(image => image.original) || [];
 
   return (
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={closeDrawer}
+          className="fixed inset-0 bg-yellow bg-opacity-50 z-40"
+          onClick={onClose}
         />
       )}
       <animated.div
-        style={{ y, touchAction: 'none' }} // Disable touch scroll while dragging
+        style={{ y, touchAction: 'none' }}
         className="fixed top-0 left-0 right-0 bg-black z-50 shadow-lg 
-        rounded-t-xl p-4 h-full overflow-y-auto scrollbar-hidden"
+          rounded-t-xl h-full overflow-y-auto scrollbar-hidden"
       >
-        {/* New down arrow icon for closing the sheet */}
-        <div className="flex items-center justify-center cursor-pointer mb-4">
+        <div className="flex items-center justify-center cursor-pointer my-3 rounded-lg">
           <FaChevronDown
-            className="text-teal-600 text-2xl"
-            onClick={onClose} // Close the sheet when the icon is tapped
+            className="text-teal-600 text-2xl mt-2"
+            onClick={onClose}
           />
         </div>
-
         <div
           ref={scrollContainerRef}
-          className="h-full overflow-y-auto scrollbar-hidden"
+          className="h-full overflow-y-auto scrollbar-hidden relative bg-black"
         >
-          <BottomSheetContentController 
-            selectedLocation={selectedLocation}
-            currentLocation={currentLocation}
-          />
+          <div className="relative heroImage">
+            <CarouselDrawerImages images={imageUrls} slidesPerView={1} />
+            <div className="absolute inset-x-0 -bottom-10 h-[200px] bg-gradient-to-t from-black via-gray-950 to-transparent z-10"></div>
+          </div>
+          <div className="relative z-20 p-4 bg-black -mt-20">
+            <BottomSheetContentController 
+              selectedLocation={selectedLocation}
+              currentLocation={currentLocation}
+            />
+          </div>
         </div>
       </animated.div>
     </>

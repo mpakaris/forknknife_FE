@@ -1,20 +1,19 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-export default function CarouselDrawerImages({ images, slidesPerView = 1.2, onSlideChange }) {
+export default function CarouselDrawerImages({ images, slidesPerView = 1.2 }) {
   return (
     <div className="w-full">
       <Swiper
         spaceBetween={10}  
         slidesPerView={slidesPerView}   
         grabCursor={true}
-        onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)} // Pass active slide index to parent
       >
         {images.map((option, index) => (
           <SwiperSlide key={index}>
             <div className="h-80 flex items-center justify-center overflow-hidden">
-              <Image
+              <img
                 src={`${option}`}
                 width={440} 
                 height={440} 

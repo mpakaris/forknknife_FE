@@ -28,12 +28,11 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
        );
      default:
        return (
-
-        <div className='max-h-[90vh] mb-9'>
+        <div className='max-h-[90vh] mb-9 my-7'>
           <BottomSheetHeadInfo 
             selectedLocation={selectedLocation}
             handleShare={handleShare}
-            />
+          />
           {showReservation && 
             <RestaurantInvitation handleShare={handleShare}/> 
           }

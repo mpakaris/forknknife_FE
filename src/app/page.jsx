@@ -1,4 +1,5 @@
 "use client";
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
 import { useSwipeable } from 'react-swipeable';
@@ -14,27 +15,53 @@ import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
 import Navbar from "./components/Navigation/Navbar";
 import ImageDisplay from "./mockData/ImageDisplay";
+import mockLocations from './mockData/locations';
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [showBottomNavigation, setShowBottomNavigation] = useState(true);
   const [infoBanner, setInfoBanner] = useState(false);
-  const lastScrollY = useRef(0); // useRef to track scroll position
-  const scrollContainerRef = useRef(null); // Scroll container reference
+  const [locations, setLocations] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const lastScrollY = useRef(0);
+  const scrollContainerRef = useRef(null);
   const screens = ["home", "mealPlan", "map", "favorites", "profile"];
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      setLoading(true);
+      try {
+        if (process.env.NEXT_PUBLIC_ENV === 'development') {
+          const response = await axios.get("http://192.168.0.167:5001/getstuffdone-80541/us-central1/getFirstTenCollections");
+          const locationsArray = Object.entries(response.data).map(([uuid, details]) => ({
+            uuid,
+            ...details,
+          }));
+          setLocations(locationsArray);
+        } else {
+          // Use mock data in PROD mode
+          setLocations(mockLocations);
+        }
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLocations();
+  }, []);
 
   // Scroll event handler to toggle BottomNavigation based on scroll direction
   const handleScroll = () => {
-    const currentScrollY = scrollContainerRef.current.scrollTop; // Use the ref to track the scroll position
+    const currentScrollY = scrollContainerRef.current.scrollTop;
     if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
-      // Scrolling down
       setShowBottomNavigation(false);
     } else if (currentScrollY < lastScrollY.current) {
-      // Scrolling up
       setShowBottomNavigation(true);
     }
-    lastScrollY.current = currentScrollY; // Update ref value
+    lastScrollY.current = currentScrollY;
   };
 
   useEffect(() => {
@@ -81,7 +108,7 @@ const Home = () => {
           </div>
         );
       case "map":
-        return <MapController />;
+        return <MapController locations={locations} />;
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
       case "profile":
@@ -103,9 +130,9 @@ const Home = () => {
     if (currentScreen !== "map") {
       return (
         <motion.div
-          initial={{ y: 100, opacity: 0 }} // Hidden initially
-          animate={{ y: showBottomNavigation ? 0 : 100, opacity: showBottomNavigation ? 1 : 0 }} // Animate based on visibility
-          transition={{ duration: 0.5, ease: "easeInOut" }} // Smooth animation
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: showBottomNavigation ? 0 : 100, opacity: showBottomNavigation ? 1 : 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed bottom-0 left-0 right-0 z-50"
         >
           <BottomNavigation setScreen={setScreen} />
@@ -113,6 +140,12 @@ const Home = () => {
       );
     }
   };
+
+  const renderSpinner = () => (
+    <div className="flex items-center justify-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-b-4 border-blue-500"></div>
+    </div>
+  );
 
   return (
     <div ref={scrollContainerRef} className="App h-screen flex flex-col overflow-y-auto bg-black scrollbar-hidden">
@@ -123,8 +156,7 @@ const Home = () => {
         <NavbarSearch setScreen={setScreen} currentScreen={currentScreen} />
       </div>
       <div className="flex-grow">
-        {/* {renderInfoBanner()} */}
-        {renderScreen()}
+        {loading ? renderSpinner() : renderScreen()}
         <div style={{ marginTop: "100px" }}>
           {displayBottomNavigation()}
         </div>

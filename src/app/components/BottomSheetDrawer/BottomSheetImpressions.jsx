@@ -29,25 +29,25 @@ export default function BottomSheetImpressions() {
     <div className='pills'>
       {/* Image Carousel */}
       <div className="overflow-x-auto">
-        <h2 className="text-md font-bold text-gray-600 mt-2 mb-3">Impressions</h2>
+        <h2 className="text-md font-bold text-gray-200 mt-2 mb-3">Impressions</h2>
         <div className="flex mb-4">
-        <div 
-          className={`flex-1 p-4 text-center cursor-pointer transition-transform transform ${
-            activeCarousel === 'restaurants' ? 'bg-teal-800 text-white shadow-lg' : 'bg-gray-200'
-          } rounded-l-sm hover:scale-100`}
-          onClick={() => handleCarouselSwitch('restaurants')}
-        >
-          Location
+          <div 
+            className={`flex-1 p-4 text-center cursor-pointer transition-transform transform ${
+              activeCarousel === 'restaurants' ? 'bg-teal-800 text-white shadow-lg' : 'bg-gray-200'
+            } rounded-l-sm hover:scale-100`}
+            onClick={() => handleCarouselSwitch('restaurants')}
+          >
+            Location
+          </div>
+          <div 
+            className={`flex-1 p-4 text-center cursor-pointer transition-transform transform ${
+              activeCarousel === 'foods' ? 'bg-teal-800 text-white shadow-lg' : 'bg-gray-200'
+            } rounded-r-sm hover:scale-100`}
+            onClick={() => handleCarouselSwitch('foods')}
+          >
+            Food
+          </div>
         </div>
-        <div 
-          className={`flex-1 p-4 text-center cursor-pointer transition-transform transform ${
-            activeCarousel === 'foods' ? 'bg-teal-800 text-white shadow-lg' : 'bg-gray-200'
-          } rounded-r-sm hover:scale-100`}
-          onClick={() => handleCarouselSwitch('foods')}
-        >
-          Food
-        </div>
-      </div>
         <CarouselDrawerImages
           images={carouselImages[activeCarousel]}
         />

@@ -28,7 +28,7 @@ export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
     <div className="pills space-y-2">
       {/* {JSON.stringify(selectedLocation)} */}
       <div className="flex justify-between items-center mb-2">
-        <h1 className="text-2xl font-bold text-gray-200">{selectedLocation.name}</h1>
+        <h1 className="text-4xl font-bold text-gray-200 mb-6">{selectedLocation.name}</h1>
         <div className="flex items-center space-x-3">
           <button onClick={handleShare}>
             <FaShareAlt className="text-gray-200 text-2xl" />
@@ -42,19 +42,29 @@ export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
           </button>
         </div>
       </div>
-
-      <div className="flex items-center">
-        <FaMapMarkerAlt className="text-gray-200 mr-2" />
+      <div className="grid grid-cols-12 gap-4 text-white p-4">
+      
+      {/* Address Row */}
+      <div className="col-span-1 flex justify-center">
+        <FaMapMarkerAlt className="text-gray-200 text-2xl" />
+      </div>
+      <div className="col-span-11">
         <span className="text-gray-300">{selectedLocation.address}</span>
       </div>
 
-      <div className="flex items-center">
-        <FaPhone className="text-gray-200 mr-2" />
+      {/* Phone Row */}
+      <div className="col-span-1 flex justify-center">
+        <FaPhone className="text-gray-200 text-2xl" />
+      </div>
+      <div className="col-span-11">
         <span className="text-gray-200">{selectedLocation.phone}</span>
       </div>
 
-      <div className="flex items-center">
-        <FaGlobe className="text-gray-200 mr-2" />
+      {/* Website Row */}
+      <div className="col-span-1 flex justify-center">
+        <FaGlobe className="text-gray-200 text-2xl" />
+      </div>
+      <div className="col-span-11">
         <a
           href={selectedLocation.url}
           className="text-gray-300 hover:underline"
@@ -64,6 +74,7 @@ export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
           {selectedLocation.url}
         </a>
       </div>
+    </div>
 
      <div className='mt-4'>
       <BottomSheetTagPills tags={selectedLocation.tags} />
