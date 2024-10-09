@@ -58,7 +58,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
           ref={scrollContainerRef}
           className="h-full overflow-y-auto scrollbar-hidden relative bg-black"
         >
-          <div className="relative heroImage">
+          <div className="relative heroImage h-[400px]">
             <CarouselDrawerImages images={imageUrls} slidesPerView={1} />
             <div className="absolute inset-x-0 -bottom-10 h-[200px] bg-gradient-to-t from-black via-gray-950 to-transparent z-10"></div>
           </div>
