@@ -33,7 +33,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
   }, [isDragging]);
 
   // Extract image URLs from selectedLocation.serpAPI.images_results
-  const imageUrls = selectedLocation?.serpAPI?.images_results?.map(image => image.original) || [];
+  const imageUrls = selectedLocation?.pictures || [];
 
   return (
     <>

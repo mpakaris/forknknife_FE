@@ -14,7 +14,6 @@ import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
 import Navbar from "./components/Navigation/Navbar";
-import ImageDisplay from "./mockData/ImageDisplay";
 import mockLocations from './mockData/locations';
 
 const Home = () => {
@@ -33,7 +32,7 @@ const Home = () => {
       setLoading(true);
       try {
         if (process.env.NEXT_PUBLIC_ENV === 'development') {
-          const response = await axios.get("http://192.168.0.167:5001/getstuffdone-80541/us-central1/getFirstTenCollections");
+          const response = await axios.get("http://192.168.0.167:5001/getstuffdone-80541/us-central1/getAllCollections");
           const locationsArray = Object.entries(response.data).map(([uuid, details]) => ({
             uuid,
             ...details,
@@ -112,7 +111,7 @@ const Home = () => {
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
       case "profile":
-        return <ImageDisplay />;
+        return <p className="text-white text-center">PROFILE</p>
       default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }
