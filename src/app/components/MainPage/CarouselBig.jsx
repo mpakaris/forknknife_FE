@@ -1,10 +1,11 @@
-import Image from 'next/image';
-import { FaUtensils } from 'react-icons/fa'; // Font Awesome for the fork/knife icon
+/* eslint-disable @next/next/no-img-element */
+import { FaUtensils } from 'react-icons/fa';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { getDistanceBetweenLocations } from "../../utils/getDistanceBetweenLocations";
 
-export default function CarouselBig({options}) {
-
+export default function CarouselBig({ options }) {
+  const userLocation = { lat: 47.48958612315468, lng: 19.06244937021245 }
 
   return (
     <div className="w-full">
@@ -15,26 +16,35 @@ export default function CarouselBig({options}) {
       >
         {options.map((option, index) => (
           <SwiperSlide key={index}>
-            <div className="flex bg-white rounded-lg shadow-md mb-2 overflow-hidden h-26">
-              <div className="w-1/3">
-                <Image
-                  src={`/images/${option.pic}`}
-                  width={100}
-                  height={100}
-                  alt={`${option.name}`}
-                  className="object-cover w-full h-full"
-                />
+            <div className="flex bg-white rounded-lg shadow-md mb-2 overflow-hidden h-60"> {/* Fixed height for the card */}
+              <div className="w-1/2 h-full">
+                {option.pictures && option.pictures.length > 0 ? (
+                  <img
+                    src={option.pictures[0]}
+                    alt={`${option.name}`}
+                    className="object-cover w-full h-full" 
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <span>No Image</span>
+                  </div>
+                )}
               </div>
-              <div className="w-2/3 p-3 flex flex-col justify-between">
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-sm font-bold text-teal-500 bold">{option.label}</p>
-                  <div className="flex items-center text-gray-600">
+              <div className="w-1/2 p-3 flex flex-col justify-between">
+                <div className="flex justify-between items-center">
+                  <p className="text-sm font-bold text-teal-800">
+                   {getDistanceBetweenLocations(
+                    userLocation, 
+                    {lat: option.lat, lng: option.lng}
+                    )} km
+                  </p>
+                  <div className="flex items-center text-teal-800">
                     <FaUtensils className="mr-1" />
-                    <span>{option.rating}</span>
+                    <span>4.5</span>
                   </div>
                 </div>
-                <h2 className="text-md font-bold text-gray-900 mb-2">{option.name}</h2>
-                <p className="text-sm text-gray-600 mb-4">{option.description}</p>
+                <h2 className="text-md font-bold text-teal-900 mb-2">{option.name}</h2>
+                <p className="text-sm text-gray-600 mb-4">{option.address}</p>
                 <p className="text-md font-semibold text-gray-600">{option.price}</p>
               </div>
             </div>

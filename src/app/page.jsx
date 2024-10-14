@@ -2,12 +2,14 @@
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
-import { useSwipeable } from 'react-swipeable';
-import NavbarCarousel from "./components/MainPage/NavbarCarousel";
-import NavbarCarouselFavorites from "./components/MainPage/NavbarCarouselFavorites";
-import NavbarCarouselLastChecked from "./components/MainPage/NavbarCarouselLastChecked";
-import NavbarCarouselMayAlsoLike from "./components/MainPage/NavbarCarouselMayAlsoLike";
-import NavbarCarouselWeRecommend from "./components/MainPage/NavbarCarouselWeRecommend";
+import Spinner from "./components/Home/Spinner";
+// import NavbarCarousel from "./components/MainPage/NavbarCarousel";
+// import NavbarCarouselFavorites from "./components/MainPage/NavbarCarouselFavorites";
+// import NavbarCarouselLastChecked from "./components/MainPage/NavbarCarouselLastChecked";
+// import NavbarCarouselMayAlsoLike from "./components/MainPage/NavbarCarouselMayAlsoLike";
+// import NavbarCarouselWeRecommend from "./components/MainPage/NavbarCarouselWeRecommend";
+import CloseToYourLocation from './components/MainPage/CloseToYourLocation';
+import InYourDistrict from "./components/MainPage/InYourDistrict";
 import NavbarSearch from "./components/MainPage/NavbarSearch";
 import TopInfoBanner from "./components/MainPage/TopInfoBanner";
 import MapController from "./components/Maps/MapController";
@@ -23,44 +25,50 @@ const Home = () => {
   const [infoBanner, setInfoBanner] = useState(false);
   const [locations, setLocations] = useState([]); 
   const [loading, setLoading] = useState(true); 
+  const [progress, setProgress] = useState(10); // Progress for loading bar
   const lastScrollY = useRef(0);
   const scrollContainerRef = useRef(null);
-  const screens = ["home", "mealPlan", "map", "favorites", "profile"];
 
   useEffect(() => {
-    const fetchLocations = async () => {
-      setLoading(true);
-      try {
-        if (process.env.NEXT_PUBLIC_ENV === 'development') {
-          const response = await axios.get("http://192.168.0.167:5001/getstuffdone-80541/us-central1/getAllCollections");
-          const locationsArray = Object.entries(response.data).map(([uuid, details]) => ({
-            uuid,
-            ...details,
-          }));
-          setLocations(locationsArray);
-        } else {
-          // Use mock data in PROD mode
-          setLocations(mockLocations);
+    const interval = setInterval(() => {
+      setProgress((oldProgress) => {
+        const newProgress = oldProgress + 10;
+        if (newProgress >= 100) {
+          clearInterval(interval);
+          return 100;
         }
-      } catch (error) {
-        console.error("Error fetching locations:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+        return newProgress;
+      });
+    }, 900);
+  
     fetchLocations();
+  
+    return () => clearInterval(interval); // Clear interval on component unmount
   }, []);
 
-  // Scroll event handler to toggle BottomNavigation based on scroll direction
-  const handleScroll = () => {
-    const currentScrollY = scrollContainerRef.current.scrollTop;
-    if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
-      setShowBottomNavigation(false);
-    } else if (currentScrollY < lastScrollY.current) {
-      setShowBottomNavigation(true);
+  const fetchLocations = async () => {
+    setLoading(true);
+    try {
+      let fetchedLocations;
+      if (process.env.NEXT_PUBLIC_ENV === 'development') {
+        const response = await axios.get(
+          "http://0.0.0.0:5001/getstuffdone-80541/us-central1/getAllCollections"
+        );
+        fetchedLocations = Object.entries(response.data).map(([uuid, details]) => ({
+          uuid,
+          ...details,
+        }));
+      } else {
+        // Use mock data in PROD mode
+        fetchedLocations = mockLocations;
+      }
+
+      setLocations(fetchedLocations);
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+    } finally {
+      setLoading(false);
     }
-    lastScrollY.current = currentScrollY;
   };
 
   useEffect(() => {
@@ -75,23 +83,15 @@ const Home = () => {
     };
   }, []);
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () => swipeScreenHandler("left"),
-    onSwipedRight: () => swipeScreenHandler("right"),
-    delta: 200,
-    preventDefaultTouchmoveEvent: true,
-    trackMouse: true,
-  });
-
-  const swipeScreenHandler = (direction) => {
-    const currentIndex = screens.indexOf(currentScreen);
-    if (direction === "left") {
-      const nextScreen = screens[(currentIndex + 1) % screens.length];
-      setScreen(nextScreen);
-    } else if (direction === "right") {
-      const prevScreen = screens[(currentIndex - 1 + screens.length) % screens.length];
-      setScreen(prevScreen);
+  // Scroll event handler to toggle BottomNavigation based on scroll direction
+  const handleScroll = () => {
+    const currentScrollY = scrollContainerRef.current.scrollTop;
+    if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+      setShowBottomNavigation(false);
+    } else if (currentScrollY < lastScrollY.current) {
+      setShowBottomNavigation(true);
     }
+    lastScrollY.current = currentScrollY;
   };
 
   const renderScreen = () => {
@@ -99,11 +99,13 @@ const Home = () => {
       case "home":
         return (
           <div className="homeScreen">
-            <NavbarCarousel />
-            <NavbarCarouselLastChecked />
+            <InYourDistrict locations={locations} />
+            <CloseToYourLocation locations={locations} />
+            {/* <NavbarCarousel /> 
+            <NavbarCarouselLastChecked nearbyLocations={nearbyLocations}/>
             <NavbarCarouselMayAlsoLike />
-            <NavbarCarouselFavorites />
-            <NavbarCarouselWeRecommend />
+            <NavbarCarouselFavorites nearbyLocations={nearbyLocations}/>
+            <NavbarCarouselWeRecommend /> */}
           </div>
         );
       case "map":
@@ -140,26 +142,26 @@ const Home = () => {
     }
   };
 
-  const renderSpinner = () => (
-    <div className="flex items-center justify-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-b-4 border-blue-500"></div>
-    </div>
-  );
-
   return (
     <div ref={scrollContainerRef} className="App h-screen flex flex-col overflow-y-auto bg-black scrollbar-hidden">
-      <div className="relative z-10">
-        {displayNavbar()}
-      </div>
-      <div className="sticky top-0 z-20 bg-white">
-        <NavbarSearch setScreen={setScreen} currentScreen={currentScreen} />
-      </div>
-      <div className="flex-grow">
-        {loading ? renderSpinner() : renderScreen()}
-        <div style={{ marginTop: "100px" }}>
-          {displayBottomNavigation()}
-        </div>
-      </div>
+      {loading ? (
+        <Spinner progress={progress} />
+      ) : (
+        <>
+          <div className="relative z-10">
+            {displayNavbar()}
+          </div>
+          <div className="sticky top-0 z-20 bg-white">
+            <NavbarSearch setScreen={setScreen} currentScreen={currentScreen} />
+          </div>
+          <div className="flex-grow">
+            {renderScreen()}
+            <div style={{ marginTop: "100px" }}>
+              {displayBottomNavigation()}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
