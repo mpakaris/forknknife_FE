@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa'; // Import the icon for the handle
 import { animated, useSpring } from 'react-spring';
 import BottomSheetContentController from "./BottomSheetContentController";
-import CarouselDrawerImages from './CarouselDrawerImages';
 
 const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation }) => {
   const [isDragging, setDragging] = useState(false);
@@ -32,9 +31,6 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
     };
   }, [isDragging]);
 
-  // Extract image URLs from selectedLocation.serpAPI.images_results
-  const imageUrls = selectedLocation?.pictures || [];
-
   return (
     <>
       {isOpen && (
@@ -45,24 +41,20 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
       )}
       <animated.div
         style={{ y, touchAction: 'none' }}
-        className="fixed top-0 left-0 right-0 bg-black z-50 shadow-lg 
+        className="fixed top-0 left-0 right-0 bg-white backdrop-blur-2xl bg-white/30 z-50 shadow-lg 
           rounded-t-xl h-full overflow-y-auto scrollbar-hidden"
       >
         <div className="flex items-center justify-center cursor-pointer my-3 rounded-lg">
           <FaChevronDown
-            className="text-teal-600 text-2xl mt-2"
+            className="text-teal-600 text-3xl mt-2"
             onClick={onClose}
           />
         </div>
         <div
           ref={scrollContainerRef}
-          className="h-full overflow-y-auto scrollbar-hidden relative bg-black"
+          className="h-full overflow-y-auto scrollbar-hidden relative"
         >
-          <div className="relative heroImage h-[400px]">
-            <CarouselDrawerImages images={imageUrls} slidesPerView={1} />
-            <div className="absolute inset-x-0 -bottom-10 h-[200px] bg-gradient-to-t from-black via-gray-950 to-transparent z-10"></div>
-          </div>
-          <div className="relative z-20 p-4 bg-black -mt-20">
+          <div className="relative z-20">
             <BottomSheetContentController 
               selectedLocation={selectedLocation}
               currentLocation={currentLocation}
