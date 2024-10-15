@@ -39,7 +39,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-yellow bg-opacity-50 z-40"
+          className="fixed inset-0 bg-opacity-50 z-40"
           onClick={onClose}
         />
       )}

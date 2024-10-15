@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const myFont = Ubuntu({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "FORK 'n KNIFE",
@@ -40,7 +43,7 @@ export default function RootLayout({
       ></link> */}
       {/* Set Nodge-Color for iOS */}
       <meta name="theme-color" content="#000000"></meta>
-      <body className={inter.className}>{children}</body>
+      <body className={myFont.className}>{children}</body>
       {/* // "theme_color": "#2196f3",
       // "background_color": "#2196f3", */}
     </html>
