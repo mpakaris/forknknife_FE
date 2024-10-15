@@ -3,9 +3,9 @@ import { getLocationsWithinRadius } from '../../utils/getLocationsWithinRadius';
 import { shuffleLocations } from "../../utils/shuffleLocations";
 import CarouselBig from './CarouselBig';
 
-export default function CloseToYourLocation({ locations }) {
+export default function CloseToYourLocation({ locations, onLocationSelect }) {
   const [nearbyLocations, setNearbyLocations] = useState([]);
-  const [radius, setRadius] = useState(2000);
+  const [radius, setRadius] = useState(1000);
 
   useEffect(() => {
     const locationsWithinRadius = getLocationsWithinRadius(
@@ -41,7 +41,7 @@ export default function CloseToYourLocation({ locations }) {
         />
       </div>
       <div className="w-full">
-        <CarouselBig options={nearbyLocations} />
+        <CarouselBig options={nearbyLocations} onLocationSelect={onLocationSelect}/>
       </div>
     </div>
   );

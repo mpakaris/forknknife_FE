@@ -1,6 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
+import BottomSheetDrawer from "./components/BottomSheetDrawer/BottomSheetDrawer";
 import Spinner from "./components/Home/Spinner";
 import CloseToYourLocation from './components/MainPage/CloseToYourLocation';
 import InYourDistrict from "./components/MainPage/InYourDistrict";
@@ -18,10 +19,12 @@ const Home = () => {
   const [showBottomNavigation, setShowBottomNavigation] = useState(true);
   const [progress, setProgress] = useState(10); 
   const [userLocation, setUserLocation] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedLocationId, setSelectedLocationId] = useState(null);
   const lastScrollY = useRef(0);
   const scrollContainerRef = useRef(null);
 
-  const { locations, loading } = useFetchLocations();  // Fetch locations using hook
+  const { locations, loading } = useFetchLocations();
 
   // Progress Bar Simulation
   useEffect(() => {
@@ -29,9 +32,9 @@ const Home = () => {
       setProgress((oldProgress) => Math.min(oldProgress + 10, 100));
     }, 900);
 
-    handleLocationPermission(setUserLocation);  // Handle location permission during initial load
+    handleLocationPermission(setUserLocation); 
 
-    return () => clearInterval(interval); // Clear interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
   // Scroll event handler to toggle BottomNavigation based on scroll direction
@@ -48,17 +51,29 @@ const Home = () => {
     }
   }, []);
 
+  const openDrawer = (uuid) => {
+    setSelectedLocationId(uuid);
+    setIsDrawerOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+    setSelectedLocationId(null);
+  };
+
+  const selectedLocation = locations.find((loc) => loc.uuid === selectedLocationId);
+
   const renderScreen = () => {
     switch (currentScreen) {
       case "home":
         return (
           <div className="homeScreen">
-            <InYourDistrict locations={locations} />
-            <CloseToYourLocation locations={locations} />
+            <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
+            <CloseToYourLocation locations={locations} onLocationSelect={openDrawer} />
           </div>
         );
       case "map":
-        return <MapController locations={locations} userLocation={userLocation} />;
+        return <MapController locations={locations} userLocation={userLocation} onLocationSelect={openDrawer} />;
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
       case "profile":
@@ -96,6 +111,15 @@ const Home = () => {
             <div style={{ marginTop: "100px" }}>{displayBottomNavigation()}</div>
           </div>
         </>
+      )}
+
+      {selectedLocation && (
+        <BottomSheetDrawer
+          isOpen={isDrawerOpen}
+          onClose={closeDrawer}
+          selectedLocation={selectedLocation}
+          currentLocation={userLocation}
+        />
       )}
     </div>
   );

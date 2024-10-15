@@ -3,15 +3,14 @@ import { getLocationsInSameDistrict } from '../../utils/getLocationsInSameDistri
 import { shuffleLocations } from "../../utils/shuffleLocations";
 import CarouselBig from './CarouselBig';
 
-export default function InYourDistrict({ locations, userLocation="1082 Budapest, Kisfaludy Utca 28/b" }) {
+export default function InYourDistrict({ locations, onLocationSelect, userLocation = "1082 Budapest, Kisfaludy Utca 28/b" }) {
   const [nearbyLocations, setNearbyLocations] = useState([]);
 
   useEffect(() => {
-    const locationsWithinDistrict = getLocationsInSameDistrict(locations, userLocation)
-    
+    const locationsWithinDistrict = getLocationsInSameDistrict(locations, userLocation);
     const shuffledLocations = shuffleLocations(locationsWithinDistrict);
-    setNearbyLocations(shuffledLocations); 
-  }, [locations, userLocation]); 
+    setNearbyLocations(shuffledLocations);
+  }, [locations, userLocation]);
 
   return (
     <div className="flex flex-col items-start bg-black px-3 mt-3 py-3">
@@ -19,9 +18,8 @@ export default function InYourDistrict({ locations, userLocation="1082 Budapest,
         Locations in your district: {nearbyLocations.length}
       </h4>
       <div className="w-full">
-        <CarouselBig options={nearbyLocations} />
+        <CarouselBig options={nearbyLocations} onLocationSelect={onLocationSelect} />
       </div>
-
     </div>
   );
 }
