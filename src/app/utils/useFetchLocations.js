@@ -20,7 +20,6 @@ export const useFetchLocations = () => {
               ...details,
             })
           );
-          console.log(response.data);
         } else {
           // Use mock data in PROD mode
           fetchedLocations = mockLocations;

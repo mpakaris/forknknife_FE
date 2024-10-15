@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
 import BottomSheetDrawer from "./components/BottomSheetDrawer/BottomSheetDrawer";
+import FunFacts from "./components/Home/FunFacts";
 import Spinner from "./components/Home/Spinner";
 import CloseToYourLocation from './components/MainPage/CloseToYourLocation';
 import InYourDistrict from "./components/MainPage/InYourDistrict";
@@ -28,7 +29,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((oldProgress) => Math.min(oldProgress + 10, 100));
-    }, 900);
+    }, 300);
 
     handleLocationPermission(setUserLocation); 
 
@@ -68,6 +69,7 @@ const Home = () => {
           <div className="homeScreen">
             <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
             <CloseToYourLocation locations={locations} onLocationSelect={openDrawer} />
+            <FunFacts />
           </div>
         );
       case "map":

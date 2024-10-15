@@ -28,7 +28,7 @@ export default function CloseToYourLocation({ locations, onLocationSelect }) {
         Locations in vicinity: {nearbyLocations.length} | {radius} meters
       </h4>
       {/* Slider for adjusting the radius */}
-      <div className="w-full mb-2">
+      <div className="w-full mb-2 border-b-2 border-gray-200 pb-2">
         <input
           id="radiusRange"
           type="range"
@@ -40,7 +40,7 @@ export default function CloseToYourLocation({ locations, onLocationSelect }) {
           className="w-full mt-2"
         />
       </div>
-      <div className="w-full">
+      <div className="w-full mt-3">
         <CarouselBig options={nearbyLocations} onLocationSelect={onLocationSelect}/>
       </div>
     </div>
