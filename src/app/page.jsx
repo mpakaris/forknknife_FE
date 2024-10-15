@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import BottomSheetDrawer from "./components/BottomSheetDrawer/BottomSheetDrawer";
 import FunFacts from "./components/Home/FunFacts";
 import HungarianCulinary from "./components/Home/HungarianCulinary";
+import Picture from "./components/Home/Picture";
 import Spinner from "./components/Home/Spinner";
 import CloseToYourLocation from './components/MainPage/CloseToYourLocation';
 import InYourDistrict from "./components/MainPage/InYourDistrict";
@@ -70,6 +71,9 @@ const Home = () => {
           <div className="homeScreen">
             <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
             <CloseToYourLocation locations={locations} onLocationSelect={openDrawer} />
+            <Picture 
+              src="/images/CoffeeShop.png" 
+              alt="Girl dreaming about food" />
             <FunFacts />
             <HungarianCulinary />
           </div>
