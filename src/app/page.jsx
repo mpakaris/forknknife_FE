@@ -100,6 +100,8 @@ const Home = () => {
         return (
           <div className="homeScreen">
             <InYourDistrict locations={locations} />
+            <InYourDistrict locations={locations} />
+            <CloseToYourLocation locations={locations} />
             <CloseToYourLocation locations={locations} />
             {/* <NavbarCarousel /> 
             <NavbarCarouselLastChecked nearbyLocations={nearbyLocations}/>
