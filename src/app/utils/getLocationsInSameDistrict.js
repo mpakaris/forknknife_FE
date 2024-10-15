@@ -2,6 +2,12 @@ export function getLocationsInSameDistrict(locations, currentAddress) {
   // Extract ZIP code from the current address
   const currentZipCode = extractZipCode(currentAddress);
 
+  // Check if currentZipCode exists before proceeding
+  if (!currentZipCode) {
+    console.error("No ZIP code found in the current address");
+    return [];
+  }
+
   // Extract city and district information from the current ZIP code
   const currentCityCode = currentZipCode.charAt(0); // First digit (city)
   const currentDistrictCode = currentZipCode.substring(1, 3); // Second and third digits (district)
@@ -9,6 +15,13 @@ export function getLocationsInSameDistrict(locations, currentAddress) {
   // Filter locations based on matching city and district codes
   return locations.filter((location) => {
     const locationZipCode = extractZipCode(location.address);
+
+    // Skip this location if the ZIP code is null
+    if (!locationZipCode) {
+      console.warn(`No ZIP code found for location: ${location.address}`);
+      return false;
+    }
+
     const locationCityCode = locationZipCode.charAt(0);
     const locationDistrictCode = locationZipCode.substring(1, 3);
 
