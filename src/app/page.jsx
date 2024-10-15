@@ -6,7 +6,6 @@ import Spinner from "./components/Home/Spinner";
 import CloseToYourLocation from './components/MainPage/CloseToYourLocation';
 import InYourDistrict from "./components/MainPage/InYourDistrict";
 import NavbarSearch from "./components/MainPage/NavbarSearch";
-import TopInfoBanner from "./components/MainPage/TopInfoBanner";
 import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
@@ -20,7 +19,8 @@ const Home = () => {
   const [infoBanner, setInfoBanner] = useState(false);
   const [locations, setLocations] = useState([]); 
   const [loading, setLoading] = useState(true); 
-  const [progress, setProgress] = useState(10); // Progress for loading bar
+  const [progress, setProgress] = useState(10); 
+  const [userLocation, setUserLocation] = useState(null);
   const lastScrollY = useRef(0);
   const scrollContainerRef = useRef(null);
 
@@ -35,9 +35,10 @@ const Home = () => {
         return newProgress;
       });
     }, 900);
-  
+
     fetchLocations();
-  
+    handleLocationPermission();  // Handle location permission during initial load
+
     return () => clearInterval(interval); // Clear interval on component unmount
   }, []);
 
@@ -66,27 +67,36 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", handleScroll);
-    }
-    return () => {
-      if (scrollContainer) {
-        scrollContainer.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, []);
+  const handleLocationPermission = () => {
+    const hasLocationPermission = localStorage.getItem("hasLocationPermission");
 
-  // Scroll event handler to toggle BottomNavigation based on scroll direction
-  const handleScroll = () => {
-    const currentScrollY = scrollContainerRef.current.scrollTop;
-    if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
-      setShowBottomNavigation(false);
-    } else if (currentScrollY < lastScrollY.current) {
-      setShowBottomNavigation(true);
+    if (!hasLocationPermission || hasLocationPermission === "false") {
+      const userWantsToAllow = window.confirm("Allow access to your current location?");
+      if (userWantsToAllow) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              setUserLocation({ lat: latitude, lng: longitude });
+              localStorage.setItem("hasLocationPermission", "true");
+            },
+            (error) => {
+              console.error("Error fetching location:", error);
+              localStorage.setItem("hasLocationPermission", "false");
+            }
+          );
+        }
+      } else {
+        localStorage.setItem("hasLocationPermission", "false");
+      }
+    } else if (hasLocationPermission === "true") {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ lat: latitude, lng: longitude });
+        });
+      }
     }
-    lastScrollY.current = currentScrollY;
   };
 
   const renderScreen = () => {
@@ -96,13 +106,10 @@ const Home = () => {
           <div className="homeScreen">
             <InYourDistrict locations={locations} />
             <CloseToYourLocation locations={locations} />
-            <InYourDistrict locations={locations} />
-            <InYourDistrict locations={locations} />
-            <InYourDistrict locations={locations} />
           </div>
         );
       case "map":
-        return <MapController locations={locations} />;
+        return <MapController locations={locations} userLocation={userLocation} />;
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
       case "profile":
@@ -110,14 +117,6 @@ const Home = () => {
       default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }
-  };
-
-  const renderInfoBanner = () => {
-    if (infoBanner) return <TopInfoBanner message={"Sample Info Banner"} />;
-  };
-
-  const displayNavbar = () => {
-    if (currentScreen !== "map" && navbarVisible) return <Navbar />;
   };
 
   const displayBottomNavigation = () => {
@@ -142,7 +141,7 @@ const Home = () => {
       ) : (
         <>
           <div className="relative z-10">
-            {displayNavbar()}
+            {navbarVisible && <Navbar />}
           </div>
           <div className="sticky top-0 z-20 bg-white">
             <NavbarSearch setScreen={setScreen} currentScreen={currentScreen} />
