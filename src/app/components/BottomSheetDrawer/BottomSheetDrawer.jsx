@@ -5,8 +5,13 @@ import BottomSheetContentController from "./BottomSheetContentController";
 
 const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation }) => {
   const [isDragging, setDragging] = useState(false);
-  const [{ y }, api] = useSpring(() => ({ y: 0 }));
   const scrollContainerRef = useRef(null);
+
+  // useSpring to animate the Y value from bottom to top
+  const [{ y }, api] = useSpring(() => ({
+    y: 100,  // Start with y at 100% (off-screen at the bottom)
+    config: { tension: 250, friction: 30 },  // Adjust the animation speed and smoothness
+  }));
 
   // Function to handle swipe down to close
   const handleSwipeToClose = () => {
@@ -31,6 +36,17 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
     };
   }, [isDragging]);
 
+  // Animate the drawer when isOpen changes
+  useEffect(() => {
+    if (isOpen) {
+      // If open, animate the drawer from the bottom (100%) to the top (0%)
+      api.start({ y: 0 });
+    } else {
+      // If closed, move the drawer back down (off the screen)
+      api.start({ y: 100 });
+    }
+  }, [isOpen, api]);
+
   return (
     <>
       {isOpen && (
@@ -40,11 +56,16 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
         />
       )}
       <animated.div
-        style={{ y, touchAction: 'none' }}
-        className="fixed top-0 left-0 right-0 bg-white backdrop-blur-2xl bg-white/30 z-50 shadow-lg 
-          rounded-t-xl h-full overflow-y-auto scrollbar-hidden"
+        style={{
+          transform: y.to((value) => `translateY(${value}%)`), // Translate based on y
+          touchAction: 'none',
+        }}
+        className="fixed left-0 right-0 bg-white backdrop-blur-2xl 
+        bg-white/30 z-50 shadow-lg rounded-t-xl h-full overflow-y-auto 
+        scrollbar-hidden"
       >
-        <div className="flex items-center justify-center cursor-pointer my-3 rounded-lg">
+        {/* Sticky ChevronDown div */}
+        <div className="sticky top-0 flex items-center justify-center cursor-pointer my-3 rounded-lg bg-transparent z-50">
           <FaChevronDown
             className="text-white text-3xl mt-2"
             onClick={onClose}

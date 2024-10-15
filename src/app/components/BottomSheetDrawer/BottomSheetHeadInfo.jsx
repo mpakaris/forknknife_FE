@@ -15,7 +15,7 @@ export default function BottomSheetHeadInfo({ selectedLocation, handleShare }) {
     <div className="pills space-y-2">
       {/* {JSON.stringify(selectedLocation)} */}
       <div className="flex justify-between items-center my-5 px-3">
-        <h1 className="text-4xl font-bold text-gray-800 mb-6">{selectedLocation.name}</h1>
+        <h1 className="text-4xl font-bold text-gray-800">{selectedLocation.name}</h1>
         <div className="flex items-center space-x-3">
           <button onClick={handleShare}>
             <FaShareAlt className="text-gray-800 text-2xl" />
