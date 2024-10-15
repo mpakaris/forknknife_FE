@@ -67,9 +67,6 @@ const Home = () => {
         return (
           <div className="homeScreen">
             <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
-            <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
-            <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
-            <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
             <CloseToYourLocation locations={locations} onLocationSelect={openDrawer} />
           </div>
         );

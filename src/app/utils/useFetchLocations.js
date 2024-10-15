@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import mockLocations from "../mockData/locations";
 
 export const useFetchLocations = () => {
@@ -20,6 +20,7 @@ export const useFetchLocations = () => {
               ...details,
             })
           );
+          console.log(response.data);
         } else {
           // Use mock data in PROD mode
           fetchedLocations = mockLocations;

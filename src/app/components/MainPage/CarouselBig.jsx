@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { FaUtensils } from 'react-icons/fa';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
