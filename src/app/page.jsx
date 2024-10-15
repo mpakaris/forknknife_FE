@@ -9,13 +9,11 @@ import NavbarSearch from "./components/MainPage/NavbarSearch";
 import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
-import Navbar from "./components/Navigation/Navbar";
 import { handleLocationPermission } from './utils/locationUtils';
 import { useFetchLocations } from './utils/useFetchLocations';
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
-  const [navbarVisible, setNavbarVisible] = useState(true);
   const [showBottomNavigation, setShowBottomNavigation] = useState(true);
   const [progress, setProgress] = useState(10); 
   const [userLocation, setUserLocation] = useState(null);
@@ -69,6 +67,9 @@ const Home = () => {
         return (
           <div className="homeScreen">
             <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
+            <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
+            <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
+            <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
             <CloseToYourLocation locations={locations} onLocationSelect={openDrawer} />
           </div>
         );
@@ -102,7 +103,6 @@ const Home = () => {
         <Spinner progress={progress} />
       ) : (
         <>
-          <div className="relative z-10">{navbarVisible && <Navbar />}</div>
           <div className="sticky top-0 z-20 bg-white">
             <NavbarSearch setScreen={setScreen} currentScreen={currentScreen} />
           </div>

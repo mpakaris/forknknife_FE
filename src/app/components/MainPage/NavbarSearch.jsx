@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
  
-import { FaHome, FaMapMarkedAlt, FaSearch } from 'react-icons/fa'; // Font Awesome Icons
+import { FaHome, FaSearch } from 'react-icons/fa'; // Font Awesome Icons
 
 export default function NavbarSearch({setScreen, currentScreen}) {
 
@@ -15,8 +16,8 @@ export default function NavbarSearch({setScreen, currentScreen}) {
     } else {
       return (
         <button onClick={() => setScreen('map')} className="text-center flex flex-col items-center">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-600">
-            <FaMapMarkedAlt className="h-5 w-5 text-gray-100" />
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
+            <img src='/images/logo.png' width={100} height={100} alt="logo" />
           </div>
         </button>    
       )

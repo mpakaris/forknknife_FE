@@ -32,7 +32,7 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
        );
      default:
        return (
-        <div className='max-h-[90vh] px-4'>
+        <div className='max-h-[90vh]'>
           <div className="relative heroImage">
             <CarouselDrawerImages images={imageUrls} slidesPerView={1} />
           </div>

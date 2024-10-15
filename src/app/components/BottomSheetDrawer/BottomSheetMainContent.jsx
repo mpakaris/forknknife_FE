@@ -1,6 +1,5 @@
 import "leaflet/dist/leaflet.css";
 import dynamic from "next/dynamic";
-import BottomSheetImpressions from "./BottomSheetImpressions";
 import BottomSheetReviews from "./BottomSheetReviews";
 import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 
@@ -10,9 +9,7 @@ const Map = dynamic(() => import("../Maps/MapTilerModal"), { ssr: false });
 const BottomSheetMainContent = ({ selectedLocation, currentLocation, }) => {
 
   return (
-    <div className="mt-8">
-      <div className="h-[2px] bg-gray-200 mt-6"></div>
-
+    <div className="mt-5">
       {/* Map Component */}
       <div className="reviews mt-4">
         <Map 
@@ -26,25 +23,14 @@ const BottomSheetMainContent = ({ selectedLocation, currentLocation, }) => {
           }} 
         />
       </div>
-      
-      <div className="h-[2px] bg-gray-200"></div>
-
-      {/* Impressions Section */}
-      <div className="mt-3">
-        <BottomSheetImpressions />
-      </div>
-
-      <div className="h-[2px] bg-gray-200 mt-6"></div>
-
+    
       {/* Weekly Menu */}
-      <div className="weeklyMenu mt-5">
+      <div className="weeklyMenu mt-4 px-3">
         <BottomSheetWeeklyMenu menu={selectedLocation.menu}/>
       </div>
 
-      <div className="h-[2px] bg-gray-200 mt-6"></div>
-
       {/* Reviews Section */}
-      <div className="reviews mt-5">
+      <div className="reviews mt-4">
         <BottomSheetReviews reviews={selectedLocation.reviews} />
       </div>
     </div>
