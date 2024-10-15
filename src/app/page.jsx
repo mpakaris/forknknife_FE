@@ -1,5 +1,4 @@
 "use client";
-import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
 import Spinner from "./components/Home/Spinner";
@@ -10,94 +9,44 @@ import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
 import Navbar from "./components/Navigation/Navbar";
-import mockLocations from './mockData/locations';
+import { handleLocationPermission } from './utils/locationUtils';
+import { useFetchLocations } from './utils/useFetchLocations';
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [showBottomNavigation, setShowBottomNavigation] = useState(true);
-  const [infoBanner, setInfoBanner] = useState(false);
-  const [locations, setLocations] = useState([]); 
-  const [loading, setLoading] = useState(true); 
   const [progress, setProgress] = useState(10); 
   const [userLocation, setUserLocation] = useState(null);
   const lastScrollY = useRef(0);
   const scrollContainerRef = useRef(null);
 
+  const { locations, loading } = useFetchLocations();  // Fetch locations using hook
+
+  // Progress Bar Simulation
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((oldProgress) => {
-        const newProgress = oldProgress + 10;
-        if (newProgress >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return newProgress;
-      });
+      setProgress((oldProgress) => Math.min(oldProgress + 10, 100));
     }, 900);
 
-    fetchLocations();
-    handleLocationPermission();  // Handle location permission during initial load
+    handleLocationPermission(setUserLocation);  // Handle location permission during initial load
 
     return () => clearInterval(interval); // Clear interval on component unmount
   }, []);
 
-  const fetchLocations = async () => {
-    setLoading(true);
-    try {
-      let fetchedLocations;
-      if (process.env.NEXT_PUBLIC_ENV === 'development') {
-        const response = await axios.get(
-          "http://0.0.0.0:5001/getstuffdone-80541/us-central1/getAllCollections"
-        );
-        fetchedLocations = Object.entries(response.data).map(([uuid, details]) => ({
-          uuid,
-          ...details,
-        }));
-      } else {
-        // Use mock data in PROD mode
-        fetchedLocations = mockLocations;
-      }
-
-      setLocations(fetchedLocations);
-    } catch (error) {
-      console.error("Error fetching locations:", error);
-    } finally {
-      setLoading(false);
+  // Scroll event handler to toggle BottomNavigation based on scroll direction
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      const handleScroll = () => {
+        const currentScrollY = scrollContainer.scrollTop;
+        setShowBottomNavigation(currentScrollY <= lastScrollY.current || currentScrollY < 50);
+        lastScrollY.current = currentScrollY;
+      };
+      scrollContainer.addEventListener("scroll", handleScroll);
+      return () => scrollContainer.removeEventListener("scroll", handleScroll);
     }
-  };
-
-  const handleLocationPermission = () => {
-    const hasLocationPermission = localStorage.getItem("hasLocationPermission");
-
-    if (!hasLocationPermission || hasLocationPermission === "false") {
-      const userWantsToAllow = window.confirm("Allow access to your current location?");
-      if (userWantsToAllow) {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const { latitude, longitude } = position.coords;
-              setUserLocation({ lat: latitude, lng: longitude });
-              localStorage.setItem("hasLocationPermission", "true");
-            },
-            (error) => {
-              console.error("Error fetching location:", error);
-              localStorage.setItem("hasLocationPermission", "false");
-            }
-          );
-        }
-      } else {
-        localStorage.setItem("hasLocationPermission", "false");
-      }
-    } else if (hasLocationPermission === "true") {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const { latitude, longitude } = position.coords;
-          setUserLocation({ lat: latitude, lng: longitude });
-        });
-      }
-    }
-  };
+  }, []);
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -113,26 +62,24 @@ const Home = () => {
       case "mealPlan":
         return <MealPlanController mealPlan={mockMealPlan} />;
       case "profile":
-        return <p className="text-white text-center">PROFILE</p>
+        return <p className="text-white text-center">PROFILE</p>;
       default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }
   };
 
-  const displayBottomNavigation = () => {
-    if (currentScreen !== "map") {
-      return (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: showBottomNavigation ? 0 : 100, opacity: showBottomNavigation ? 1 : 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="fixed bottom-0 left-0 right-0 z-50"
-        >
-          <BottomNavigation setScreen={setScreen} />
-        </motion.div>
-      );
-    }
-  };
+  const displayBottomNavigation = () => (
+    currentScreen !== "map" && (
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: showBottomNavigation ? 0 : 100, opacity: showBottomNavigation ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="fixed bottom-0 left-0 right-0 z-50"
+      >
+        <BottomNavigation setScreen={setScreen} />
+      </motion.div>
+    )
+  );
 
   return (
     <div ref={scrollContainerRef} className="App h-screen flex flex-col overflow-y-auto bg-black scrollbar-hidden">
@@ -140,17 +87,13 @@ const Home = () => {
         <Spinner progress={progress} />
       ) : (
         <>
-          <div className="relative z-10">
-            {navbarVisible && <Navbar />}
-          </div>
+          <div className="relative z-10">{navbarVisible && <Navbar />}</div>
           <div className="sticky top-0 z-20 bg-white">
             <NavbarSearch setScreen={setScreen} currentScreen={currentScreen} />
           </div>
           <div className="flex-grow">
             {renderScreen()}
-            <div style={{ marginTop: "100px" }}>
-              {displayBottomNavigation()}
-            </div>
+            <div style={{ marginTop: "100px" }}>{displayBottomNavigation()}</div>
           </div>
         </>
       )}
