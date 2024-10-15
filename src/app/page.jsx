@@ -3,11 +3,6 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
 import Spinner from "./components/Home/Spinner";
-// import NavbarCarousel from "./components/MainPage/NavbarCarousel";
-// import NavbarCarouselFavorites from "./components/MainPage/NavbarCarouselFavorites";
-// import NavbarCarouselLastChecked from "./components/MainPage/NavbarCarouselLastChecked";
-// import NavbarCarouselMayAlsoLike from "./components/MainPage/NavbarCarouselMayAlsoLike";
-// import NavbarCarouselWeRecommend from "./components/MainPage/NavbarCarouselWeRecommend";
 import CloseToYourLocation from './components/MainPage/CloseToYourLocation';
 import InYourDistrict from "./components/MainPage/InYourDistrict";
 import NavbarSearch from "./components/MainPage/NavbarSearch";
@@ -100,14 +95,10 @@ const Home = () => {
         return (
           <div className="homeScreen">
             <InYourDistrict locations={locations} />
+            <CloseToYourLocation locations={locations} />
             <InYourDistrict locations={locations} />
-            <CloseToYourLocation locations={locations} />
-            <CloseToYourLocation locations={locations} />
-            {/* <NavbarCarousel /> 
-            <NavbarCarouselLastChecked nearbyLocations={nearbyLocations}/>
-            <NavbarCarouselMayAlsoLike />
-            <NavbarCarouselFavorites nearbyLocations={nearbyLocations}/>
-            <NavbarCarouselWeRecommend /> */}
+            <InYourDistrict locations={locations} />
+            <InYourDistrict locations={locations} />
           </div>
         );
       case "map":

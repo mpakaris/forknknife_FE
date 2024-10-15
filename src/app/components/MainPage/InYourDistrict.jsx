@@ -16,7 +16,7 @@ export default function InYourDistrict({ locations, userLocation="1082 Budapest,
   return (
     <div className="flex flex-col items-start bg-black px-3 mt-3 py-3">
       <h4 className="text-md font-bold text-white text-center mb-2">
-        {nearbyLocations.length} locations in your district
+        Locations in your district: {nearbyLocations.length}
       </h4>
       <div className="w-full">
         <CarouselBig options={nearbyLocations} />
