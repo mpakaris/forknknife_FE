@@ -46,7 +46,7 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
       >
         <div className="flex items-center justify-center cursor-pointer my-3 rounded-lg">
           <FaChevronDown
-            className="text-teal-600 text-3xl mt-2"
+            className="text-white text-3xl mt-2"
             onClick={onClose}
           />
         </div>
