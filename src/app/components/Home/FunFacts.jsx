@@ -41,7 +41,7 @@ const FunFacts = () => {
           <option value="Misc">Misc</option>
         </select>
       </div>
-      <div className="mt-3">
+      <div className="mt-5">
         <Swiper
           spaceBetween={20}
           slidesPerView={1.1}

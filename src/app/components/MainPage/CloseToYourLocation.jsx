@@ -24,11 +24,13 @@ export default function CloseToYourLocation({ locations, onLocationSelect }) {
 
   return (
     <div className="flex flex-col items-start bg-black px-3 mt-3 py-3">
-      <h4 className="text-md font-bold text-white text-center mb-2">
+      <h4 className="text-md font-bold text-white mb-2 first-letter
+        border-b-2 border-gray-200 w-full pb-2"
+      >
         Locations in vicinity: {nearbyLocations.length} | {radius} meters
       </h4>
       {/* Slider for adjusting the radius */}
-      <div className="w-full mb-2 border-b-2 border-gray-200 pb-2">
+      <div className="w-full mb-2 pb-2">
         <input
           id="radiusRange"
           type="range"
@@ -40,7 +42,7 @@ export default function CloseToYourLocation({ locations, onLocationSelect }) {
           className="w-full mt-2"
         />
       </div>
-      <div className="w-full mt-3">
+      <div className="w-full">
         <CarouselBig options={nearbyLocations} onLocationSelect={onLocationSelect}/>
       </div>
     </div>
