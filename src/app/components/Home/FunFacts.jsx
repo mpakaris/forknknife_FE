@@ -26,7 +26,7 @@ const FunFacts = () => {
         <h1>Facts about Budapest:</h1>
         <select
           className="bg-gray-700 text-gray-200 border border-gray-600 
-            text-xs rounded p-2 w-1/2"
+            text-md rounded px-2 py-3 w-1/2"
           value={selectedOption}
           onChange={(e) => setSelectedOption(e.target.value)}
         >
