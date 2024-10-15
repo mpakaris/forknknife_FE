@@ -12,7 +12,7 @@ const HungarianCulinary = () => {
       : culinaryList.filter((option) => option.type === selectedOption);
 
   return (
-    <div className="w-full px-3 text-gray-200">
+    <div className="w-full px-3 text-gray-200 mt-5">
       <div className="flex items-center justify-between my-3 border-b-2 border-gray-200 pb-2">
         <h1>Hungarian Culinary Delights:</h1>
         <select
@@ -50,7 +50,7 @@ const HungarianCulinary = () => {
                 </div>
                 {/* 2/3 for the text */}
                 <div className="w-2/3 p-3 flex flex-col items-center my-auto text-gray-200">
-                  <p className="text-xs mb-5">{option.type} | {option.menu}</p>
+                  <p className="text-xs mb-5 font-bold">{option.menu} | {option.type}</p>
                   <p className="text-xs flex-grow text-center">{option.desc}</p>
                 </div>
               </div>

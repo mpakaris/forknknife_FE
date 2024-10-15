@@ -62,7 +62,7 @@ const FunFacts = () => {
                 </div>
                 {/* 2/3 for the text */}
                 <div className="w-2/3 p-3 flex flex-col items-center my-auto text-gray-200">
-                  <p className="text-xs mb-5">{option.id} | {option.type}</p>
+                  <p className="text-xs mb-5">{option.type} | {option.id}</p>
                   <p className="text-xs flex-grow text-center">{option.fact}</p>
                 </div>
               </div>
