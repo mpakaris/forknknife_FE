@@ -2,17 +2,18 @@
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-const CarouselSmall = ({ options }) => {
+const CarouselSmall = ({ options, onRouteSelect }) => {
   return (
     <div className="w-full">
       <Swiper
-        spaceBetween={10}
-        slidesPerView={1.6}
+        spaceBetween={20}
+        slidesPerView={1.4}
         grabCursor={true}
       >
         {options.map((option, index) => (
           <SwiperSlide key={index}>
-            <div className="flex flex-col items-center rounded-full shadow-md bg-white my-2 overflow-hidden w-60 h-60"> {/* Circular card dimensions */}
+            <div onClick={()=>onRouteSelect(option)} 
+              className="flex flex-col items-center rounded-full shadow-md bg-white my-2 overflow-hidden w-60 h-60"> {/* Circular card dimensions */}
               <div className="relative w-full h-50"> {/* Set image container to 50% of the card height */}
                 <img
                   src={option.imgUrl}

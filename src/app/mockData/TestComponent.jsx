@@ -7,7 +7,7 @@ const TestComponent = ({ locations }) => {
   <div className="restaurant-list">
      <div className="flex items-center justify-center mb-6 px-6">
        <img
-         src="https://randomuser.me/api/portraits/women/10.jpg"
+         src="https://randomuser.me/api/portraits/women/10‚.jpg"
          alt="Eszter Profile"
          className="w-20 h-20 rounded-full mr-4"
        />

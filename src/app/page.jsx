@@ -10,8 +10,9 @@ import CloseToYourLocation from './components/MainPage/CloseToYourLocation';
 import EatLikeALocalDrawer from "./components/MainPage/EatLikeALocalDrawer";
 import EatLikeALocalRecommendations from './components/MainPage/EatLikeLocalsRecommendations';
 import InYourDistrict from "./components/MainPage/InYourDistrict";
-import NavbarCarousel from './components/MainPage/NavbarCarousel';
 import NavbarSearch from "./components/MainPage/NavbarSearch";
+import WeRecommend from './components/MainPage/WeRecommend';
+import TestComponent2 from "./components/MainPage/WeRecommendDrawer";
 import MapController from "./components/Maps/MapController";
 import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
@@ -71,18 +72,18 @@ const Home = () => {
       case "home":
         return (
           <div className="homeScreen">
+            <CloseToYourLocation locations={locations} onLocationSelect={(uuid) => {
+              openDrawer(<BottomSheetContentController selectedLocation={returnSelectedLocation(uuid)} userLocation={userLocation} />
+              )}} 
+            />
+            <EatLikeALocalRecommendations onRouteSelect={(route) => openDrawer(<EatLikeALocalDrawer selectedLocalRoute={route} />)} />
+            <FunFacts />          
             <InYourDistrict locations={locations} onLocationSelect={(uuid) => {
               openDrawer(<BottomSheetContentController selectedLocation={returnSelectedLocation(uuid)} userLocation={userLocation} />
             )}}
             />
-            <EatLikeALocalRecommendations onRouteSelect={(route) => openDrawer(<EatLikeALocalDrawer selectedLocalRoute={route} />)} />
-            <CloseToYourLocation locations={locations} onLocationSelect={(uuid) => {
-              openDrawer(<BottomSheetContentController selectedLocation={returnSelectedLocation(uuid)} userLocation={userLocation} />
-            )}} 
-            />
-            <NavbarCarousel />
+            <WeRecommend onRouteSelect={(route) => openDrawer(<TestComponent2 selectedTour={route} />)}/>
             <HungarianCulinary />
-            <FunFacts />          
           </div>
         );
       case "map":

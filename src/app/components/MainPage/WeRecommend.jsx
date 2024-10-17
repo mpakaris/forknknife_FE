@@ -1,6 +1,6 @@
 import CarouselSmall from "./CarouselSmall";
  
-const NavbarCarousel = () => {
+const NavbarCarousel = ({onRouteSelect}) => {
   const routes = [
     {
       "profile": "Budapest in 1 Day",
@@ -76,7 +76,7 @@ const NavbarCarousel = () => {
         We Recommend
       </h4>
       <div className="w-full">
-        <CarouselSmall options={routes} />
+        <CarouselSmall options={routes} onRouteSelect={onRouteSelect}/>
       </div>
     </div>
   );
