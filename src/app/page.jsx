@@ -72,11 +72,11 @@ const Home = () => {
       case "home":
         return (
           <div className="homeScreen">
+            <EatLikeALocalRecommendations onRouteSelect={(route) => openDrawer(<EatLikeALocalDrawer selectedLocalRoute={route} />)} />
             <CloseToYourLocation locations={locations} onLocationSelect={(uuid) => {
               openDrawer(<BottomSheetContentController selectedLocation={returnSelectedLocation(uuid)} userLocation={userLocation} />
               )}} 
             />
-            <EatLikeALocalRecommendations onRouteSelect={(route) => openDrawer(<EatLikeALocalDrawer selectedLocalRoute={route} />)} />
             <FunFacts />          
             <InYourDistrict locations={locations} onLocationSelect={(uuid) => {
               openDrawer(<BottomSheetContentController selectedLocation={returnSelectedLocation(uuid)} userLocation={userLocation} />
