@@ -119,6 +119,7 @@ const Home = () => {
         <>
           <div className="sticky top-0 z-20 bg-white">
             <NavbarSearch setScreen={setScreen} currentScreen={currentScreen} />
+            <p className="text-white bg-teal-800 text-center text-xs">Version 1.15.beta</p>
           </div>
           <div className="flex-grow">
             {renderScreen()}
