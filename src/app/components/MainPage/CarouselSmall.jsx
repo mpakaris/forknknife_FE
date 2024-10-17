@@ -18,12 +18,12 @@ const CarouselSmall = ({ options, onRouteSelect }) => {
                 <img
                   src={option.imgUrl}
                   alt={`Budapest Hungary`}
-                  className="object-cover w-full h-full rounded-t-full" // Use w-full and h-full to make it fit the container
+                  className="object-cover w-full h-full rounded-t-full" 
                 />
               </div>
-              <div className="flex-grow p-3 text-center flex flex-col justify-center items-center">
-                <p className="text-lg font-semibold">{option.name}</p> {/* Increased text size */}
-                <p className="text-sm font-semibold">{option.profile}</p> {/* Increased text size */}
+              <div className="flex-grow text-center flex flex-col pt-2 items-center">
+                <p className="text-lg font-semibold">{option.name}</p> 
+                <p className="text-sm font-semibold">{option.profile}</p> 
               </div>
             </div>
           </SwiperSlide>
