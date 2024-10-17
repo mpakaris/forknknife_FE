@@ -6,8 +6,8 @@ const TestComponent2 = ({ selectedLocalRoute }) => {
     <>
       {selectedLocalRoute && (
         <div className="user-profile px-4">
-          <h1 className="text-teal-900 text-xl text-center mb-3 border-white border-b-2 pb-2">
-            Eat with Ivan
+          <h1 className="text-teal-900 text-2xl text-bold text-center mb-3 border-white border-b-2 pb-2">
+            Eat like a Local
           </h1>
           <div className="flex items-center justify-center mb-3 px-6">
             <img
