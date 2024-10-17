@@ -9,31 +9,33 @@ const Map = dynamic(() => import("../Maps/MapTilerModal"), { ssr: false });
 const BottomSheetMainContent = ({ selectedLocation, userLocation, }) => {
 
   return (
-    <div className="mt-5">
-      {/* Map Component */}
-      <div className="reviews mt-4">
-        <Map 
-          currentLocation={{
-            lat: userLocation?.lat,
-            lng: userLocation?.lng
-          }} 
-          destinationLocation={{
-            lat: selectedLocation?.lat, 
-            lng: selectedLocation?.lng
-          }} 
-        />
-      </div>
-    
-      {/* Weekly Menu */}
-      <div className="weeklyMenu mt-4 px-3">
-        <BottomSheetWeeklyMenu menu={selectedLocation.menu}/>
-      </div>
+    <>
+      {selectedLocation && <div className="mt-5">
+        {/* Map Component */}
+        <div className="reviews mt-4">
+          <Map 
+            currentLocation={{
+              lat: userLocation?.lat,
+              lng: userLocation?.lng
+            }} 
+            destinationLocation={{
+              lat: selectedLocation?.lat, 
+              lng: selectedLocation?.lng
+            }} 
+          />
+        </div>
+      
+        {/* Weekly Menu */}
+        <div className="weeklyMenu mt-4 px-3">
+          <BottomSheetWeeklyMenu menu={selectedLocation.menu}/>
+        </div>
 
-      {/* Reviews Section */}
-      <div className="reviews mt-4">
-        <BottomSheetReviews reviews={selectedLocation.reviews} />
-      </div>
-    </div>
+        {/* Reviews Section */}
+        <div className="reviews mt-4">
+          <BottomSheetReviews reviews={selectedLocation.reviews} />
+        </div>
+      </div>}
+    </>
   );
 };
 

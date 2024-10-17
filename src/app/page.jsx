@@ -154,7 +154,7 @@ const Home = () => {
           // selectedRoute={mustVisitRestaurants}
           selectedLocalRoute={selectedLocalRoute}
           userLocation={userLocation}
-          type="showSelectedLocalRoute"
+          // type="showSelectedLocalRoute"
         />
       )}
     </div>
