@@ -23,7 +23,7 @@ export default function CarouselBig({ options, onLocationSelect }) {
               <div className="w-1/2 h-full">
                 {option.pictures && option.pictures.length > 0 ? (
                   <img
-                    src={option.pictures[0]}
+                    src={option.pictures[0] || "https://threecorners.com/wp-content/uploads/2021/07/thethreecorners_budapest_hungary_hotels_destination_page1.jpg"}
                     alt={`${option.name}`}
                     className="object-cover w-full h-full"
                   />
