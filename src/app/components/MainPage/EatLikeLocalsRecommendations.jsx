@@ -1,10 +1,11 @@
 import EatLikeLocalsCarousel from "./EatLikeLocalsCarousel";
  
-const EatLikeLocalsRecommendations = ({setLocalRoute}) => {
+const EatLikeLocalsRecommendations = ({onRouteSelect}) => {
   const routes = [
     {
       "name": "Ivan",
       "time": "4 years",
+      "age" : "31",
       "greeting": "HeyHo What's up?",
       "description": "I moved to Budapest 4 years ago for my studies. I immediately fell in love with the city and what it offers.",
       "imgUrl": "https://randomuser.me/api/portraits/men/1.jpg",
@@ -86,6 +87,7 @@ const EatLikeLocalsRecommendations = ({setLocalRoute}) => {
     {
       "name": "Stacy",
       "time": "5 years",
+      "age" : "39",
       "greeting": "Hi, how are you?",
       "imgUrl": "https://randomuser.me/api/portraits/women/2.jpg",
       "description": "Born and raised in the US, I  moved to Budapest 10 years ago and enjoy it ever since.",
@@ -166,6 +168,7 @@ const EatLikeLocalsRecommendations = ({setLocalRoute}) => {
       "name": "Stan",
       "time": "15 years",
       "greeting": "Szia!",
+      "age" : "48",
       "imgUrl": "https://randomuser.me/api/portraits/men/50.jpg",
       "description": "Born and raised in the US, I  moved to Budapest 10 years ago and enjoy it ever since.",
       "locations": [
@@ -249,7 +252,7 @@ const EatLikeLocalsRecommendations = ({setLocalRoute}) => {
          Eat like a local     
       </h4>
       <div className="w-full">
-        <EatLikeLocalsCarousel routes={routes} setLocalRoute={setLocalRoute} />
+        <EatLikeLocalsCarousel routes={routes} onRouteSelect={onRouteSelect} />
       </div>
     </div>
   );

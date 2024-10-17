@@ -1,13 +1,9 @@
-import TestComponent from '@/app/mockData/TestComponent';
-import TestComponent2 from '@/app/mockData/TestComponent2';
 import { useEffect, useRef } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import { animated, useSpring } from 'react-spring';
-import BottomSheetContentController from './BottomSheetContentController';
 
-const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, userLocation, selectedLocalRoute, type = "showSelectedLocation" }) => {
+const BottomSheetDrawer = ({ isOpen, onClose, children }) => {
   const scrollContainerRef = useRef(null);
-
   const [{ y }, api] = useSpring(() => ({
     y: 100,  
     config: { tension: 250, friction: 30 },  
@@ -38,34 +34,8 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, userLocation, se
             onClick={onClose}
           />
         </div>
-        <div
-          ref={scrollContainerRef}
-          className="h-full overflow-y-auto scrollbar-hidden relative scroll-smooth -webkit-overflow-scrolling-touch"
-        >
-          {type === "showSelectedLocation" &&
-            <div className="relative z-20">
-              <BottomSheetContentController
-                selectedLocation={selectedLocation}
-                userLocation={userLocation}
-              />
-            </div>
-          }
-          {type === "showSelectedRoute" &&
-            <div className="relative z-20">
-              <TestComponent
-                locations={selectedRoute}
-                userLocation={userLocation}
-              />
-            </div>
-          }
-          {type === "showSelectedLocalRoute" &&
-            <div className="relative z-20">
-              <TestComponent2
-                selectedLocalRoute={selectedLocalRoute}
-                userLocation={userLocation}
-              />
-            </div>
-          }
+        <div ref={scrollContainerRef} className="h-full overflow-y-auto scrollbar-hidden relative scroll-smooth -webkit-overflow-scrolling-touch">
+          {children}
         </div>
       </animated.div>
     </>

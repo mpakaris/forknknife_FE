@@ -2,7 +2,7 @@
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-const EatLikeLocalsCarousel = ({ routes, setLocalRoute }) => {
+const EatLikeLocalsCarousel = ({ routes, onRouteSelect }) => {
   return (
     <div className="w-full">
       <Swiper
@@ -12,7 +12,7 @@ const EatLikeLocalsCarousel = ({ routes, setLocalRoute }) => {
       >
         {routes && routes.map((route, index) => (
           <SwiperSlide key={index}>
-            <div onClick={() => setLocalRoute(route)} className="flex flex-col items-center rounded-md shadow-md bg-black my-2 overflow-hidden w-40 h-40">
+            <div onClick={() => onRouteSelect(route)} className="flex flex-col items-center rounded-md shadow-md bg-black my-2 overflow-hidden w-40 h-40">
               <div className="relative w-24 h-24"> 
                 <img
                   src={route.imgUrl}

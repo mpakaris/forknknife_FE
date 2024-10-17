@@ -1,11 +1,13 @@
 "use client";
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from "react";
+import BottomSheetContentController from "./components/BottomSheetDrawer/BottomSheetContentController";
 import BottomSheetDrawer from "./components/BottomSheetDrawer/BottomSheetDrawer";
 import FunFacts from "./components/Home/FunFacts";
 import HungarianCulinary from "./components/Home/HungarianCulinary";
 import Spinner from "./components/Home/Spinner";
 import CloseToYourLocation from './components/MainPage/CloseToYourLocation';
+import EatLikeALocalDrawer from "./components/MainPage/EatLikeALocalDrawer";
 import EatLikeALocalRecommendations from './components/MainPage/EatLikeLocalsRecommendations';
 import InYourDistrict from "./components/MainPage/InYourDistrict";
 import NavbarCarousel from './components/MainPage/NavbarCarousel';
@@ -15,8 +17,6 @@ import MealPlanController from './components/MealPlan/MealPlanController';
 import BottomNavigation from "./components/Navigation/BottomNavigation";
 import { handleLocationPermission } from './utils/locationUtils';
 import { useFetchLocations } from './utils/useFetchLocations';
-// import { mustVisitRestaurants } from "./mockData/mustVisitRestaurants";
-// import { restaurants } from "./mockData/restaurants";
 
 const Home = () => {
   const [currentScreen, setScreen] = useState("home");
@@ -24,22 +24,13 @@ const Home = () => {
   const [progress, setProgress] = useState(10); 
   const [userLocation, setUserLocation] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedLocationId, setSelectedLocationId] = useState(null);
-  const [selectedLocalRoute, setSelectedLocalRoute] = useState(null);
+  const [drawerContent, setDrawerContent] = useState(null);
 
   const lastScrollY = useRef(0);
   const scrollContainerRef = useRef(null);
 
   const { locations, loading } = useFetchLocations();
 
-  const locations2 = [
-    { lat: 47.50060910372449, 
-      lng:  19.084300931135 },
-    { lat: 47.50750735967782, 
-      lng: 19.045819700055304}
-  ];
-
-  // Progress Bar Simulation
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((oldProgress) => Math.min(oldProgress + 10, 100));
@@ -50,7 +41,6 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll event handler to toggle BottomNavigation based on scroll direction
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
@@ -64,54 +54,45 @@ const Home = () => {
     }
   }, []);
 
-  const openDrawer = (uuid) => {
-    setSelectedLocationId(uuid);
+  const openDrawer = (content) => {
+    setDrawerContent(content);
     setIsDrawerOpen(true);
   };
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);
-    setSelectedLocationId(null);
-    setSelectedLocalRoute(null)
+    setDrawerContent(null);
   };
 
-  const handleLocalRoute = (route) => {
-    setSelectedLocalRoute(route);
-    setIsDrawerOpen(true)
-  };
-
-  useEffect(() => {
-    if (selectedLocalRoute) {
-      console.log("Updated Route: ", selectedLocalRoute);
-      setIsDrawerOpen(true);
-    }
-  }, [selectedLocalRoute]);
-
-  const selectedLocation = locations.find((loc) => loc.uuid === selectedLocationId);
+  const returnSelectedLocation = (locationId) => {return locations.find((loc) => loc.uuid === locationId)}
 
   const renderScreen = () => {
     switch (currentScreen) {
       case "home":
         return (
           <div className="homeScreen">
-            <InYourDistrict locations={locations} onLocationSelect={openDrawer} />
-            <EatLikeALocalRecommendations setLocalRoute={handleLocalRoute}/>
+            <InYourDistrict locations={locations} onLocationSelect={(uuid) => {
+              openDrawer(<BottomSheetContentController selectedLocation={returnSelectedLocation(uuid)} userLocation={userLocation} />
+            )}}
+            />
+            <EatLikeALocalRecommendations onRouteSelect={(route) => openDrawer(<EatLikeALocalDrawer selectedLocalRoute={route} />)} />
+            <CloseToYourLocation locations={locations} onLocationSelect={(uuid) => {
+              openDrawer(<BottomSheetContentController selectedLocation={returnSelectedLocation(uuid)} userLocation={userLocation} />
+            )}} 
+            />
             <NavbarCarousel />
             <HungarianCulinary />
-            <CloseToYourLocation locations={locations} onLocationSelect={openDrawer} />
             <FunFacts />          
-            {/* <Picture 
-              src="/images/cultural_historical.png" 
-              alt="Girl dreaming about food" 
-            /> */}
           </div>
         );
       case "map":
-        return <MapController locations={locations} userLocation={userLocation} onLocationSelect={openDrawer} />;
+        return <MapController locations={locations} userLocation={userLocation} 
+          onLocationSelect={(uuid) => {
+            openDrawer(<BottomSheetContentController selectedLocation={returnSelectedLocation(uuid)} userLocation={userLocation} />
+          )}} 
+        />;
       case "mealPlan":
-        return <MealPlanController mealPlan={mockMealPlan} />;
-      case "profile":
-        return <p className="text-white text-center">PROFILE</p>;
+        return <MealPlanController />;
       default:
         return <div style={{ height: "750px" }} className="bg-gray-300 opacity-40">Screen not found: {currentScreen}</div>;
     }
@@ -146,16 +127,10 @@ const Home = () => {
         </>
       )}
 
-      {(selectedLocation || setSelectedLocalRoute) && (
-        <BottomSheetDrawer
-          isOpen={isDrawerOpen}
-          onClose={closeDrawer}
-          selectedLocation={selectedLocation}
-          // selectedRoute={mustVisitRestaurants}
-          selectedLocalRoute={selectedLocalRoute}
-          userLocation={userLocation}
-          // type="showSelectedLocalRoute"
-        />
+      {drawerContent && (
+        <BottomSheetDrawer isOpen={isDrawerOpen} onClose={closeDrawer}>
+          {drawerContent}
+        </BottomSheetDrawer>
       )}
     </div>
   );

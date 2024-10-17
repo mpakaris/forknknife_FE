@@ -1,15 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-const TestComponent2 = ({ selectedLocalRoute }) => {
+const EatLikeALocalDrawer = ({ selectedLocalRoute }) => {
   return (
     <>
       {selectedLocalRoute && (
         <div className="user-profile px-4">
-          <h1 className="text-teal-900 text-2xl text-bold text-center mb-3 border-white border-b-2 pb-2">
+          <h1 className="text-teal-900 text-2xl w-full text-bold text-center mb-3">
             Eat like a Local
           </h1>
-          <div className="flex items-center justify-center mb-3 px-6">
+          <h3 className="border-white border-b-2 pb-2 text-center">{selectedLocalRoute.name} | {selectedLocalRoute.age} years old</h3>
+          <div className="flex items-center justify-center my-3 px-6">
             <img
               src={selectedLocalRoute.imgUrl}
               alt={`${selectedLocalRoute.name}'s Route`}
@@ -54,4 +55,4 @@ const TestComponent2 = ({ selectedLocalRoute }) => {
   );
 };
 
-export default TestComponent2;
+export default EatLikeALocalDrawer;
