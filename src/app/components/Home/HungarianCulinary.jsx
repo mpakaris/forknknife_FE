@@ -63,7 +63,6 @@ const HungarianCulinary = () => {
 };
 
 const culinaryList = [
-    // Main Dish
     {
       "menu": "Gulyás",
       "desc": "A hearty soup made with beef, vegetables, and spices, often flavored with paprika.",

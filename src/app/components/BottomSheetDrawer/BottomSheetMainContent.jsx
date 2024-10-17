@@ -6,7 +6,7 @@ import BottomSheetWeeklyMenu from "./BottomSheetWeeklyMenu";
 // Dynamically load the Map component for client-side rendering
 const Map = dynamic(() => import("../Maps/MapTilerModal"), { ssr: false });
 
-const BottomSheetMainContent = ({ selectedLocation, currentLocation, }) => {
+const BottomSheetMainContent = ({ selectedLocation, userLocation, }) => {
 
   return (
     <div className="mt-5">
@@ -14,8 +14,8 @@ const BottomSheetMainContent = ({ selectedLocation, currentLocation, }) => {
       <div className="reviews mt-4">
         <Map 
           currentLocation={{
-            lat: currentLocation?.lat,
-            lng: currentLocation?.lng
+            lat: userLocation?.lat,
+            lng: userLocation?.lng
           }} 
           destinationLocation={{
             lat: selectedLocation?.lat, 

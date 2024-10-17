@@ -1,9 +1,10 @@
+import TestComponent from '@/app/mockData/TestComponent';
 import { useEffect, useRef } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import { animated, useSpring } from 'react-spring';
 import BottomSheetContentController from './BottomSheetContentController';
 
-const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation }) => {
+const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, userLocation, selectedRoute, type = "showSelectedLocation" }) => {
   const scrollContainerRef = useRef(null);
 
   // useSpring to animate the Y value from bottom to top
@@ -43,12 +44,22 @@ const BottomSheetDrawer = ({ isOpen, onClose, selectedLocation, currentLocation 
           ref={scrollContainerRef}
           className="h-full overflow-y-auto scrollbar-hidden relative scroll-smooth -webkit-overflow-scrolling-touch"
         >
-          <div className="relative z-20">
-            <BottomSheetContentController
-              selectedLocation={selectedLocation}
-              currentLocation={currentLocation}
-            />
-          </div>
+          {type === "showSelectedLocation" &&
+            <div className="relative z-20">
+              <BottomSheetContentController
+                selectedLocation={selectedLocation}
+                userLocation={userLocation}
+              />
+            </div>
+          }
+          {type === "showSelectedRoute" &&
+            <div className="relative z-20">
+              <TestComponent
+                locations={selectedRoute}
+                userLocation={userLocation}
+              />
+            </div>
+          }
         </div>
       </animated.div>
     </>

@@ -4,7 +4,7 @@ import BottomSheetMainContent from "./BottomSheetMainContent";
 import CarouselDrawerImages from './CarouselDrawerImages';
 import RestaurantInvitation from "./Invitation/RestaurantInvitation";
 
-const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
+const BottomSheetContentController = ({selectedLocation, userLocation}) => {
  
  const [currentModalScreen, setCurrentModalScreen] = useState(undefined) 
  const [showReservation, setShowReservation] = useState(false)
@@ -45,7 +45,7 @@ const BottomSheetContentController = ({selectedLocation, currentLocation}) => {
           }
           <BottomSheetMainContent
             selectedLocation={selectedLocation} 
-            currentLocation={currentLocation}
+            userLocation={userLocation}
             setModalScreen={setModalScreen}
           />
         </div>
